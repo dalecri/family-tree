@@ -343,18 +343,43 @@ const TREE = { title: "The D'Alessio Family", planted: "OCT 31 2026", keepers: "
 
 const PEOPLE = [
   {
-    id: "poppy", name: "Poppy", born: "", died: "", photo: "",
-    parents: [], partners: ["poppy-partner"], tentative: false, placeholder: false,
-    note: "Recovering at home after a fall, autumn 2026. The root of this tree."
+    id: "alfred", name: "Alfred D'Alessio", born: "", died: "", photo: "",
+    parents: [], partners: ["simone"], tentative: false, placeholder: false,
+    note: "Gerry's father. The start of this tree."
   },
   {
-    id: "poppy-partner", name: "To add", born: "", died: "", photo: "",
-    parents: [], partners: ["poppy"], tentative: false, placeholder: true,
+    id: "simone", name: "Simone D'Alessio", born: "", died: "", photo: "",
+    parents: [], partners: ["alfred"], tentative: false, placeholder: false,
+    note: "Gerry's mother."
+  },
+  {
+    id: "gerry", name: "Gerry D'Alessio", born: "", died: "", photo: "",
+    parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
+    note: "Known to the whole family as Poppy. Recovering at home after a fall, autumn 2026."
+  },
+  {
+    id: "lorraine", name: "Lorraine D'Alessio", born: "", died: "", photo: "",
+    parents: [], partners: ["gerry"], tentative: false, placeholder: false,
+    note: "Known to the whole family as Nanny."
+  },
+  {
+    id: "judy", name: "Judy D'Alessio", born: "", died: "", photo: "",
+    parents: ["gerry", "lorraine"], partners: [], tentative: false, placeholder: false,
+    note: ""
+  },
+  {
+    id: "dale", name: "Dale D'Alessio", born: "", died: "", photo: "",
+    parents: ["gerry", "lorraine"], partners: [], tentative: false, placeholder: false,
+    note: ""
+  },
+  {
+    id: "gary", name: "Gary D'Alessio", born: "", died: "", photo: "",
+    parents: ["gerry", "lorraine"], partners: [], tentative: false, placeholder: false,
     note: ""
   },
   {
     id: "mark", name: "Mark D'Alessio", born: "", died: "", photo: "",
-    parents: ["poppy", "poppy-partner"], partners: ["elena"], tentative: false, placeholder: false,
+    parents: ["gerry", "lorraine"], partners: ["elena"], tentative: false, placeholder: false,
     note: "Cris's father."
   },
   {
@@ -374,8 +399,8 @@ const PEOPLE = [
   },
   {
     id: "vince", name: "Vince D'Alessio", born: "", died: "", photo: "",
-    parents: ["poppy", "poppy-partner"], partners: [], tentative: true, placeholder: false,
-    note: "Exact place in Poppy's generation to confirm with family. Father of July."
+    parents: [], partners: [], tentative: false, placeholder: false,
+    note: "How Vince's branch joins the main line is still to confirm with family. Father of July."
   },
   {
     id: "july", name: "July D'Alessio", born: "", died: "", photo: "",
