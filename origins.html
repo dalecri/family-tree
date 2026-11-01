@@ -123,6 +123,7 @@ ul.plain li{margin-bottom:8px}
 
 /* three lines */
 .lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 14px}
+.lines.four{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 22px}
 .line{border-top:3px solid var(--ink);padding-top:10px}
 .line.ours{border-top-color:var(--red)}
 .line h3{margin:0 0 4px;font:400 21px/1.15 var(--hand);letter-spacing:.05em;color:var(--ink)}
@@ -180,7 +181,7 @@ ul.plain li{margin-bottom:8px}
 .fix{margin:16px 0 0;padding:12px 14px;border:1px dashed var(--pencil);border-radius:10px;font-size:12px;line-height:1.7;max-width:66ch}
 .fix b{color:var(--red);font-weight:700;letter-spacing:.04em}
 .line .tag.maybe{border-style:dashed;border-color:var(--pencil-text);color:var(--pencil-text)}
-@media (max-width:640px){.pair{grid-template-columns:1fr}.typed{padding:22px 18px 18px}.photo a,.typed{transform:none}}
+@media (max-width:640px){.pair,.lines.four{grid-template-columns:1fr}.typed{padding:22px 18px 18px}.photo a,.typed{transform:none}}
 @media (prefers-reduced-motion:reduce){.photo a,.typed{transform:none}}
 
 @media (max-width:640px){
@@ -224,13 +225,40 @@ ul.plain li{margin-bottom:8px}
     </figure>
   </section>
 
+  <section aria-labelledby="h-sibs">
+    <h2 id="h-sibs">Four sons and two daughters</h2>
+    <p>The album now names all six of Vincent and Rosario's children, which matches the typed note exactly:</p>
+    <dl class="fields">
+      <dt>Sons</dt><dd>Alfred, Sistine, Edward and Augustine <i>(Augustine is spelled Agustine in the album)</i></dd>
+      <dt>Daughters</dt><dd>Giovanno and Annie <i>(Giovanno as written; Giovanna is the usual Italian spelling)</i></dd>
+    </dl>
+    <div class="pair">
+    <figure class="photo" style="--w:320px;--tilt:-1.2deg">
+      <a href="photos/album/siblings-1914.jpg" target="_blank" rel="noopener"><img src="photos/album/siblings-1914.jpg" width="779" height="1100" loading="lazy" alt="Alfred with his sisters, 1914"></a>
+      <figcaption><b>Alfred with his sisters, 1914</b>Giovanno (left), Alfred, about 14 (centre), and Annie (right).</figcaption>
+    </figure>
+    <figure class="photo" style="--w:320px;--tilt:1deg">
+      <a href="photos/album/vincent-edward-annie-1916.jpg" target="_blank" rel="noopener"><img src="photos/album/vincent-edward-annie-1916.jpg" width="771" height="1074" loading="lazy" alt="Vincent with Edward and Annie"></a>
+      <figcaption><b>Vincent with Edward and Annie</b>Labelled &ldquo;father with son &amp; daughter&rdquo;, 1916.</figcaption>
+    </figure>
+    </div>
+    <p>Both this photo and the one above are dated 1916, but Vincent looks much older in the first. One of the two dates may be off, which is common with labels added years later.</p>
+    <p>Augustine is the one son no record calls a brother outright. He is counted here because he stands with Alfred and Edward at Alfred's wedding, his son Norman is called Gerald and Vincent's cousin, and he completes the count of four sons. The tree still draws his link in pencil.</p>
+  </section>
+
   <section aria-labelledby="h-leave">
     <h2 id="h-leave">Alfred leaves Italy, 1923</h2>
     <p>Part of Alfred's Italian passport survives in the album. He signed it in the Italian way, surname first: <i>D'Alessio Alfredo</i>.</p>
-    <figure class="photo" style="--w:360px;--tilt:-1.2deg">
+    <div class="pair">
+    <figure class="photo" style="--w:320px;--tilt:-1deg">
+      <a href="photos/album/alfred-police-1918.jpg" target="_blank" rel="noopener"><img src="photos/album/alfred-police-1918.jpg" width="764" height="984" loading="lazy" alt="Alfred, 1918"></a>
+      <figcaption><b>Alfred, 1918</b>Labelled &ldquo;Police&rdquo;. The epaulettes, braided cords and white cross-belt look like the uniform of the Carabinieri, Italy's military police.</figcaption>
+    </figure>
+    <figure class="photo" style="--w:320px;--tilt:1.2deg">
       <a href="photos/album/passport-1923.jpg" target="_blank" rel="noopener"><img src="photos/album/passport-1923.jpg" width="750" height="1090" loading="lazy" alt="Alfred's passport, October 1923"></a>
       <figcaption><b>Alfred's passport, October 1923</b>The stamp at the bottom left is from the Fondo per l'Emigrazione, a fee paid by emigrants. Its postmark appears to read &ldquo;…SICURA&rdquo;.</figcaption>
     </figure>
+    </div>
     <dl class="fields">
       <dt>Issued by</dt><dd>Questura di Teramo (the provincial police office)</dd>
       <dt>Date issued</dt><dd>October 1923</dd>
@@ -238,14 +266,24 @@ ul.plain li{margin-bottom:8px}
       <dt>Eyes</dt><dd>castani <i>(brown)</i></dd>
       <dt>Hair</dt><dd>castani <i>(brown)</i></dd>
     </dl>
-    <p>Alfred was about 23. Italians heading to Cornwall at the time usually landed in Halifax and travelled on by rail, finding work on the railways, the canal and in construction. Families tended to follow a first arrival from the same town, so other people from Torricella Sicura may have come to Cornwall too.</p>
+    <p>Alfred was about 23. Italians heading to Cornwall at the time usually landed in Halifax and travelled on by rail, finding work on the railways, the canal and in construction. Families tended to follow a first arrival from the same town, and that's what the album shows: by the time Alfred married, his brothers Augustine and Edward were in Canada too.</p>
     <p class="src">Passport read from a photo of the album page; some handwriting is hard to make out. Context: Wikipédia (French); Canadian Museum of Immigration at Pier 21</p>
-    <div class="fix"><b>Updated.</b> This page first guessed that the family arrived around 1900, going by Alfred's birth year. The passport shows Alfred left Italy himself, as an adult, in October 1923 or soon after. His middle initial V. most likely comes from his father's name, Vincent (Vincenzo in Italian).</div>
+    <div class="fix"><b>Updated.</b> This page first guessed that the family arrived around 1900, going by Alfred's birth year. The passport shows Alfred left Italy himself, as an adult, in October 1923 or soon after. His middle initial V. most likely comes from his father's name, Vincent (Vincenzo in Italian). The Augustine line, first listed as a separate family, now looks like Alfred's brother's.</div>
   </section>
 
   <section aria-labelledby="h-simone">
     <h2 id="h-simone">Simone</h2>
-    <p>Simone Hébert was born in 1907. The album names her parents as Alpheda Simpson and Domina Hébert.</p>
+    <p>Simone Hébert was born in 1907. Her parents were Alpheda Simpson and Domina Hébert. Her mother died in 1912 in Hull, Quebec (now part of Gatineau), the same year as Simone's photo at age 5. Her father, Domina, died in 1930 at 56.</p>
+    <div class="pair">
+    <figure class="photo" style="--w:320px;--tilt:1deg">
+      <a href="photos/album/alpheda.jpg" target="_blank" rel="noopener"><img src="photos/album/alpheda.jpg" width="786" height="1100" loading="lazy" alt="Alpheda Simpson"></a>
+      <figcaption><b>Alpheda Simpson</b>Simone's mother. Died in 1912 in Hull, Quebec.</figcaption>
+    </figure>
+    <figure class="photo" style="--w:320px;--tilt:-1deg">
+      <a href="photos/album/alpheda-sister-1903.jpg" target="_blank" rel="noopener"><img src="photos/album/alpheda-sister-1903.jpg" width="829" height="1100" loading="lazy" alt="Alpheda and her sister, 1903"></a>
+      <figcaption><b>Alpheda and her sister, 1903</b>The album doesn't say which one is Alpheda, or her sister's name.</figcaption>
+    </figure>
+    </div>
     <div class="pair">
     <figure class="photo" style="--w:320px;--tilt:-1.5deg">
       <a href="photos/album/simone-1912.jpg" target="_blank" rel="noopener"><img src="photos/album/simone-1912.jpg" width="705" height="983" loading="lazy" alt="Simone, 1912"></a>
@@ -253,9 +291,14 @@ ul.plain li{margin-bottom:8px}
     </figure>
     <figure class="photo" style="--w:320px;--tilt:1deg">
       <a href="photos/album/wedding.jpg" target="_blank" rel="noopener"><img src="photos/album/wedding.jpg" width="898" height="1100" loading="lazy" alt="Alfred and Simone"></a>
-      <figcaption><b>Alfred and Simone</b>Their wedding portrait. The date is still to find.</figcaption>
+      <figcaption><b>Alfred and Simone</b>Their wedding portrait.</figcaption>
     </figure>
     </div>
+    <figure class="photo" style="--w:360px;--tilt:-.8deg">
+      <a href="photos/album/wedding-party.jpg" target="_blank" rel="noopener"><img src="photos/album/wedding-party.jpg" width="720" height="1040" loading="lazy" alt="The wedding party"></a>
+      <figcaption><b>The wedding party</b>Standing, left to right: Alfred, Augustine and Edward D'Alessio, and Simone's father, Domina Hébert. Simone is seated with the same bouquet as in the portrait.</figcaption>
+    </figure>
+    <p>The wedding date isn't written down, but it can be narrowed. It came after Alfred's passport was issued in October 1923, and before Domina died in 1930. Their first son, Vincent, was born in 1928, so the wedding was most likely between 1924 and 1928.</p>
   </section>
 
   <section aria-labelledby="h-stones">
@@ -272,17 +315,21 @@ ul.plain li{margin-bottom:8px}
   </section>
 
   <section aria-labelledby="h-boys">
-    <h2 id="h-boys">Cousin Norman</h2>
+    <h2 id="h-boys">The boys</h2>
+    <figure class="photo" style="--w:320px;--tilt:1deg">
+      <a href="photos/album/moe-and-curly.jpg" target="_blank" rel="noopener"><img src="photos/album/moe-and-curly.jpg" width="825" height="1100" loading="lazy" alt="&ldquo;Moe &amp; Curly&rdquo;"></a>
+      <figcaption><b>&ldquo;Moe &amp; Curly&rdquo;</b>Gerald (left) and Vincent (right) as little boys. The label is written &ldquo;Moe 7 Curly&rdquo;, almost certainly a typo for the ampersand.</figcaption>
+    </figure>
     <figure class="photo" style="--w:360px;--tilt:-.8deg">
       <a href="photos/album/family-1930s.jpg" target="_blank" rel="noopener"><img src="photos/album/family-1930s.jpg" width="786" height="1100" loading="lazy" alt="Alfred and Simone with the boys"></a>
       <figcaption><b>Alfred and Simone with the boys</b>Front, left to right: Gerald, their cousin Norman, and Vincent. Norman was the son of Rose and Augustine D'Alessio, and he died shortly after this picture was taken. 1930s.</figcaption>
     </figure>
-    <p>This caption matters. If Norman was Gerald and Vincent's first cousin, Augustine D'Alessio was most likely Alfred's brother, one of Vincent and Rosario's four sons. "Cousin" can also be used loosely, so the tree draws that link in pencil until it's confirmed.</p>
+    <p>This caption matters. If Norman was Gerald and Vincent's first cousin, Augustine was Alfred's brother. Together with the wedding party photo, that's strong evidence, but "cousin" can be used loosely, so the tree keeps Augustine's link in pencil until a record confirms it.</p>
   </section>
 
   <section aria-labelledby="h-book">
     <h2 id="h-book">Cornwall, 1954</h2>
-    <p>The 1954 Cornwall phone book lists five D'Alessio households. Gerald and Vincent are Alfred's sons.</p>
+    <p>The 1954 Cornwall phone book lists five D'Alessio households. Gerald and Vincent are Alfred's sons, and Augustine is very likely his brother.</p>
     <div class="book" role="table" aria-label="D'Alessio listings in the 1954 Cornwall phone book">
       <div class="bh" role="row"><span role="columnheader">D'Alessio</span><span role="columnheader">Cornwall &middot; 1954</span></div>
       <div class="row ours" role="row"><span class="who" role="cell"><b>D'Alessio Gerald</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">521 Carleton St</span></div>
@@ -290,16 +337,18 @@ ul.plain li{margin-bottom:8px}
       <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio A.</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">621 Gloucester St</span></div>
       <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio Augustine</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">604 York St</span></div>
       <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio Ed</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">337 McLean St</span></div>
-      <div class="foot">White pages. "A." could be Alfred, but that isn't confirmed yet.</div>
+      <div class="foot">White pages. "A." could be Alfred, and "Ed" could be his brother Edward. Neither is confirmed yet.</div>
     </div>
   </section>
 
   <section aria-labelledby="h-lines">
     <h2 id="h-lines">D'Alessio lines in Cornwall</h2>
-    <div class="lines">
+    <p>Three of Vincent and Rosario's sons settled in Cornwall. A fourth D'Alessio family, Ettore's, has no known link yet.</p>
+    <div class="lines four">
       <div class="line ours"><h3>Alfred &amp; Simone</h3><p>Alfred V. (1900–1987) and Simone Hébert (1907–1990). Parents of Vincent, Fred, Gerry, Robert and Andy.</p><span class="tag">This tree</span></div>
-      <div class="line"><h3>Augustine &amp; Rose</h3><p>Augustine married Rose Giannetti (1908–1997). Their son Norman is called a cousin of Alfred's boys. Listed at 604 York St in 1954.</p><span class="tag maybe">Likely family</span></div>
-      <div class="line"><h3>Ettore</h3><p>Ettore D'Alessio (1896–1988), married Lucia Desimone (1901–1989). Also buried at St. Columban's. No known link yet.</p></div>
+      <div class="line"><h3>Augustine &amp; Rose</h3><p>Married Rose Giannetti (1908–1997). Father of Norman. Listed at 604 York St in 1954.</p><span class="tag maybe">Very likely brother</span></div>
+      <div class="line"><h3>Edward</h3><p>At Alfred's wedding, and photographed with his father in 1916. Possibly "Ed" at 337 McLean St in 1954.</p><span class="tag">Brother</span></div>
+      <div class="line"><h3>Ettore</h3><p>Ettore D'Alessio (1896–1988), married Lucia Desimone (1901–1989). Also buried at St. Columban's.</p><span class="tag maybe">No known link</span></div>
     </div>
   </section>
 
@@ -332,12 +381,14 @@ ul.plain li{margin-bottom:8px}
   <section aria-labelledby="h-todo">
     <h2 id="h-todo">Still to find</h2>
     <ul class="todo">
-      <li>The names of Vincent and Rosario's other children: four sons and two daughters in all</li>
+      <li>A record that confirms Augustine as Alfred's brother</li>
+      <li>What happened to Sistine, Giovanno and Annie: did they stay in Italy?</li>
       <li>Rosario's family name</li>
-      <li>Whether Augustine was Alfred's brother</li>
+      <li>Which date is right for the two 1916 photos of Vincent</li>
       <li>When Alfred landed in Canada, and on which ship (late 1923 or after)</li>
-      <li>When and where Alfred and Simone married</li>
-      <li>Whether "A." at 621 Gloucester St in 1954 is Alfred</li>
+      <li>The exact wedding date (most likely 1924 to 1928)</li>
+      <li>Whether "A." and "Ed" in the 1954 phone book are Alfred and Edward</li>
+      <li>The name of Alpheda's sister</li>
       <li>Whether the Ettore line is related to ours</li>
       <li>Sylvia's birth year: 1930 or 1936</li>
       <li>The relatives still living in Torricella Sicura</li>
@@ -348,7 +399,7 @@ ul.plain li{margin-bottom:8px}
   <section aria-labelledby="h-src">
     <h2 id="h-src">Sources</h2>
     <ul class="sources">
-      <li>D'Alessio family album: typed family note; photograph, Italy, 1916; Alfred D'Alessio's Italian passport, October 1923; Simone Hébert, 1912; Alfred and Simone's wedding portrait; Alfred and Simone with Gerald, Norman and Vincent, 1930s</li>
+      <li>D'Alessio family album: typed family note; Alfred with his sisters, 1914; Vincent, Rosario, Sistine and Rosario, Italy, 1916; Vincent with Edward and Annie, 1916; Alfred in uniform, 1918; Alfred's Italian passport, October 1923; Alpheda Simpson, and with her sister, 1903; Simone Hébert, 1912; Alfred and Simone's wedding portrait and wedding party; Gerald and Vincent (&ldquo;Moe &amp; Curly&rdquo;); Alfred and Simone with Gerald, Norman and Vincent, 1930s</li>
       <li>Obituary of Vincent D'Alessio, M. John Sullivan Funeral Home, 2001</li>
       <li>Obituary of Alfred "Fred" D'Alessio, 2008</li>
       <li>Obituary of Sylvia (Dickenson) D'Alessio, 2021</li>

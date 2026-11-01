@@ -397,7 +397,7 @@ const PEOPLE = [
   {
     id: "vincent-sr", name: "Vincent D'Alessio", born: "", died: "", photo: "photos/vincent-sr.jpg",
     parents: [], partners: ["rosario-sr"], tentative: false, placeholder: false,
-    note: "Alfred's father. The family lived in Torricella Sicura, in the province of Teramo, Abruzzo, Italy. He and his wife Rosario had four sons and two daughters, and relatives still live there. Photographed in Italy in 1916."
+    note: "Alfred's father. The family lived in Torricella Sicura, in the province of Teramo, Abruzzo, Italy. He and his wife Rosario had four sons and two daughters: Alfred, Sistine, Edward, Augustine, Giovanno and Annie. Relatives still live there. Two album photos of him are both dated 1916, but he looks much older in one, so one date may be off."
   },
   {
     id: "rosario-sr", name: "Rosario", born: "", died: "", photo: "photos/rosario-sr.jpg",
@@ -407,17 +407,17 @@ const PEOPLE = [
   {
     id: "alfred", name: "Alfred D'Alessio", born: "1900", died: "1987", photo: "photos/alfred.jpg",
     parents: ["vincent-sr", "rosario-sr"], partners: ["simone"], tentative: false, placeholder: false,
-    note: "Alfredo D'Alessio in Italy. Son of Vincent and Rosario of Torricella Sicura; his Italian passport was issued in Teramo in October 1923. Married Simone Hébert. Father of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
+    note: "Alfredo D'Alessio in Italy. Son of Vincent and Rosario of Torricella Sicura. Photographed in uniform in 1918 (labelled \"Police\"). His Italian passport was issued in Teramo in October 1923. Married Simone Hébert. Father of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
     id: "simone", name: "Simone Hébert", born: "1907", died: "1990", photo: "photos/simone.jpg",
     parents: [], partners: ["alfred"], tentative: false, placeholder: false,
-    note: "Daughter of Alpheda Simpson and Domina Hébert. Married Alfred D'Alessio. Mother of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
+    note: "Daughter of Alpheda Simpson and Domina Hébert. Her mother died in Hull, Quebec, in 1912, when Simone was about five; her father died in 1930 at 56. Married Alfred D'Alessio. Mother of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
     id: "vince", name: "Vincent D'Alessio", born: "1928", died: "12 Feb 2001", photo: "photos/vince.jpg",
     parents: ["alfred", "simone"], partners: ["sylvia"], tentative: false, placeholder: false,
-    note: "Known as Vince. A retired civil servant, known for his love of music. Married to Sylvia for 38 years. Died at the Ottawa General Hospital at 72. Buried at St. Columban's Cemetery, Cornwall."
+    note: "Known as Vince, and \"Curly\" in a baby photo with his brother Gerald. A retired civil servant, known for his love of music. Married to Sylvia for 38 years. Died at the Ottawa General Hospital at 72. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
     id: "sylvia", name: "Sylvia May Dickenson", born: "1936", died: "2021", photo: "",
@@ -492,7 +492,7 @@ const PEOPLE = [
   {
     id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "photos/gerry.jpg",
     parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
-    note: "Known as Gerry, and Poppy to the family. His photo here is from the 1930s, as a boy with his brother Vincent and cousin Norman."
+    note: "Known as Gerry, and Poppy to the family. His photo here is from the 1930s, as a boy with his brother Vincent and cousin Norman. An earlier baby photo of the two brothers is labelled \"Moe & Curly\", Gerald being Moe."
   },
   {
     id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "",
@@ -665,9 +665,9 @@ const PEOPLE = [
     note: "Sistine's wife. Named Rosario on the 1916 photo label, like her mother-in-law."
   },
   {
-    id: "augustine", name: "Augustine D'Alessio", born: "", died: "", photo: "",
+    id: "augustine", name: "Augustine D'Alessio", born: "", died: "", photo: "photos/augustine.jpg",
     parents: ["vincent-sr", "rosario-sr"], partners: ["rose"], tentative: true, placeholder: false,
-    note: "Head of another Cornwall D'Alessio family (604 York St in 1954). A 1930s family photo calls his son Norman a cousin of Gerald and Vincent, so he is likely Alfred's brother. Still to confirm."
+    note: "Spelled Agustine in the album. Stood with Alfred and Edward at Alfred's wedding, and his son Norman is called a cousin of Gerald and Vincent. That makes him almost certainly the fourth of Vincent and Rosario's sons, but no record says so outright yet. Lived at 604 York St, Cornwall, in 1954."
   },
   {
     id: "rose", name: "Rose Giannetti", born: "", died: "", photo: "",
@@ -680,19 +680,19 @@ const PEOPLE = [
     note: "Son of Augustine and Rose. Photographed as a little boy with his cousins Gerald and Vincent in the 1930s, and died shortly after the photo was taken."
   },
   {
-    id: "vr-son", name: "To add", born: "", died: "", photo: "",
-    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
-    note: "One of Vincent and Rosario's four sons. Name and details to add."
+    id: "edward", name: "Edward D'Alessio", born: "", died: "", photo: "photos/edward.jpg",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: false,
+    note: "Alfred's brother. Photographed with his father Vincent and sister Annie in 1916, and stood with Alfred at his wedding to Simone. Possibly the \"Ed\" listed at 337 McLean St in Cornwall's 1954 phone book."
   },
   {
-    id: "vr-daughter-1", name: "To add", born: "", died: "", photo: "",
-    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
-    note: "One of Vincent and Rosario's two daughters. Name and details to add."
+    id: "giovanno", name: "Giovanno D'Alessio", born: "", died: "", photo: "photos/giovanna.jpg",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: false,
+    note: "Alfred's sister. Named Giovanno on the label of a 1914 photo of her with Alfred and Annie; the usual Italian spelling would be Giovanna."
   },
   {
-    id: "vr-daughter-2", name: "To add", born: "", died: "", photo: "",
-    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
-    note: "One of Vincent and Rosario's two daughters. Name and details to add."
+    id: "annie", name: "Annie D'Alessio", born: "", died: "", photo: "photos/annie.jpg",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: false,
+    note: "Alfred's sister. Photographed with Alfred and Giovanno in 1914, and with her father Vincent and brother Edward in 1916."
   }
 ];
 /* ======================= END OF FAMILY DATA ========================== */
