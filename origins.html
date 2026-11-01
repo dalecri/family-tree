@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>D'Alessio Origins</title>
+<meta name="theme-color" content="#FBF8F1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script>
+/* use the same colour theme the visitor picked on the tree */
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('dalessio-tree-theme'); } catch (e) {}
+  if (!/^(blossom|night|autumn|contrast)$/.test(t || '')) {
+    t = matchMedia('(prefers-contrast: more)').matches ? 'contrast' : matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'blossom';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+<style>
+:root{
+  /* Blossom (default). Text pairs meet WCAG AA on --paper and --card. */
+  --paper:#FBF8F1;--card:#FFFDF8;--line:#e8e0d2;
+  --ink:#1f1b1d;--ink-soft:#6b6466;--pencil:#8d8589;--pencil-text:#6f686b;
+  --red:#C8392E;--pink:#EFA3B3;--amber:#B5761A;
+  --soft:#f3ece0;--edge:rgba(31,27,29,.32);--zoom-bg:rgba(251,248,241,.9);--stamp:#3a3436;
+  --shadow:rgba(60,40,30,.16);--scrim:rgba(40,28,24,.28);--tape:rgba(239,163,179,.55);--focus:#1f1b1d;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .3 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:light;
+  --hand:'Patrick Hand SC','Segoe Print','Bradley Hand','Comic Sans MS',cursive;
+  --mono:'Space Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+:root[data-theme="night"]{
+  --paper:#16131c;--card:#211c29;--line:#3a3245;
+  --ink:#EEE8F2;--ink-soft:#B5ADBF;--pencil:#8F879C;--pencil-text:#A9A1B5;
+  --red:#FF8F80;--pink:#F28DA6;--amber:#F2C94C;
+  --soft:#2c2636;--edge:rgba(238,232,242,.32);--zoom-bg:rgba(22,19,28,.88);--stamp:#CFC7D9;
+  --shadow:rgba(0,0,0,.45);--scrim:rgba(0,0,0,.5);--tape:rgba(242,141,166,.45);--focus:#F2C94C;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 .95 0 0 0 0 .9 0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:dark;
+}
+:root[data-theme="autumn"]{
+  --paper:#F5EFE3;--card:#FBF7EE;--line:#E3D7C3;
+  --ink:#2E2119;--ink-soft:#66574A;--pencil:#8C7F70;--pencil-text:#6E6255;
+  --red:#9C3A12;--pink:#E58E3F;--amber:#1F6F78;
+  --soft:#EFE5D3;--edge:rgba(46,33,25,.32);--zoom-bg:rgba(245,239,227,.9);--stamp:#3B2A20;
+  --shadow:rgba(70,40,20,.16);--scrim:rgba(50,30,15,.3);--tape:rgba(217,119,58,.42);--focus:#1F6F78;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .3 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:light;
+}
+:root[data-theme="contrast"]{
+  --paper:#FFFFFF;--card:#FFFFFF;--line:#1a1a1a;
+  --ink:#000000;--ink-soft:#2b2b2b;--pencil:#4D4D4D;--pencil-text:#3a3a3a;
+  --red:#8E0F14;--pink:#E06C88;--amber:#0050B5;
+  --soft:#EDEDED;--edge:#000000;--zoom-bg:#FFFFFF;--stamp:#000000;
+  --shadow:rgba(0,0,0,.25);--scrim:rgba(0,0,0,.55);--tape:rgba(224,108,136,.5);--focus:#0050B5;
+  --grain:none;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{background-color:var(--paper);background-image:var(--grain)}
+body{margin:0;color:var(--ink);font:13px/1.8 var(--mono);background:transparent;
+  padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+a{color:var(--red)}
+a:focus-visible{outline:2.5px solid var(--focus);outline-offset:3px;border-radius:3px}
+.wrap{max-width:720px;margin:0 auto;padding-block:22px 64px}
+
+/* top bar */
+.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:11px;letter-spacing:.06em;color:var(--ink);
+  border:1.5px solid var(--edge);border-radius:99px;padding:5px 14px 5px 11px}
+.back:hover{border-color:var(--red);color:var(--red)}
+
+/* title */
+header.hero{text-align:center;margin:34px 0 8px}
+h1{margin:0;font:400 clamp(30px,7vw,46px)/1.05 var(--hand);color:var(--red);letter-spacing:.16em;text-wrap:balance;
+  display:inline-flex;align-items:center;gap:10px}
+h1 svg{width:.62em;height:.62em;flex:none}
+.sub{margin:10px 0 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+.lede{margin:30px auto 0;max-width:62ch;font-size:13.5px}
+
+/* sections */
+section{margin-top:48px}
+h2{display:flex;align-items:center;gap:10px;margin:0 0 14px;font:400 27px/1.1 var(--hand);color:var(--red);letter-spacing:.06em;text-wrap:balance}
+h2::before{content:"";flex:none;width:11px;height:11px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--pink)}
+p{margin:0 0 12px;max-width:66ch}
+ul.plain{margin:0 0 12px;padding-left:20px;max-width:66ch}
+ul.plain li{margin-bottom:8px}
+.src{color:var(--pencil-text);font-size:11px}
+
+/* surname numbers */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0 18px}
+.stat{border:1px dashed var(--line);border-radius:10px;padding:12px 12px 10px;background:var(--card)}
+.stat b{display:block;font:400 30px/1 var(--hand);color:var(--red);letter-spacing:.03em;font-variant-numeric:tabular-nums}
+.stat span{display:block;margin-top:6px;font-size:10px;line-height:1.5;color:var(--ink-soft);letter-spacing:.04em}
+
+/* headstones */
+.stones{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0 16px}
+.stone{position:relative;text-align:center;padding:26px 14px 16px;background:var(--soft);border:1.5px solid var(--line);
+  border-radius:90px 90px 6px 6px}
+.stone .nm{font:400 22px/1.15 var(--hand);color:var(--ink);letter-spacing:.06em}
+.stone .yr{margin-top:6px;font-size:12px;letter-spacing:.14em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.stone .rel{margin-top:8px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.stone .alt{margin-top:6px;font-size:10px;line-height:1.5;color:var(--pencil-text)}
+.place{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-align:center;margin:-2px 0 16px}
+
+/* 1954 phone book */
+.book{margin:18px 0 14px;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px 18px 14px;
+  box-shadow:0 10px 26px var(--shadow);transform:rotate(-.6deg)}
+.book .bh{display:flex;justify-content:space-between;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-bottom:8px;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.book .bh span:last-child{font-weight:400;color:var(--ink-soft)}
+.row{display:flex;align-items:baseline;gap:6px;font-size:12.5px;line-height:2}
+.row .who{white-space:nowrap}
+.row .who b{font-weight:700;letter-spacing:.02em}
+.row .dots{flex:1;min-width:16px;border-bottom:1.5px dotted var(--pencil);transform:translateY(-4px)}
+.row .addr{white-space:nowrap;font-variant-numeric:tabular-nums}
+.row.ours .who b{color:var(--red)}
+.book .foot{margin-top:6px;font-size:10px;color:var(--pencil-text)}
+
+/* three lines */
+.lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0 14px}
+.line{border-top:3px solid var(--ink);padding-top:10px}
+.line.ours{border-top-color:var(--red)}
+.line h3{margin:0 0 4px;font:400 21px/1.15 var(--hand);letter-spacing:.05em;color:var(--ink)}
+.line.ours h3{color:var(--red)}
+.line p{font-size:12px;line-height:1.65;margin:0}
+.line .tag{display:inline-block;margin-top:8px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:1px 8px;border-radius:99px;
+  border:1px solid var(--red);color:var(--red)}
+
+/* clue cards */
+.clues{display:grid;gap:12px;margin-top:16px}
+.clue{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.clue .k{font:400 24px/1 var(--hand);color:var(--red);text-align:center;padding-top:2px}
+.clue h3{margin:0 0 4px;font-size:12px;letter-spacing:.06em;font-weight:700}
+.clue p{margin:0;font-size:12.5px;line-height:1.7}
+
+/* open questions */
+.todo{list-style:none;margin:14px 0 0;padding:0;max-width:66ch}
+.todo li{position:relative;padding:8px 0 8px 30px;border-bottom:1px dashed var(--line)}
+.todo li::before{content:"";position:absolute;left:4px;top:13px;width:13px;height:13px;border:1.4px dashed var(--pencil);border-radius:50%}
+.note{border-left:2px solid var(--tape);padding:2px 0 2px 12px;color:var(--ink-soft);margin-top:16px}
+
+/* sources */
+.sources{margin:14px 0 0;padding-left:20px;font-size:11.5px;color:var(--ink-soft);max-width:66ch}
+.sources li{margin-bottom:5px}
+.sig{margin-top:40px;text-align:right;font:20px var(--hand);color:var(--red);letter-spacing:.05em}
+
+@media (max-width:640px){
+  body{font-size:12.5px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stones,.lines{grid-template-columns:1fr}
+  .book{transform:none;padding:14px 12px}
+  .row{font-size:11.5px}
+  .row .who{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){.book{transform:none}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="./"><span aria-hidden="true">&larr;</span> Back to the tree</a>
+
+  <header class="hero">
+    <h1>D'ALESSIO ORIGINS
+      <svg viewBox="-12 -12 24 24" aria-hidden="true">
+        <g style="fill:var(--pink)" opacity=".85"><circle cx="0" cy="-5.6" r="5"/><circle cx="5.3" cy="-1.7" r="5"/><circle cx="3.3" cy="4.6" r="5"/><circle cx="-3.3" cy="4.6" r="5"/><circle cx="-5.3" cy="-1.7" r="5"/></g>
+        <circle r="2.8" style="fill:var(--red)"/>
+      </svg>
+    </h1>
+    <p class="sub">Where the name comes from, and what the records say</p>
+  </header>
+
+  <p class="lede">The D'Alessio name is Italian, and the branch on this tree has been in Cornwall, Ontario since at least the early 1900s. This page gathers what we've found so far about Alfred and Simone, the other D'Alessio families in Cornwall, and where in Italy the name likely started. Some of it is confirmed, and some of it is still a good guess. We've tried to say which is which.</p>
+
+  <section aria-labelledby="h-italy">
+    <h2 id="h-italy">The name in Italy today</h2>
+    <p>D'Alessio means "of Alessio" (Italian for Alexis or Alexander). The surname is found mostly in central and southern Italy.</p>
+    <div class="stats">
+      <div class="stat"><b>~4,400</b><span>people named D'Alessio in Italy</span></div>
+      <div class="stat"><b>519</b><span>towns where the name appears</span></div>
+      <div class="stat"><b>376</b><span>in Rome, the largest centre</span></div>
+      <div class="stat"><b>252</b><span>in Naples, the second largest</span></div>
+    </div>
+    <p class="src">Ciao Genealogy; Cognomix</p>
+  </section>
+
+  <section aria-labelledby="h-stones">
+    <h2 id="h-stones">Alfred and Simone</h2>
+    <p>Gerry's parents are confirmed through their graves. Fred's 2008 obituary named "the late Alfred and Simone (Hebert) D'Alessio" as his parents, and they are the only matching couple buried in Cornwall.</p>
+    <div class="stones">
+      <div class="stone"><div class="nm">Alfred V. D'Alessio</div><div class="yr">1900 – 1987</div><div class="rel">Gerry's father</div></div>
+      <div class="stone"><div class="nm">Simone D. Hébert D'Alessio</div><div class="yr">1907 – 1990</div><div class="rel">Gerry's mother</div></div>
+      <div class="stone"><div class="nm">Vincent D'Alessio</div><div class="yr">1928 – 2001</div><div class="rel">Gerry's brother</div></div>
+      <div class="stone"><div class="nm">Sylvia Dickenson</div><div class="yr">1930 – 2021</div><div class="rel">Vincent's wife</div><div class="alt">Headstone says 1930.<br>Her obituary says 1936.</div></div>
+    </div>
+    <p class="place">St. Columban's Cemetery &middot; Cornwall, Ontario</p>
+    <p class="src">Find A Grave; Fred's obituary, 2008; Sylvia's obituary, 2021</p>
+  </section>
+
+  <section aria-labelledby="h-book">
+    <h2 id="h-book">Cornwall, 1954</h2>
+    <p>The 1954 Cornwall phone book lists five D'Alessio households. Gerald and Vincent are the brothers on this tree.</p>
+    <div class="book" role="table" aria-label="D'Alessio listings in the 1954 Cornwall phone book">
+      <div class="bh" role="row"><span role="columnheader">D'Alessio</span><span role="columnheader">Cornwall &middot; 1954</span></div>
+      <div class="row ours" role="row"><span class="who" role="cell"><b>D'Alessio Gerald</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">521 Carleton St</span></div>
+      <div class="row ours" role="row"><span class="who" role="cell"><b>D'Alessio Vincent</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">113 Fennell Cres</span></div>
+      <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio A.</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">621 Gloucester St</span></div>
+      <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio Augustine</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">604 York St</span></div>
+      <div class="row" role="row"><span class="who" role="cell"><b>D'Alessio Ed</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">337 McLean St</span></div>
+      <div class="foot">White pages. "A." could be Alfred, but that isn't confirmed yet.</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-lines">
+    <h2 id="h-lines">Three D'Alessio lines in Cornwall</h2>
+    <p>At least three D'Alessio families were in Cornwall by the mid-1900s. No record found so far shows how, or whether, they're related.</p>
+    <div class="lines">
+      <div class="line ours"><h3>Alfred &amp; Simone</h3><p>Alfred V. (1900–1987) and Simone Hébert (1907–1990). Parents of Vincent, Fred, Gerry, Robert and Andy.</p><span class="tag">This tree</span></div>
+      <div class="line"><h3>Augustine</h3><p>Head of a separate line. Married Rose Giannetti (1908–1997). Listed at 604 York St in 1954.</p></div>
+      <div class="line"><h3>Ettore</h3><p>Ettore D'Alessio (1896–1988), married Lucia Desimone (1901–1989). Also buried at St. Columban's.</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-came">
+    <h2 id="h-came">How Italians came to Cornwall</h2>
+    <ul class="plain">
+      <li>Cornwall's Italian community began arriving in the early 1900s.</li>
+      <li>Most came by rail from Halifax and found work on the railways, the canal and in construction.</li>
+      <li>Families usually followed a first "pioneer" from the same Italian town, then sent for relatives and neighbours. This is called chain migration.</li>
+    </ul>
+    <p class="src">Wikipédia (French); Canadian Museum of Immigration at Pier 21</p>
+  </section>
+
+  <section aria-labelledby="h-clues">
+    <h2 id="h-clues">Clues to where in Italy</h2>
+    <div class="clues">
+      <div class="clue"><div class="k" aria-hidden="true">1900</div><div><h3>Alfred's birth year</h3><p>Alfred was born in 1900, which places the family's arrival in Canada in the late 1890s or early 1900s, right in the first wave of Italian immigration to Cornwall.</p></div></div>
+      <div class="clue"><div class="k" aria-hidden="true">V.</div><div><h3>His middle initial</h3><p>Alfred's middle initial V may stand for Vincent or Vincenzo. A middle name like that often comes from a grandfather. Alfred and Simone also named one of their sons Vincent.</p></div></div>
+      <div class="clue"><div class="k" aria-hidden="true">S</div><div><h3>Southern Italian in-laws</h3><p>Desimone and Giannetti, the Italian surnames that married into the Cornwall D'Alessio families, are both southern Italian names. That fits a chain migration from one district in southern Italy.</p></div></div>
+      <div class="clue"><div class="k" aria-hidden="true">A</div><div><h3>An Abruzzo family</h3><p>Another D'Alessio family, Elio D'Alessio (son of Giovanni D'Alessio and Anna Rabottini), came through Pier 21 from Chieti Scalo in Abruzzo. Abruzzese D'Alessios settled in the region too, but no link to the Cornwall families has been found.</p></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-todo">
+    <h2 id="h-todo">Still to find</h2>
+    <ul class="todo">
+      <li>Where Alfred was born, and the names of his parents</li>
+      <li>When and how the family arrived in Canada (a ship or border record)</li>
+      <li>Whether "A." at 621 Gloucester St in 1954 is Alfred</li>
+      <li>Whether the Augustine and Ettore lines are related to ours</li>
+      <li>Sylvia's birth year: 1930 or 1936</li>
+    </ul>
+    <p class="note">Know something, or have an old document or photo? Send it to Cris or July. Even a town name passed down in a story can help.</p>
+  </section>
+
+  <section aria-labelledby="h-src">
+    <h2 id="h-src">Sources</h2>
+    <ul class="sources">
+      <li>Find A Grave: St. Columban's Cemetery, Cornwall, Ontario</li>
+      <li>Obituary of Alfred "Fred" D'Alessio, 2008</li>
+      <li>Obituary of Sylvia (Dickenson) D'Alessio, 2021</li>
+      <li>Cornwall phone book (white pages), 1954</li>
+      <li>Wikipédia (French): Cornwall's Italian community</li>
+      <li>Canadian Museum of Immigration at Pier 21</li>
+      <li>Ciao Genealogy and Cognomix: D'Alessio surname distribution</li>
+    </ul>
+  </section>
+
+  <p class="sig">&#10048; Cris or July</p>
+</main>
+</body>
+</html>
