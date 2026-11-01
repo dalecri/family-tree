@@ -446,7 +446,7 @@ const PEOPLE = [
   {
     id: "alfred", name: "Alfred D'Alessio", born: "1900", died: "28 Jan 1987", photo: "photos/alfred.jpg",
     parents: ["vincent-sr", "rosario-sr"], partners: ["simone"], tentative: false, placeholder: false,
-    note: "Alfredo D'Alessio in Italy, and Alfred Sr. in Cornwall. Son of Vincent D'Alessio and Rosaria Cappeli of Torricella Sicura. Photographed in uniform in 1918 (labelled \"Police\"). His Italian passport was issued in Teramo in October 1923. Married Simone Hébert. Father of Vincent, Fred, Gerry, Robert, and Andy. Lived at 331 Sixth Street East, Cornwall, and died at the Hotel Dieu Hospital there at 86, with 17 grandchildren and one great-grandchild. Funeral at St. Columban's Church; buried in St. Columban's Cemetery."
+    note: "Alfredo D'Alessio in Italy, and Alfred Sr. in Cornwall. Son of Vincent D'Alessio and Rosaria Cappeli of Torricella Sicura. Photographed in uniform in 1918: the album says \"Police\", and family writing on a copy says \"Vatican City Guard\". His Italian passport was issued in Teramo in October 1923. Married Simone Hébert. Retired in 1974 after 50 years with Cornwall Prince Clothing, and was given a watch. Father of Vincent, Fred, Gerry, Robert, and Andy. Lived at 331 Sixth Street East, Cornwall, and died at the Hotel Dieu Hospital there at 86, with 17 grandchildren and one great-grandchild. Funeral at St. Columban's Church; buried in St. Columban's Cemetery."
   },
   {
     id: "simone", name: "Simone Hébert", born: "1907", died: "29 Oct 1990", photo: "photos/simone.jpg",
@@ -456,7 +456,7 @@ const PEOPLE = [
   {
     id: "vince", name: "Vincent D'Alessio", born: "1928", died: "12 Feb 2001", photo: "photos/vince.jpg",
     parents: ["alfred", "simone"], partners: ["sylvia"], tentative: false, placeholder: false,
-    note: "Known as Vince, and \"Curly\" in a baby photo with his brother Gerald. A retired civil servant, known for his love of music. Married to Sylvia for 38 years. Died at the Ottawa General Hospital at 72. Buried at St. Columban's Cemetery, Cornwall."
+    note: "Known as Vince, and \"Curly\" in a baby photo with his brother Gerald. A retired civil servant, known for his love of music: he was a church organist on Sundays and played clarinet and alto saxophone in the D'Alessio family orchestra. Married to Sylvia for 38 years. Died at the Ottawa General Hospital at 72. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
     id: "sylvia", name: "Sylvia May Dickenson", born: "1936", died: "2021", photo: "",
@@ -531,12 +531,12 @@ const PEOPLE = [
   {
     id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "photos/gerry.jpg",
     parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
-    note: "Known as Gerry, and Poppy to the family. Married Lorraine Ruest on 27 February 1954; his photo here is from their wedding. A baby photo of him with his brother Vincent is labelled \"Moe & Curly\", Gerald being Moe. Lived in Ottawa in 1987, Long Sault in 1990, and Russell in 2001."
+    note: "Known as Gerry, and Poppy to the family. Married Lorraine Ruest on 27 February 1954; his photo here is from their wedding. A baby photo of him with his brother Vincent is labelled \"Moe & Curly\", Gerald being Moe. In 1947 the brothers were band members together. By 1974 he had 38 years with his company and was given a car and a golf holiday in Portugal. Lived in Ottawa in 1987, Long Sault in 1990, and Russell in 2001."
   },
   {
     id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "photos/lorraine.jpg",
     parents: [], partners: ["gerry"], tentative: false, placeholder: false,
-    note: "Known to the whole family as Nanny. Her brothers were Guy, Gilles and René Ruest, and an album photo shows her with her mother in front of the Ruest restaurant. She and Gerry married on 27 February 1954; her photo here is from their wedding. By May 2021 she had 8 grandchildren and 3 great-grandchildren."
+    note: "Known to the whole family as Nanny. Poppy wrote of her: \"A super lady with a wonderful personality and a great welcoming host no matter who I dragged home.\" Her brothers were Guy, Gilles and René Ruest, and an album photo shows her with her mother in front of the Ruest restaurant. She and Gerry married on 27 February 1954; her photo here is from later years. By May 2021 she had 8 grandchildren and 3 great-grandchildren."
   },
   {
     id: "judy", name: "Judy D'Alessio", born: "", died: "before May 2021", photo: "",
@@ -771,7 +771,7 @@ const ALBUM = [
     people: ["vincent-sr", "edward", "annie"] },
   { src: "photos/album/alfred-police-1918.jpg", w: 764, h: 984,
     title: "Alfred in uniform, 1918",
-    caption: "Labelled “Police”. The uniform looks like that of the Carabinieri.",
+    caption: "Labelled “Police” in the album. The back of a printed copy says “In uniform of Vatican City Guard, Rome, Italy”. The uniform looks like the Carabinieri's, so which it was is still a question.",
     people: ["alfred"] },
   { src: "photos/album/passport-1923.jpg", w: 750, h: 1090,
     title: "Alfred's passport, October 1923",
@@ -813,6 +813,14 @@ const ALBUM = [
     title: "Lorraine's three brothers",
     caption: "Guy, Gilles and René Ruest.",
     people: ["lorraine"] },
+  { src: "photos/album/band-1947.jpg", w: 748, h: 1100,
+    title: "Band members, 1947",
+    caption: "Brothers Vince (left) and Gerry (right) in band uniform.",
+    people: ["vince", "gerry"] },
+  { src: "photos/album/band-1947-back.jpg", w: 742, h: 1100,
+    title: "The back of the 1947 postcard",
+    caption: "“Vince was a church organist on Sunday and played the clarinet and alto saxophone in our D'Alessio orchestra.”",
+    people: ["vince", "gerry"] },
   { src: "photos/album/gerry-lorraine-wedding-1954.jpg", w: 766, h: 1100,
     title: "Gerry and Lorraine's wedding",
     caption: "February 27, 1954. Gerry's brother Freddy is in the background.",
@@ -833,6 +841,34 @@ const ALBUM = [
     title: "Mark in New Brunswick, 1979",
     caption: "Maître d' of the Cosmos Club. · Mark cuando vivió en New Brunswick.",
     people: ["mark"] },
+  { src: "photos/album/alfred-retirement-1974.jpg", w: 1076, h: 830,
+    title: "Alfred's retirement, 1974",
+    caption: "Alfred and Simone at his presentation for 50 years' service, given by foreman Fred Bowman.",
+    people: ["alfred", "simone"] },
+  { src: "photos/album/alfred-retirement-1974-back.jpg", w: 900, h: 780,
+    title: "The back of the retirement photo",
+    caption: "Retirement, 1974: 50 years and a watch at Cornwall Prince Clothing. Gerry's own note below it: 38 years, “a car and a golf holiday in Portugal”.",
+    people: ["alfred", "simone", "gerry", "lorraine"] },
+  { src: "photos/album/nanny-poppy-friends.jpg", w: 1100, h: 731,
+    title: "“Did somebody drop a beer?”",
+    caption: "Nanny and Poppy (seated right) with friends at Christmas.",
+    people: ["lorraine", "gerry"] },
+  { src: "photos/album/nanny.jpg", w: 1100, h: 982,
+    title: "Nanny",
+    caption: "Two photos of Lorraine, kept together.",
+    people: ["lorraine"] },
+  { src: "photos/album/nanny-note.jpg", w: 1100, h: 692,
+    title: "Poppy's note about Nanny",
+    caption: "“My wife Lorraine: a super lady with a wonderful personality and a great welcoming host no matter who I dragged home, and often on odd hours by friends who had consumed too much of the product I sold!”",
+    people: ["lorraine", "gerry"] },
+  { src: "photos/album/nanny-with-taylor.jpg", w: 945, h: 1094,
+    title: "Nanny with Taylor",
+    caption: "“A very happy Grandma!”",
+    people: ["lorraine", "taylor"] },
+  { src: "photos/album/gary-mel-wedding.jpg", w: 1100, h: 804,
+    title: "Gary and Mel's wedding",
+    caption: "Gary and Mel seated in the centre, with Gary's sister Judy seated next to Mel.",
+    people: ["gary", "mel", "judy"] },
   { src: "photos/album/alfred-obituary-1987.jpg", w: 780, h: 1100,
     title: "Alfred's obituary, 1987",
     caption: "Wilson Funeral Home, Cornwall.",
