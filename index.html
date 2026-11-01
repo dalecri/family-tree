@@ -345,27 +345,107 @@ const PEOPLE = [
   {
     id: "alfred", name: "Alfred D'Alessio", born: "", died: "", photo: "",
     parents: [], partners: ["simone"], tentative: false, placeholder: false,
-    note: "Gerry's father. The start of this tree."
+    note: "The start of this tree. Father of Vincent, Fred, Gerry, Robert, and Andy."
   },
   {
-    id: "simone", name: "Simone D'Alessio", born: "", died: "", photo: "",
+    id: "simone", name: "Simone Hébert", born: "", died: "", photo: "",
     parents: [], partners: ["alfred"], tentative: false, placeholder: false,
-    note: "Gerry's mother."
+    note: "Mother of Vincent, Fred, Gerry, Robert, and Andy."
   },
   {
-    id: "gerry", name: "Gerry D'Alessio", born: "", died: "", photo: "",
-    parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
-    note: "Known to the whole family as Poppy. Recovering at home after a fall, autumn 2026."
+    id: "vince", name: "Vincent D'Alessio", born: "", died: "", photo: "",
+    parents: ["alfred", "simone"], partners: ["sylvia"], tentative: false, placeholder: false,
+    note: "Gerry's brother. Married Sylvia May Dickenson."
   },
   {
-    id: "lorraine", name: "Lorraine D'Alessio", born: "", died: "", photo: "",
-    parents: [], partners: ["gerry"], tentative: false, placeholder: false,
-    note: "Known to the whole family as Nanny."
+    id: "sylvia", name: "Sylvia May Dickenson", born: "1936", died: "2021", photo: "",
+    parents: [], partners: ["vince"], tentative: false, placeholder: false,
+    note: "Vincent's wife."
   },
   {
-    id: "judy", name: "Judy D'Alessio", born: "", died: "", photo: "",
-    parents: ["gerry", "lorraine"], partners: [], tentative: false, placeholder: false,
+    id: "lawrence", name: "Lawrence D'Alessio", born: "", died: "", photo: "",
+    parents: ["vince", "sylvia"], partners: ["monique"], tentative: false, placeholder: false,
     note: ""
+  },
+  {
+    id: "monique", name: "Monique", born: "", died: "", photo: "",
+    parents: [], partners: ["lawrence"], tentative: false, placeholder: false,
+    note: "Lawrence's wife."
+  },
+  {
+    id: "kevin", name: "Kevin D'Alessio", born: "", died: "", photo: "",
+    parents: ["vince", "sylvia"], partners: ["michelle"], tentative: false, placeholder: false,
+    note: ""
+  },
+  {
+    id: "michelle", name: "Michelle Flaro", born: "", died: "", photo: "",
+    parents: [], partners: ["kevin"], tentative: false, placeholder: false,
+    note: "Kevin's wife."
+  },
+  {
+    id: "stephen", name: "Stephen D'Alessio", born: "", died: "", photo: "",
+    parents: ["vince", "sylvia"], partners: ["renata"], tentative: false, placeholder: false,
+    note: ""
+  },
+  {
+    id: "renata", name: "Renata Nijssen", born: "", died: "", photo: "",
+    parents: [], partners: ["stephen"], tentative: false, placeholder: false,
+    note: "Stephen's wife."
+  },
+  {
+    id: "fred", name: "Alfred 'Fred' D'Alessio", born: "c. 1948", died: "12 May 2008", photo: "",
+    parents: ["alfred", "simone"], partners: ["margaret"], tentative: false, placeholder: false,
+    note: "Gerry's brother."
+  },
+  {
+    id: "margaret", name: "Margaret McClure", born: "", died: "", photo: "",
+    parents: [], partners: ["fred"], tentative: false, placeholder: false,
+    note: "Fred's wife."
+  },
+  {
+    id: "julie", name: "Julie D'Alessio", born: "", died: "", photo: "",
+    parents: ["fred", "margaret"], partners: ["troy"], tentative: false, placeholder: false,
+    note: "Lives in Cornwall."
+  },
+  {
+    id: "troy", name: "Troy Hickman", born: "", died: "", photo: "",
+    parents: [], partners: ["julie"], tentative: false, placeholder: false,
+    note: "Julie's husband."
+  },
+  {
+    id: "darin", name: "Darin D'Alessio", born: "", died: "", photo: "",
+    parents: ["fred", "margaret"], partners: ["caroline"], tentative: false, placeholder: false,
+    note: "Lives in Kingston."
+  },
+  {
+    id: "caroline", name: "Caroline", born: "", died: "", photo: "",
+    parents: [], partners: ["darin"], tentative: false, placeholder: false,
+    note: "Darin's wife."
+  },
+  {
+    id: "angela", name: "Angela D'Alessio", born: "", died: "", photo: "",
+    parents: ["fred", "margaret"], partners: [], tentative: false, placeholder: false,
+    note: ""
+  },
+  {
+    id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "",
+    parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
+    note: "Known as Gerry, and Poppy to the family. Recovering at home after a fall, autumn 2026."
+  },
+  {
+    id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "",
+    parents: ["joseph-ruest", "lucia-bison"], partners: ["gerry"], tentative: false, placeholder: false,
+    note: "Known to the whole family as Nanny. She and Gerry married about 1954. By May 2021 she had 8 grandchildren and 3 great-grandchildren."
+  },
+  {
+    id: "judy", name: "Judy D'Alessio", born: "", died: "before May 2021", photo: "",
+    parents: ["gerry", "lorraine"], partners: ["kendall"], tentative: false, placeholder: false,
+    note: "Married Kendall. She died before her mother."
+  },
+  {
+    id: "kendall", name: "Kendall", born: "", died: "", photo: "",
+    parents: [], partners: ["judy"], tentative: false, placeholder: false,
+    note: "Judy's husband. First name to add."
   },
   {
     id: "brent", name: "Brent D'Alessio", born: "", died: "", photo: "",
@@ -438,9 +518,84 @@ const PEOPLE = [
     note: "Cris's husband."
   },
   {
-    id: "vince", name: "Vince D'Alessio", born: "", died: "", photo: "",
-    parents: ["alfred", "simone"], partners: [], tentative: false, placeholder: false,
-    note: "Gerry's brother. Father of July."
+    id: "robert", name: "Robert D'Alessio", born: "", died: "", photo: "",
+    parents: ["alfred", "simone"], partners: ["lise"], tentative: false, placeholder: false,
+    note: "Gerry's brother."
+  },
+  {
+    id: "lise", name: "Lise", born: "", died: "", photo: "",
+    parents: [], partners: ["robert"], tentative: false, placeholder: false,
+    note: "Robert's wife."
+  },
+  {
+    id: "andy", name: "André 'Andy' D'Alessio", born: "", died: "", photo: "",
+    parents: ["alfred", "simone"], partners: ["paulette"], tentative: false, placeholder: false,
+    note: "Gerry's brother. Grandchildren (through Dominic and Daniel): Allègra, Abbygail, Leo, Sophie, and Cecelia."
+  },
+  {
+    id: "paulette", name: "Paulette Rhea Clouthier", born: "1949", died: "11 Oct 2023", photo: "",
+    parents: [], partners: ["andy"], tentative: false, placeholder: false,
+    note: "Andy's wife."
+  },
+  {
+    id: "dominic", name: "Dominic D'Alessio", born: "", died: "", photo: "",
+    parents: ["andy", "paulette"], partners: ["lesley"], tentative: false, placeholder: false,
+    note: "Lives in Cornwall, Ontario."
+  },
+  {
+    id: "lesley", name: "Lesley", born: "", died: "", photo: "",
+    parents: [], partners: ["dominic"], tentative: false, placeholder: false,
+    note: "Dominic's wife."
+  },
+  {
+    id: "daniel", name: "Daniel D'Alessio", born: "", died: "", photo: "",
+    parents: ["andy", "paulette"], partners: ["angela-daniel"], tentative: false, placeholder: false,
+    note: "Lives in Moose Jaw, Saskatchewan."
+  },
+  {
+    id: "angela-daniel", name: "Angela", born: "", died: "", photo: "",
+    parents: [], partners: ["daniel"], tentative: false, placeholder: false,
+    note: "Daniel's wife."
+  },
+  {
+    id: "joseph-ruest", name: "Joseph Étienne Ruest", born: "", died: "", photo: "",
+    parents: [], partners: ["lucia-bison"], tentative: false, placeholder: false,
+    note: "Lorraine's father."
+  },
+  {
+    id: "lucia-bison", name: "Lucia Bison", born: "", died: "", photo: "",
+    parents: [], partners: ["joseph-ruest"], tentative: false, placeholder: false,
+    note: "Lorraine's mother."
+  },
+  {
+    id: "gilles-ruest", name: "Gilles Ruest", born: "", died: "", photo: "",
+    parents: ["joseph-ruest", "lucia-bison"], partners: ["sandra"], tentative: false, placeholder: false,
+    note: "Lorraine's brother."
+  },
+  {
+    id: "sandra", name: "Sandra", born: "", died: "", photo: "",
+    parents: [], partners: ["gilles-ruest"], tentative: false, placeholder: false,
+    note: "Gilles's wife."
+  },
+  {
+    id: "guy-ruest", name: "Guy Ruest", born: "", died: "", photo: "",
+    parents: ["joseph-ruest", "lucia-bison"], partners: ["jeannine"], tentative: false, placeholder: false,
+    note: "Lorraine's brother. Predeceased, before 2021."
+  },
+  {
+    id: "jeannine", name: "Jeannine", born: "", died: "", photo: "",
+    parents: [], partners: ["guy-ruest"], tentative: false, placeholder: false,
+    note: "Guy's wife."
+  },
+  {
+    id: "rene-ruest", name: "René Ruest", born: "", died: "", photo: "",
+    parents: ["joseph-ruest", "lucia-bison"], partners: ["dawn"], tentative: false, placeholder: false,
+    note: "Lorraine's brother. Predeceased, before 2021."
+  },
+  {
+    id: "dawn", name: "Dawn", born: "", died: "", photo: "",
+    parents: [], partners: ["rene-ruest"], tentative: false, placeholder: false,
+    note: "René's wife."
   },
   {
     id: "july", name: "July D'Alessio", born: "", died: "", photo: "",
