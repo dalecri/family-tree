@@ -94,6 +94,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .nm{font-family:var(--hand);font-size:19px;fill:var(--red);letter-spacing:.05em}
 .ghost .nm{fill:var(--pencil-text)}
 .dt{font-family:var(--mono);font-size:10px;fill:var(--ink-soft)}
+.sn{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;fill:var(--ink-soft)}
+.chip{fill:var(--paper);opacity:.9;stroke:var(--line);stroke-width:.6}
 .tg{font-family:var(--mono);font-size:9px;fill:var(--pencil-text)}
 .circ{fill:none;stroke:var(--amber);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
 .node:focus-visible .nm{text-decoration:underline}
@@ -119,6 +121,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #card .tag{display:inline-block;margin-top:7px;font-size:10px;padding:1px 8px;border:1px dashed var(--pencil-text);border-radius:99px;color:var(--pencil-text)}
 #card .note{font-size:12.5px;line-height:1.7;margin:16px 0 4px}
 #card h3{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:20px 0 6px}
+#card h3 .ct{font-weight:400;letter-spacing:0;color:var(--pencil-text);margin-left:4px}
 #card .list{display:flex;flex-direction:column;gap:2px}
 #card .rel{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px dashed var(--line);padding:6px 2px}
 #card .rel:hover b,#card .rel:focus-visible b{text-decoration:underline;outline:none}
@@ -186,6 +189,37 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sheet .note{border-left:2px solid var(--tape);padding:2px 0 2px 12px;color:var(--ink-soft)}
 .sheet .sig{margin-top:30px;text-align:right;font:20px var(--hand);color:var(--red);letter-spacing:.05em}
 @media (max-width:700px){.help{padding:0}.sheet{min-height:100%;border-radius:0;padding:40px 20px 34px;transform:none!important}.sheet .tape{display:none}}
+
+/* ---------- big-tree prototype ---------- */
+#svg.lod-far .node .lbl,#svg.lod-far .pola,#svg.lod-far .fold,#svg.lod-mid .pola{opacity:0;pointer-events:none}
+#svg .lbl,#svg .fold{transition:opacity .2s}
+#fams{display:none}
+#svg.lod-far #fams{display:inline}
+.stage:has(#svg.lod-near) .gens{display:none}
+.fam{cursor:zoom-in}
+.fam rect{fill:var(--card);stroke:var(--edge);stroke-width:1;opacity:.95}
+.fam .fn{font:20px var(--hand);fill:var(--red);text-anchor:middle;letter-spacing:.05em}
+.fam .fc{font:10px var(--mono);fill:var(--ink-soft);text-anchor:middle;letter-spacing:.06em}
+.fam:hover rect{stroke:var(--red)}
+.fold{cursor:pointer;outline:none}
+.fold rect{fill:var(--paper);stroke:var(--pencil);stroke-width:1.1}
+.fold text{font:11px var(--mono);fill:var(--ink-soft);text-anchor:middle}
+.fold.on rect{fill:var(--card);stroke:var(--red);stroke-dasharray:3 2.5}
+.fold.on text{fill:var(--red);font-weight:700}
+.fold:hover rect,.fold:focus-visible rect{stroke:var(--red);stroke-width:1.8}
+.folded-bud{opacity:.8}
+#svg.spot [data-o]:not(.lit){opacity:.13}
+#svg.spot .node:not(.lit){opacity:.25}
+#svg.spot .fold{opacity:.35}
+#svg [data-o],#svg .node{transition:opacity .25s}
+#svg.big.dragging #branches,#svg.big.dragging #flowers,#svg.big.lod-far #branches,#svg.big.lod-far #flowers{filter:none}
+.gens{position:absolute;left:0;top:0;bottom:0;width:0;pointer-events:none}
+.gen{position:absolute;left:14px;transform:translateY(-50%);display:flex;align-items:baseline;gap:6px;white-space:nowrap;
+  font:9.5px var(--mono);letter-spacing:.14em;color:var(--pencil-text);background:var(--zoom-bg);padding:2px 7px;border:1px dashed var(--line);border-radius:99px}
+.gen b{font-weight:700;color:var(--ink-soft)}
+.mini{position:absolute;left:16px;bottom:40px;border:1px solid var(--line);border-radius:10px;background:var(--zoom-bg);box-shadow:0 6px 18px var(--shadow);cursor:crosshair;touch-action:none}
+.mini[hidden]{display:none}
+@media (max-width:700px){.mini{display:none}.gen{left:8px}}
 @media (prefers-reduced-motion:reduce){#card,.help,.sheet{transition:none}.growing .bud,.helpbtn.nudge{animation:none}}
 </style>
 </head>
@@ -227,11 +261,15 @@ button{font:inherit;color:inherit;cursor:pointer}
         <g id="branches" filter="url(#ink)"></g>
         <g id="leaves"></g>
         <g id="flowers" filter="url(#wash)"></g>
+        <g id="badges"></g>
         <g id="nodes"></g>
+        <g id="fams"></g>
       </g>
     </g>
   </svg>
   <div class="stamp" id="stamp"></div>
+  <div class="gens" id="gens" aria-hidden="true"></div>
+  <canvas class="mini" id="mini" hidden aria-label="Minimap: drag to move around the tree"></canvas>
   <div class="zoom">
     <button id="zin" aria-label="Zoom in">+</button>
     <button id="zout" aria-label="Zoom out">&minus;</button>
@@ -269,9 +307,12 @@ button{font:inherit;color:inherit;cursor:pointer}
       <li><b>Move:</b> drag the page. On a phone, drag with one finger.</li>
       <li><b>Zoom:</b> scroll, pinch, or use the <b>+</b> and <b>&minus;</b> buttons. <b>Fit</b> shows the whole tree again.</li>
       <li><b>Meet someone:</b> tap their name. Their card shows dates, a short story, and their parents, partners and children. Tap any of those names to jump to that person.</li>
-      <li><b>Find someone:</b> type a name in the search box and press Enter.</li>
+      <li><b>Find someone:</b> type a name in the search box and press Enter. If they're inside a folded branch, it opens for you.</li>
+      <li><b>Follow a line:</b> when you tap someone, everyone outside their line (parents, grandparents, partner, children and grandchildren) fades back so their branch stands out.</li>
+      <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to bring them back. Very big families open with the younger branches folded.</li>
+      <li><b>Zoomed out:</b> names give way to family labels. Tap a label to fly to that family. The <b>GEN</b> markers on the left show which generation you're looking at, and the small map in the corner shows where you are.</li>
       <li><b>Photos:</b> hides or shows the polaroids, if you'd rather see just the branches.</li>
-      <li><b>Save as image:</b> downloads a picture of the whole tree, ready for the family group chat.</li>
+      <li><b>Save as image:</b> downloads a picture of the tree as it's showing now (folded branches stay folded), ready for the family group chat.</li>
     </ul>
 
     <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Adding to the tree</h3>
@@ -565,8 +606,11 @@ const PEOPLE = [
 'use strict';
 
 /* ---------- constants ---------- */
-const HALF = 190, GAP = 44, ROW_H = 210, TW = 62, TH = 30;
-const MIN_K = 0.15, MAX_K = 3;
+const TW = 62, TH = 30, ROW_H = 250;
+const MIN_K = 0.03, MAX_K = 3;
+/* which families are folded away (resets on reload) */
+const folded = new Set();
+const LOD_FAR = 0.5, LOD_MID = 0.8;
 /* Tree palettes. UI colours live in the CSS variables of the same theme name. */
 const THEMES = {
   blossom: { label: 'Blossom', desc: 'Cherry ink on warm paper',
@@ -624,6 +668,22 @@ function shortDates(p) {
   if (d) return 'd. ' + d;
   return '';
 }
+/* name block: given name big, surname small underneath, then dates and pencil note */
+function nameParts(p) {
+  const full = String(p.name || p.id).trim(), w = full.split(/\s+/);
+  return w.length < 2 ? [full, ''] : [w.slice(0, -1).join(' '), w[w.length - 1]];
+}
+function labelRows(p) {
+  const [given, sur] = nameParts(p), rows = [{ cls: 'nm', txt: given, y: 6 }];
+  let y = 6;
+  if (sur) { y += 14; rows.push({ cls: 'sn', txt: sur.toUpperCase(), y }); }
+  const ds = shortDates(p);
+  if (ds) { y += 14; rows.push({ cls: 'dt', txt: ds, y }); }
+  if (p.tentative) { y += 14; rows.push({ cls: 'tg', txt: 'link to confirm', y }); }
+  return rows;
+}
+const ROW_FONT = { nm: [19, 'hand', 0.9], sn: [9.5, 'mono', 1.4], dt: [10, 'mono', 0], tg: [9, 'mono', 0] };
+const estW = r => r.txt.length * (r.cls === 'nm' ? 10.2 : r.cls === 'sn' ? 7.2 : r.cls === 'dt' ? 6.6 : 6.2);
 function fullDates(p) {
   const b = String(p.born || '').trim(), d = String(p.died || '').trim();
   if (b && d) return b + ' – ' + d;
@@ -700,7 +760,7 @@ function computeLayout() {
     if (byId.has(p.id)) console.warn('Family data: duplicate id "' + p.id + '". Only the first is used.');
     else byId.set(p.id, p);
   });
-  const people = [...byId.values()];
+  let people = [...byId.values()];
   people.forEach(p => [...(p.parents || []), ...(p.partners || [])].forEach(q => {
     if (!byId.has(q)) console.warn('Family data: "' + p.id + '" names "' + q + '", who is not in PEOPLE.');
   }));
@@ -738,32 +798,43 @@ function computeLayout() {
     }
   });
   const headOf = id => attached.get(id) || id;
-  const members = new Map();
+  let members = new Map();
   people.forEach(p => { if (!attached.has(p.id)) members.set(p.id, [p.id]); });
   people.forEach(p => { if (attached.has(p.id)) members.get(attached.get(p.id)).push(p.id); });
+  const membersAll = members;
 
-  const kids = new Map([...members.keys()].map(h => [h, []]));
+  const kidsAll = new Map([...members.keys()].map(h => [h, []]));
+  const upHead = new Map();
   const roots = [];
   people.forEach(p => {
     if (attached.has(p.id)) return;
     const ps = par.get(p.id);
-    if (ps.length) { const h = headOf(ps[0]); if (h !== p.id) kids.get(h).push(p.id); else roots.push(p.id); }
+    if (ps.length) { const h = headOf(ps[0]); if (h !== p.id) { kidsAll.get(h).push(p.id); upHead.set(p.id, h); } else roots.push(p.id); }
     else roots.push(p.id);
   });
 
-  // widths and descendant weight
-  const wMemo = new Map(), dMemo = new Map(), visiting = new Set();
-  function treeW(h) {
-    if (wMemo.has(h)) return wMemo.get(h);
-    if (visiting.has(h)) return 0;
-    visiting.add(h);
-    let kw = 0;
-    kids.get(h).forEach((k, i) => { kw += treeW(k) + (i ? GAP : 0); });
-    visiting.delete(h);
-    const w = Math.max(HALF * 2, kw);
-    wMemo.set(h, w);
-    return w;
+  // full-family counts, used by fold badges and family labels
+  const dAll = new Map();
+  function descAll(h) {
+    if (dAll.has(h)) return dAll.get(h);
+    dAll.set(h, membersAll.get(h).length);
+    const d = membersAll.get(h).length + kidsAll.get(h).reduce((s, k) => s + descAll(k), 0);
+    dAll.set(h, d);
+    return d;
   }
+  membersAll.forEach((m, h) => descAll(h));
+
+  // folding: a folded family keeps its couple but hides everyone below
+  const kids = new Map([...kidsAll].map(([h, ks]) => [h, folded.has(h) ? [] : ks]));
+  const visible = new Set();
+  const visitV = h => { if (visible.has(h)) return; visible.add(h); kids.get(h).forEach(visitV); };
+  membersAll.forEach((m, h) => { if (!upHead.has(h)) visitV(h); });
+  members = new Map([...membersAll].filter(([h]) => visible.has(h)));
+  const allPeople = people;
+  people = people.filter(p => visible.has(headOf(p.id)));
+
+  // descendant weight (what's on screen) sets branch thickness
+  const dMemo = new Map();
   function desc(h) {
     if (dMemo.has(h)) return dMemo.get(h);
     dMemo.set(h, members.get(h).length);
@@ -774,41 +845,132 @@ function computeLayout() {
   const stemW = h => 1.8 + 1.5 * Math.sqrt(desc(h));
   const forkW = h => stemW(h) * 0.7;
 
+  const loneSide = new Map();
+  members.forEach((m, h) => loneSide.set(h, rng('tip' + h)() < 0.5 ? -1 : 1));
+  // how far a name reaches past its twig (estimate; Patrick Hand SC ~10px per letter at 19px)
+  const labelW = p => Math.min(260, Math.max(...labelRows(p).map(estW)) + 10) + 17 + 8;
+  function ext(h) {
+    const m = members.get(h);
+    let l = 34, r = 34;
+    m.forEach((id, i) => {
+      const s = m.length === 1 ? loneSide.get(h) : (i === 0 ? -1 : 1);
+      const w = TW + 12 + labelW(byId.get(id));
+      if (s < 0) l = Math.max(l, w); else r = Math.max(r, w);
+    });
+    return [l, r];
+  }
+
   // forks: where a family's branch splits
   const fork = new Map(), placed = new Set(), placedRoots = [];
-  function place(h, left) {
-    if (placed.has(h)) return;
-    placed.add(h);
-    const w = treeW(h), c = left + w / 2;
-    fork.set(h, { x: c, y: -gen.get(h) * ROW_H });
-    const ks = kids.get(h);
-    let kw = 0;
-    ks.forEach((k, i) => { kw += treeW(k) + (i ? GAP : 0); });
-    let x = c - kw / 2;
-    ks.forEach(k => { place(k, x); x += treeW(k) + GAP; });
+  const stackIdx = new Map(), stackTop = new Set(), STACK_H = 80, STK_L = 84, STACK_MAX = 4;
+  {
+    /* Tidy-tree packing: each family's outline is tracked generation by
+       generation, and siblings slide together until their outlines are a
+       small gap apart. Short branches tuck in under tall neighbours instead
+       of reserving a full-width column. */
+    const SIB = 22, COUSIN = 54, ROOTS = 120;
+    const relX = new Map(), busy = new Set();
+    const mergeInto = (acc, c, sh) => c.forEach(([l, r], lv) => {
+      const a = acc.get(lv);
+      acc.set(lv, a ? [Math.min(a[0], l + sh), Math.max(a[1], r + sh)] : [l + sh, r + sh]);
+    });
+    const shiftFor = (acc, c, gapAt, fallback) => {
+      let sh = -Infinity;
+      c.forEach(([l], lv) => { if (acc.has(lv)) sh = Math.max(sh, acc.get(lv)[1] - l + gapAt(lv)); });
+      return sh === -Infinity ? fallback : sh;
+    };
+    function contour(h) {
+      const g = gen.get(h), e = ext(h), C = new Map([[g, [-e[0], e[1]]]]);
+      if (busy.has(h)) return C;
+      busy.add(h);
+      const ks = kids.get(h).filter(k => !busy.has(k));
+      if (ks.length) {
+        /* childless siblings (on their own, no partner) stack into a column
+           hanging off one stem, instead of each taking a column of width */
+        const leafy = k => members.get(k).length === 1 && !kids.get(k).length && !folded.has(k) && !byId.get(k).tentative;
+        const slots = [];
+        let run = [];
+        const flush = () => {
+          if (run.length >= 2) {
+            const cols = Math.ceil(run.length / STACK_MAX), per = Math.ceil(run.length / cols);
+            for (let c = 0; c < run.length; c += per) slots.push(run.slice(c, c + per));
+          } else run.forEach(k => slots.push([k]));
+          run = [];
+        };
+        ks.forEach(k => {
+          if (leafy(k) && (!run.length || gen.get(run[0]) === gen.get(k))) run.push(k);
+          else { flush(); if (leafy(k)) run.push(k); else slots.push([k]); }
+        });
+        flush();
+        const acc = new Map(), offs = [];
+        slots.forEach((slot, i) => {
+          let c;
+          if (slot.length === 1) c = contour(slot[0]);
+          else {
+            const gk = gen.get(slot[0]);
+            const r = Math.max(...slot.map(k => TW + 12 + labelW(byId.get(k))));
+            c = new Map([[gk, [-STK_L, r]]]);
+            if (slot.length >= 3) c.set(gk + 1, [-STK_L, r]);
+            slot.forEach((k, j) => { stackIdx.set(k, j); busy.add(k); });
+            stackTop.add(slot[slot.length - 1]);
+          }
+          const g0 = gen.get(slot[0]);
+          const sh = i ? shiftFor(acc, c, lv => lv === g0 ? SIB : COUSIN, offs[i - 1] + 200) : 0;
+          offs.push(sh);
+          mergeInto(acc, c, sh);
+        });
+        const mid = (offs[0] + offs[offs.length - 1]) / 2;
+        slots.forEach((slot, i) => slot.forEach(k => relX.set(k, offs[i] - mid)));
+        mergeInto(C, acc, -mid);
+      }
+      return C;
+    }
+    const absPlace = (h, x) => {
+      if (placed.has(h)) return;
+      placed.add(h);
+      fork.set(h, { x, y: -gen.get(h) * ROW_H - (stackIdx.get(h) || 0) * STACK_H });
+      kids.get(h).forEach(k => { if (relX.has(k)) absPlace(k, x + relX.get(k)); });
+    };
+    const acc = new Map();
+    let prev = 0, first = true;
+    const rootList = [...new Set(roots.filter(h => members.has(h)))];
+    members.forEach((m, h) => { if (!upHead.has(h) && !rootList.includes(h)) rootList.push(h); });
+    rootList.forEach(h => {
+      if (placed.has(h)) return;
+      const c = contour(h);
+      const sh = first ? 0 : shiftFor(acc, c, () => ROOTS, prev + 400);
+      first = false; prev = sh;
+      mergeInto(acc, c, sh);
+      absPlace(h, sh);
+      placedRoots.push(h);
+    });
+    members.forEach((m, h) => { if (!placed.has(h)) { prev += 500; absPlace(h, prev); placedRoots.push(h); } });
   }
-  let cursor = 0;
-  roots.forEach(r => { if (!placed.has(r)) { place(r, cursor); placedRoots.push(r); cursor += treeW(r) + GAP * 2; } });
-  members.forEach((m, h) => { if (!placed.has(h)) { place(h, cursor); placedRoots.push(h); cursor += treeW(h) + GAP * 2; } });
 
   // twig tips: where each person blooms
   const tip = new Map();
   members.forEach((m, h) => {
     const F = fork.get(h), r = rng('tip' + h), ks = kids.get(h);
     let lone = r() < 0.5 ? -1 : 1;
-    if (ks.length) {
-      const avg = ks.reduce((s, k) => s + fork.get(k).x, 0) / ks.length;
-      if (avg > F.x + 4) lone = -1; else if (avg < F.x - 4) lone = 1;
+    if (stackIdx.has(h)) {
+      tip.set(h, { x: F.x + TW, y: F.y - TH, s: 1, head: h, kids: false, stack: true, lw: labelW(byId.get(h)) });
+      return;
     }
     m.forEach((id, i) => {
       const s = m.length === 1 ? lone : (i === 0 ? -1 : 1);
       const lift = i > 1 ? (i - 1) * 40 : 0;
-      tip.set(id, { x: F.x + s * (TW + r() * 12), y: F.y - TH - lift - r() * 14, s, head: h, kids: ks.length > 0 });
+      tip.set(id, { x: F.x + s * (TW + r() * 12), y: F.y - TH - lift - r() * 14, s, head: h, kids: ks.length > 0 || folded.has(h) && kidsAll.get(h).length > 0, lw: labelW(byId.get(id)) });
     });
   });
 
   // the painting
   const ink = [], pencil = [], leaves = [], flowers = [], bases = [];
+  // tag what each stroke belongs to, so the spotlight can dim other branches
+  function own(o, fn) {
+    const n = [ink.length, pencil.length, leaves.length, flowers.length];
+    fn();
+    [ink, pencil, leaves, flowers].forEach((a, i) => { for (let j = n[i]; j < a.length; j++) a[j].o = o; });
+  }
   function decorate(pts, w0, w1, rnd, nB, nL) {
     const n = pts.length;
     for (let k = 0; k < nB + nL; k++) {
@@ -823,7 +985,7 @@ function computeLayout() {
       }
     }
   }
-  placedRoots.forEach(rId => {
+  placedRoots.forEach(rId => own('u:' + rId, () => {
     const F = fork.get(rId), r = rng('trunk' + rId);
     const B = { x: F.x + 70 + r() * 30, y: F.y + 260 };
     bases.push(B);
@@ -835,13 +997,14 @@ function computeLayout() {
     const spur = cubicPts(sp, { x: sp.x - 8, y: sp.y - 10 }, { x: S2.x + 10, y: S2.y + 6 }, S2, 12);
     ink.push({ d: taper(spur, 3.4, 0.6, 'spur' + rId), fill: C.ink });
     decorate(pts, w0, w1, r, 2, 2);
-  });
+  }));
   members.forEach((m, h) => {
     const F = fork.get(h);
-    kids.get(h).forEach(k => {
-      const K = fork.get(k), dy = F.y - K.y, r = rng('stem' + k);
+    kids.get(h).forEach(k => own('u:' + k, () => {
+      if (stackIdx.has(k) && !stackTop.has(k)) return;
+      const K = fork.get(k), dy = F.y - K.y, r = rng('stem' + k), st = stackIdx.has(k);
       const pts = cubicPts(F, { x: F.x + (r() - 0.5) * 50, y: F.y - dy * 0.42 },
-        { x: K.x + (r() - 0.5) * 50, y: K.y + dy * 0.48 }, K, 30);
+        { x: st ? K.x : K.x + (r() - 0.5) * 50, y: st ? K.y + dy * 0.62 : K.y + dy * 0.48 }, K, 30);
       if (byId.get(k).tentative) {
         pencil.push({ d: line(pts), stroke: C.pencil, w: 1.7 * C.pencilW, dash: '6 5', fill: 'none' });
         decorate(pts, 2, 2, r, 0, 1);
@@ -850,12 +1013,12 @@ function computeLayout() {
         ink.push({ d: taper(pts, w0, w1, 'stem' + k), fill: C.ink });
         decorate(pts, w0, w1, r, 2, 2);
       }
-    });
-    if (kids.get(h).length) {
+    }));
+    if (kids.get(h).length) own('u:' + h, () => {
       const r = rng('fork' + h);
       flowers.push(...blossom(F.x + (r() - 0.5) * 18, F.y - 6 - r() * 10, 7 + r() * 3, r));
-    }
-    m.forEach(id => {
+    });
+    m.forEach(id => own('p:' + id, () => {
       const T = tip.get(id), r = rng('twig' + id), S = { x: F.x, y: F.y + 6 };
       const pts = cubicPts(S, { x: S.x + (T.x - S.x) * 0.15, y: S.y - 16 }, { x: T.x - (T.x - S.x) * 0.4, y: T.y + 8 }, T, 16);
       if (byId.get(id).placeholder) pencil.push({ d: line(pts), stroke: C.pencil, w: 1.4 * C.pencilW, dash: '4 4', fill: 'none' });
@@ -866,13 +1029,13 @@ function computeLayout() {
           leaves.push(leaf(p.x, p.y, Math.atan2(p.ty, p.tx) + side * 0.9, 10 + r() * 4, r));
         }
       }
-    });
+    }));
   });
 
   // bounds
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   const grow = (a, b, c, d) => { x0 = Math.min(x0, a); y0 = Math.min(y0, b); x1 = Math.max(x1, c); y1 = Math.max(y1, d); };
-  tip.forEach(t => grow(t.s < 0 ? t.x - 170 : t.x - 16, t.kids ? t.y - 26 : t.y - 104, t.s < 0 ? t.x + 16 : t.x + 170, t.kids ? t.y + 130 : t.y + 46));
+  tip.forEach(t => grow(t.s < 0 ? t.x - t.lw : t.x - 16, t.kids ? t.y - 26 : t.y - 104, t.s < 0 ? t.x + 16 : t.x + t.lw, t.kids ? t.y + 130 : t.y + 46));
   fork.forEach(f => grow(f.x - 20, f.y - 20, f.x + 20, f.y + 20));
   bases.forEach(b => grow(b.x - 30, b.y - 10, b.x + 30, b.y + 4));
   if (!people.length) { x0 = y0 = 0; x1 = y1 = 100; }
@@ -881,7 +1044,8 @@ function computeLayout() {
     byId, people, par, prt, gen, tip, fork, bases,
     prims: { ink, pencil, leaves, flowers },
     bounds: { x: x0, y: y0, w: x1 - x0, h: y1 - y0 },
-    childrenOf: id => people.filter(q => par.get(q.id).includes(id))
+    childrenOf: id => allPeople.filter(q => par.get(q.id).includes(id)),
+    all: allPeople, members, membersAll, kids, kidsAll, upHead, headOf, descAll, visible
   };
 }
 
@@ -897,7 +1061,7 @@ const card = document.getElementById('card');
 let L = null, sel = null;
 
 function svgPrim(p, parent) {
-  return el('path', { d: p.d, fill: p.fill || 'none', opacity: p.op, stroke: p.stroke, 'stroke-width': p.w,
+  return el('path', { 'data-o': p.o, d: p.d, fill: p.fill || 'none', opacity: p.op, stroke: p.stroke, 'stroke-width': p.w,
     'stroke-dasharray': p.dash, 'stroke-linecap': p.stroke ? 'round' : null }, parent);
 }
 function drawBud(parent, p, r, prefix, usePhoto) {
@@ -926,7 +1090,8 @@ function initialsOf(p) {
 }
 function polaGeom(p, t) {
   const r = rng('pola' + p.id);
-  const below = 14 + (shortDates(p) ? 15 : 0) + (p.tentative ? 15 : 0) + 10;
+  const rows = labelRows(p), below = rows[rows.length - 1].y + 18;
+  if (t.stack) return { cx: -(TW + 44), cy: -2, rot: (r() - 0.5) * 10, tape: (r() - 0.5) * 14 };
   const cy = t.kids ? below + POLA.H / 2 : -POLA.GAP - POLA.H / 2;
   return { cx: t.s * 58, cy, rot: (r() - 0.5) * 10, tape: (r() - 0.5) * 14 };
 }
@@ -990,8 +1155,23 @@ photosBtn.addEventListener('click', () => {
   applyPhotos();
 });
 
+/* paper chips behind names so branches never cut through the lettering */
+let chips = [];
+function sizeChips() {
+  chips.forEach(([chip, lab]) => {
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    lab.querySelectorAll('text').forEach(t => {
+      let b; try { b = t.getBBox(); } catch (e) { return; }
+      x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height);
+    });
+    if (x0 === Infinity) return;
+    chip.setAttribute('x', f1(x0 - 7)); chip.setAttribute('y', f1(y0 - 2));
+    chip.setAttribute('width', f1(x1 - x0 + 14)); chip.setAttribute('height', f1(y1 - y0 + 5));
+  });
+}
 function renderTree() {
   L = computeLayout();
+  chips = [];
   [branchesG, leavesG, flowersG, nodesG].forEach(g => { g.textContent = ''; });
   L.prims.ink.forEach(p => svgPrim(p, branchesG));
   L.prims.pencil.forEach(p => svgPrim(p, branchesG));
@@ -1004,24 +1184,64 @@ function renderTree() {
       transform: 'translate(' + f1(t.x) + ',' + f1(t.y) + ')',
       tabindex: 0, role: 'button', 'aria-label': p.name || p.id
     }, nodesG);
-    const ds = shortDates(p);
-    el('rect', { class: 'hit', x: t.s < 0 ? -178 : -16, y: -24, width: 194, height: 34 + (ds ? 16 : 0) + (p.tentative ? 16 : 0) + 14 }, g);
+    const rows = labelRows(p), last = rows[rows.length - 1].y;
+    el('rect', { class: 'hit', x: t.s < 0 ? -t.lw : -16, y: -24, width: t.lw + 16, height: last + 34 }, g);
     const bud = el('g', { class: 'bud', style: 'animation-delay:' + (0.35 + L.gen.get(t.head) * 0.32).toFixed(2) + 's' }, g);
     drawBud(bud, p, 10, 'n-', false);
     polaroid(g, p, t);
     const lab = el('g', { class: 'lbl' }, g);
+    const chip = el('rect', { class: 'chip', rx: 7 }, lab);
     const anchor = t.s < 0 ? 'end' : 'start', lx = t.s < 0 ? -17 : 17;
-    el('text', { class: 'nm', x: lx, y: 6, 'text-anchor': anchor }, lab).textContent = p.name || p.id;
-    let ny = 6;
-    if (ds) { ny += 15; el('text', { class: 'dt', x: lx, y: ny, 'text-anchor': anchor }, lab).textContent = ds; }
-    if (p.tentative) {
-      ny += 15;
-      el('text', { class: 'tg', x: lx, y: ny, 'text-anchor': anchor }, lab).textContent = 'link to confirm';
-      const ux = t.s < 0 ? lx - 82 : lx;
-      el('line', { x1: ux, y1: ny + 4, x2: ux + 82, y2: ny + 4, stroke: C.pencil, 'stroke-width': 1, 'stroke-dasharray': '2 3' }, lab);
-    }
+    rows.forEach(r => {
+      el('text', { class: r.cls, x: lx, y: r.y, 'text-anchor': anchor }, lab).textContent = r.txt;
+      if (r.cls === 'tg') {
+        const ux = t.s < 0 ? lx - 82 : lx;
+        el('line', { x1: ux, y1: r.y + 4, x2: ux + 82, y2: r.y + 4, stroke: C.pencil, 'stroke-width': 1, 'stroke-dasharray': '2 3' }, lab);
+      }
+    });
+    chips.push([chip, lab]);
   });
+  sizeChips();
+  if (sel && !L.tip.has(sel)) sel = null;
   if (sel) markSelected();
+  buildCull();
+  renderOverlays();
+  applySpot();
+  svg.classList.toggle('big', L.people.length > 180);
+}
+/* viewport culling: only paint what's near the screen (matters past a few hundred people) */
+let cullGroups = [], cullAt = null;
+function buildCull() {
+  const boxes = new Map();
+  const add = (o, x0, y0, x1, y1) => {
+    const b = boxes.get(o);
+    if (b) { b[0] = Math.min(b[0], x0); b[1] = Math.min(b[1], y0); b[2] = Math.max(b[2], x1); b[3] = Math.max(b[3], y1); }
+    else boxes.set(o, [x0, y0, x1, y1]);
+  };
+  L.members.forEach((m, h) => {
+    const F = L.fork.get(h);
+    add('u:' + h, F.x - 60, F.y - 40, F.x + 60, F.y + 300);
+    L.kids.get(h).forEach(k => { const K = L.fork.get(k); add('u:' + k, Math.min(F.x, K.x) - 60, K.y - 40, Math.max(F.x, K.x) + 60, F.y + 40); });
+    m.forEach(id => { const t = L.tip.get(id); add('p:' + id, Math.min(F.x, t.x) - 40, t.y - 50, Math.max(F.x, t.x) + 40, F.y + 30); add('n:' + id, t.x - t.lw - 100, t.y - 120, t.x + t.lw + 100, t.y + 150); });
+  });
+  const els = new Map();
+  sceneG.querySelectorAll('[data-o]').forEach(n => { const o = n.getAttribute('data-o'); if (!els.has(o)) els.set(o, []); els.get(o).push(n); });
+  nodesG.querySelectorAll('.node').forEach(n => els.set('n:' + n.getAttribute('data-id'), [n]));
+  cullGroups = [...els].filter(([o]) => boxes.has(o)).map(([o, list]) => ({ b: boxes.get(o), list, on: true }));
+  cullAt = null;
+  cull(true);
+}
+function cull(force) {
+  if (!cullGroups.length) return;
+  const r = svg.getBoundingClientRect();
+  if (!force && cullAt && Math.abs(cam.k / cullAt.k - 1) < 0.15 && Math.abs(cam.x - cullAt.x) < r.width * 0.25 && Math.abs(cam.y - cullAt.y) < r.height * 0.25) return;
+  cullAt = { x: cam.x, y: cam.y, k: cam.k };
+  const mx = r.width * 0.6, my = r.height * 0.6;
+  const x0 = (-mx - cam.x) / cam.k, x1 = (r.width + mx - cam.x) / cam.k, y0 = (-my - cam.y) / cam.k, y1 = (r.height + my - cam.y) / cam.k;
+  cullGroups.forEach(g => {
+    const on = g.b[2] > x0 && g.b[0] < x1 && g.b[3] > y0 && g.b[1] < y1;
+    if (on !== g.on) { g.on = on; g.list.forEach(n => { n.style.display = on ? '' : 'none'; }); }
+  });
 }
 
 /* hand-drawn circle around the selected name */
@@ -1056,7 +1276,7 @@ function markSelected() {
 /* ---------- camera ---------- */
 const cam = { x: 0, y: 0, k: 1 };
 let anim = null;
-function apply() { camG.setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.k + ')'); }
+function apply() { camG.setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.k + ')'); onCamera(); }
 function stopAnim() { if (anim) { cancelAnimationFrame(anim); anim = null; } }
 function animateTo(t) {
   stopAnim();
@@ -1124,7 +1344,7 @@ function growIn() {
   const step = now => {
     const u = clamp((now - t0) / D, 0, 1);
     c.setAttribute('r', (rMax * (1 - Math.pow(1 - u, 2.2))).toFixed(1));
-    if (u < 1) requestAnimationFrame(step); else sceneG.removeAttribute('clip-path');
+    if (u < 1) requestAnimationFrame(step); else { sceneG.removeAttribute('clip-path'); setTimeout(() => svg.classList.remove('growing'), 2600); }
   };
   requestAnimationFrame(step);
 }
@@ -1143,8 +1363,9 @@ svg.addEventListener('pointerdown', e => {
   try { svg.setPointerCapture(e.pointerId); } catch (err) {}
   ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
   if (ptrs.size === 1) {
-    const n = e.target.closest && e.target.closest('[data-id]');
-    drag = { sx: e.clientX, sy: e.clientY, moved: false, id: n ? n.getAttribute('data-id') : null };
+    const n = e.target.closest && e.target.closest('[data-id],[data-fold],[data-fam]');
+    drag = { sx: e.clientX, sy: e.clientY, moved: false, id: n && n.getAttribute('data-id'),
+      fold: n && n.getAttribute('data-fold'), fam: n && n.getAttribute('data-fam') };
   } else if (ptrs.size === 2) {
     if (drag) drag.moved = true;
     pinch = pinchState();
@@ -1175,7 +1396,9 @@ function endPointer(e) {
   }
   if (ptrs.size === 0) {
     if (drag && !drag.moved && e.type === 'pointerup') {
-      if (drag.id) select(drag.id, true); else closeCard();
+      if (drag.fold) toggleFold(drag.fold);
+      else if (drag.fam) { if (folded.has(drag.fam)) toggleFold(drag.fam); else flyToFamily(drag.fam); }
+      else if (drag.id) select(drag.id, true); else closeCard();
     }
     drag = null; pinch = null;
     svg.classList.remove('dragging');
@@ -1217,11 +1440,10 @@ function openCard(id) {
     (fd ? '<div class="dates">' + esc(fd) + '</div>' : '') +
     (p.tentative ? '<span class="tag">link to confirm</span>' : '') + '</div></div>' +
     (p.note ? '<p class="note">' + esc(p.note) + '</p>' : '');
-  if (parents.length || partners.length) {
-    html += '<h3>Parents &amp; partners</h3><div class="list">' +
-      parents.map(q => relButton(q, 'parent')).join('') + partners.map(q => relButton(q, 'partner')).join('') + '</div>';
-  }
-  if (children.length) html += '<h3>Children</h3><div class="list">' + children.map(q => relButton(q, 'child')).join('') + '</div>';
+  const section = (title, list, label) => list.length
+    ? '<h3>' + title + ' <span class="ct">' + list.length + '</span></h3><div class="list">' + list.map(q => relButton(q, label)).join('') + '</div>' : '';
+  html += section('Parents', parents, 'parent') + section(partners.length > 1 ? 'Partners' : 'Partner', partners, 'partner') +
+    section('Children', children, 'child');
   card.innerHTML = html;
   card.classList.toggle('isghost', !!p.placeholder);
   drawBud(card.querySelector('.big'), p, 16, 'card-');
@@ -1236,12 +1458,15 @@ function closeCard() {
   card.setAttribute('aria-hidden', 'true');
   sel = null;
   markSelected();
+  applySpot();
 }
 function select(id, fly) {
   if (!L.byId.has(id)) return;
+  ensureVisible(id);
   sel = id;
   markSelected();
   openCard(id);
+  applySpot();
   if (fly) flyTo(id);
 }
 card.addEventListener('click', e => {
@@ -1255,7 +1480,7 @@ const input = document.getElementById('q');
 const results = document.getElementById('results');
 function matches(q) {
   q = norm(q.trim());
-  return q ? L.people.filter(p => norm(p.name).includes(q)) : [];
+  return q ? L.all.filter(p => norm(p.name).includes(q)) : [];
 }
 function hideResults() { results.hidden = true; results.innerHTML = ''; }
 function showResults() {
@@ -1334,16 +1559,19 @@ function drawExport(photos) {
     else blossom(0, 0, 10, rng('tip' + p.id)).forEach(q => canvasPrim(ctx, q, t.x, t.y));
     if (showPhotos) canvasPolaroid(ctx, p, t, img);
     const align = t.s < 0 ? 'right' : 'left', lx = t.x + (t.s < 0 ? -17 : 17);
-    ctx.textAlign = align;
-    ctx.font = '19px ' + HAND; ctx.fillStyle = p.placeholder ? C.pencilText : C.red;
-    spaced(ctx, p.name || p.id, lx, t.y + 6, 0.9, align);
-    let ny = t.y + 6;
-    const ds = shortDates(p);
-    if (ds) { ny += 15; ctx.font = '10px ' + MONO; ctx.fillStyle = C.inkSoft; ctx.textAlign = align; ctx.fillText(ds, lx, ny); }
-    if (p.tentative) {
-      ny += 15; ctx.font = '9px ' + MONO; ctx.fillStyle = C.pencilText; ctx.textAlign = align;
-      ctx.fillText('link to confirm', lx, ny);
-    }
+    const rows = labelRows(p), fontOf = r => ROW_FONT[r.cls][0] + 'px ' + (ROW_FONT[r.cls][1] === 'hand' ? HAND : MONO);
+    const widths = rows.map(r => { ctx.font = fontOf(r); return ctx.measureText(r.txt).width + r.txt.length * ROW_FONT[r.cls][2]; });
+    const cw = Math.max(...widths) + 14, cx0 = t.s < 0 ? lx - cw + 7 : lx - 7;
+    const cy0 = t.y + 6 - 17, ch = rows[rows.length - 1].y - 6 + 26;
+    ctx.save(); ctx.globalAlpha = 0.9; ctx.fillStyle = C.paper; ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(cx0, cy0, cw, ch, 7); else ctx.rect(cx0, cy0, cw, ch);
+    ctx.fill(); ctx.restore();
+    rows.forEach(r => {
+      ctx.font = fontOf(r); ctx.textAlign = align;
+      ctx.fillStyle = r.cls === 'nm' ? (p.placeholder ? C.pencilText : C.red) : r.cls === 'tg' ? C.pencilText : C.inkSoft;
+      if (ROW_FONT[r.cls][2]) spaced(ctx, r.txt, lx, t.y + r.y, ROW_FONT[r.cls][2], align);
+      else ctx.fillText(r.txt, lx, t.y + r.y);
+    });
   });
   ctx.restore();
 
@@ -1391,6 +1619,235 @@ saveBtn.addEventListener('click', async () => {
     saveBtn.textContent = label;
   }
 });
+
+/* =====================================================================
+   BIG-TREE TOOLS
+   - semantic zoom: far = family labels, mid = names, near = everything
+   - fold / unfold any family
+   - spotlight: dims everyone outside the selected person's line
+   - generation rail and minimap
+   ===================================================================== */
+const famsG = document.getElementById('fams');
+const badgesG = document.getElementById('badges');
+const gensEl = document.getElementById('gens');
+const mini = document.getElementById('mini');
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+let lod = '', famLabels = [], miniBase = null, miniT = null, overlayQueued = false;
+
+function shortName(p) {
+  const m = String(p.name || '').match(/'([^']+)'/) || String(p.note || '').match(/^Known as ([A-Z][\w-]+)/);
+  return m ? m[1] : String(p.name || p.id).split(/\s+/)[0];
+}
+function famName(h) {
+  const m = L.membersAll.get(h).map(id => shortName(L.byId.get(id)));
+  return m.length > 2 ? m[0] + ' & family' : m.join(' & ');
+}
+const hiddenCount = h => L.descAll(h) - L.membersAll.get(h).length;
+
+function renderOverlays() {
+  famsG.textContent = ''; badgesG.textContent = ''; famLabels = [];
+  L.members.forEach((m, h) => {
+    if (!L.kidsAll.get(h).length) return;
+    const F = L.fork.get(h), n = hiddenCount(h), isF = folded.has(h), name = famName(h);
+    // fold badge, sitting on the stem just under the fork
+    const txt = isF ? '+' + n : '−';
+    const w = isF ? 18 + String(n).length * 7.5 : 20;
+    const b = el('g', { class: 'fold' + (isF ? ' on' : ''), 'data-fold': h, tabindex: 0, role: 'button',
+      transform: 'translate(' + f1(F.x) + ',' + f1(F.y + 26) + ')',
+      'aria-label': (isF ? 'Unfold ' : 'Fold ') + name + ' (' + n + ' people)' }, badgesG);
+    el('title', {}, b).textContent = (isF ? 'Show ' : 'Fold away ') + name + "'s " + n + ' descendants and partners';
+    if (isF) [-14, 0, 14].forEach((dx, i) => {
+      const bud = el('g', { transform: 'translate(' + (dx) + ',' + (-58 - (i === 1 ? 10 : 0)) + ')', class: 'folded-bud' }, b);
+      blossom(0, 0, 6.5, rng('fb' + h + i)).forEach(q => svgPrim(q, bud));
+    });
+    el('rect', { x: -w / 2, y: -10, width: w, height: 20, rx: 10 }, b);
+    el('text', { x: 0, y: 4 }, b).textContent = txt;
+
+    // family label for the far zoom level
+    const g = el('g', { class: 'fam', 'data-fam': h, role: 'button', tabindex: -1 }, famsG);
+    const inner = el('g', {}, g);
+    const rect = el('rect', { rx: 10 }, inner);
+    el('text', { class: 'fn', x: 0, y: 0 }, inner).textContent = name;
+    el('text', { class: 'fc', x: 0, y: 17 }, inner).textContent = (L.descAll(h)) + ' people' + (isF ? ' · folded' : '');
+    const tw = Math.max(name.length * 10.5, 90) + 24;
+    rect.setAttribute('x', -tw / 2); rect.setAttribute('y', -20); rect.setAttribute('width', tw); rect.setAttribute('height', 46);
+    famLabels.push({ g, inner, x: F.x, y: F.y - 70, size: L.descAll(h), w: tw, h: 46, gen: L.gen.get(h) });
+  });
+  famLabels.sort((a, b) => b.size - a.size || a.gen - b.gen);
+  buildMini();
+  queueOverlay();
+}
+
+/* screen-space work, batched to one frame */
+function queueOverlay() {
+  if (overlayQueued) return;
+  overlayQueued = true;
+  requestAnimationFrame(() => { overlayQueued = false; layoutFamLabels(); layoutGens(); drawMini(); });
+}
+function onCamera() {
+  cull(false);
+  const next = cam.k < LOD_FAR ? 'far' : cam.k < LOD_MID ? 'mid' : 'near';
+  if (next !== lod) { if (lod) svg.classList.remove('lod-' + lod); lod = next; svg.classList.add('lod-' + lod); }
+  queueOverlay();
+}
+function layoutFamLabels() {
+  if (lod !== 'far') return;
+  const s = 1 / cam.k, placedB = [], r = svg.getBoundingClientRect();
+  famLabels.forEach(f => {
+    const sx = cam.x + f.x * cam.k, sy = cam.y + f.y * cam.k;
+    const box = { x0: sx - f.w / 2 - 6, x1: sx + f.w / 2 + 6, y0: sy - 24, y1: sy + 30 };
+    const off = box.x1 < 0 || box.x0 > r.width || box.y1 < 0 || box.y0 > r.height;
+    const hit = placedB.some(b => box.x0 < b.x1 && box.x1 > b.x0 && box.y0 < b.y1 && box.y1 > b.y0);
+    const show = !off && !hit;
+    f.g.style.display = show ? '' : 'none';
+    if (show) {
+      placedB.push(box);
+      f.g.setAttribute('transform', 'translate(' + f1(f.x) + ',' + f1(f.y) + ') scale(' + s.toFixed(4) + ')');
+    }
+  });
+}
+function layoutGens() {
+  const gens = new Map();
+  L.people.forEach(p => { const g = L.gen.get(p.id); gens.set(g, (gens.get(g) || 0) + 1); });
+  const r = svg.getBoundingClientRect();
+  let html = '', lastY = Infinity;
+  const top = 30;
+  [...gens.keys()].sort((a, b) => a - b).forEach(g => {
+    const y = cam.y + (-g * ROW_H - 30) * cam.k;
+    if (y < top || y > r.height - 150 || lastY - y < 26) return;
+    lastY = y;
+    html += '<div class="gen" style="top:' + y.toFixed(1) + 'px"><b>GEN ' + (ROMAN[g] || g + 1) + '</b><span>' + gens.get(g) + '</span></div>';
+  });
+  gensEl.innerHTML = html;
+}
+
+/* minimap: the whole tree in a stamp-sized frame */
+function buildMini() {
+  const b = L.bounds, r = svg.getBoundingClientRect();
+  const fitK = Math.min((r.width - 40) / b.w, (r.height - 40) / b.h);
+  const show = fitK < LOD_MID && L.people.length > 12;
+  mini.hidden = !show;
+  if (!show) { miniBase = null; return; }
+  const W = 210, H = Math.round(clamp(W * b.h / b.w, 70, 150)), dpr = window.devicePixelRatio || 1;
+  mini.style.width = W + 'px'; mini.style.height = H + 'px';
+  mini.width = W * dpr; mini.height = H * dpr;
+  const k = Math.min((W - 16) / b.w, (H - 16) / b.h);
+  miniT = { k, ox: (W - b.w * k) / 2 - b.x * k, oy: (H - b.h * k) / 2 - b.y * k, W, H, dpr };
+  const off = document.createElement('canvas'); off.width = mini.width; off.height = mini.height;
+  const c = off.getContext('2d');
+  c.scale(dpr, dpr);
+  c.strokeStyle = C.ink; c.globalAlpha = 0.55; c.lineWidth = 1;
+  L.members.forEach((m, h) => {
+    const F = L.fork.get(h);
+    L.kids.get(h).forEach(kid => {
+      const K = L.fork.get(kid);
+      c.beginPath(); c.moveTo(miniT.ox + F.x * k, miniT.oy + F.y * k);
+      c.bezierCurveTo(miniT.ox + F.x * k, miniT.oy + (F.y + K.y) / 2 * k, miniT.ox + K.x * k, miniT.oy + (F.y + K.y) / 2 * k, miniT.ox + K.x * k, miniT.oy + K.y * k);
+      c.stroke();
+    });
+  });
+  c.globalAlpha = 0.9; c.fillStyle = PINKS[1];
+  L.tip.forEach(t => { c.beginPath(); c.arc(miniT.ox + t.x * k, miniT.oy + t.y * k, 1.6, 0, 6.29); c.fill(); });
+  miniBase = off;
+}
+function drawMini() {
+  if (!miniBase) return;
+  const c = mini.getContext('2d'), T = miniT, r = svg.getBoundingClientRect();
+  c.setTransform(1, 0, 0, 1, 0, 0);
+  c.clearRect(0, 0, mini.width, mini.height);
+  c.drawImage(miniBase, 0, 0);
+  c.scale(T.dpr, T.dpr);
+  const x0 = (-cam.x / cam.k), y0 = (-cam.y / cam.k), w = r.width / cam.k, h = r.height / cam.k;
+  c.strokeStyle = C.red; c.lineWidth = 1.5; c.fillStyle = C.red; c.globalAlpha = 0.1;
+  c.fillRect(T.ox + x0 * T.k, T.oy + y0 * T.k, w * T.k, h * T.k);
+  c.globalAlpha = 1;
+  c.strokeRect(T.ox + x0 * T.k, T.oy + y0 * T.k, w * T.k, h * T.k);
+}
+function miniJump(e) {
+  if (!miniT) return;
+  const rr = mini.getBoundingClientRect(), r = svg.getBoundingClientRect();
+  const wx = (e.clientX - rr.left - miniT.ox) / miniT.k, wy = (e.clientY - rr.top - miniT.oy) / miniT.k;
+  stopAnim();
+  cam.x = r.width / 2 - wx * cam.k; cam.y = r.height / 2 - wy * cam.k;
+  apply();
+}
+let miniDrag = false;
+mini.addEventListener('pointerdown', e => { miniDrag = true; try { mini.setPointerCapture(e.pointerId); } catch (er) {} miniJump(e); });
+mini.addEventListener('pointermove', e => { if (miniDrag) miniJump(e); });
+mini.addEventListener('pointerup', () => { miniDrag = false; });
+mini.addEventListener('pointercancel', () => { miniDrag = false; });
+
+/* fold / unfold, keeping the family's fork still on screen */
+function toggleFold(h) {
+  const hadFocus = !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.fold'));
+  const F0 = L.fork.get(h), sx = cam.x + F0.x * cam.k, sy = cam.y + F0.y * cam.k;
+  if (folded.has(h)) folded.delete(h); else folded.add(h);
+  renderTree();
+  if (sel && !L.tip.has(sel)) closeCard();
+  const F1 = L.fork.get(h);
+  stopAnim();
+  cam.x = sx - F1.x * cam.k; cam.y = sy - F1.y * cam.k;
+  apply();
+  if (!folded.has(h)) flyToFamily(h);
+  const b = badgesG.querySelector('[data-fold="' + CSS.escape(h) + '"]');
+  if (b && hadFocus) b.focus();
+}
+function ensureVisible(id) {
+  if (!L.byId.has(id)) return;
+  let h = L.headOf(id), changed = false;
+  while (L.upHead.has(h)) { h = L.upHead.get(h); if (folded.delete(h)) changed = true; }
+  if (changed) renderTree();
+}
+/* big families open folded at the grandchildren, one tap from any branch */
+const AUTO_FOLD_AT = 120;
+function autoFold() {
+  if (L.all.length <= AUTO_FOLD_AT) return false;
+  L.membersAll.forEach((m, h) => { if (L.gen.get(h) >= 2 && L.kidsAll.get(h).length) folded.add(h); });
+  renderTree();
+  return true;
+}
+function flyToFamily(h) {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  const walk = u => {
+    L.members.get(u).forEach(id => { const t = L.tip.get(id); x0 = Math.min(x0, t.x - (t.s < 0 ? t.lw : 20)); x1 = Math.max(x1, t.x + (t.s > 0 ? t.lw : 20)); y0 = Math.min(y0, t.y - 110); y1 = Math.max(y1, t.y + 140); });
+    L.kids.get(u).forEach(walk);
+  };
+  walk(h);
+  const v = viewArea();
+  const k = clamp(Math.min((v.w - 60) / (x1 - x0), (v.h - 60) / (y1 - y0)), MIN_K, 1.3);
+  animateTo({ k, x: v.w / 2 - (x0 + x1) / 2 * k, y: v.h / 2 - (y0 + y1) / 2 * k });
+}
+
+/* spotlight: the selected person's ancestors, partners and descendants */
+function lineageOf(id) {
+  const set = new Set([id]);
+  const up = q => (L.par.get(q) || []).forEach(x => { if (!set.has(x)) { set.add(x); up(x); } });
+  up(id);
+  (L.prt.get(id) || new Set()).forEach(x => set.add(x));
+  const kidsOf = new Map();
+  L.all.forEach(p => L.par.get(p.id).forEach(q => { if (!kidsOf.has(q)) kidsOf.set(q, []); kidsOf.get(q).push(p.id); }));
+  const down = q => (kidsOf.get(q) || []).forEach(c => { if (!set.has(c)) { set.add(c); down(c); } });
+  down(id);
+  return set;
+}
+function applySpot() {
+  const on = sel && L.tip.has(sel);
+  svg.classList.toggle('spot', !!on);
+  if (!on) return;
+  const set = lineageOf(sel);
+  sceneG.querySelectorAll('[data-o]').forEach(n => {
+    const o = n.getAttribute('data-o');
+    n.classList.toggle('lit', set.has(o.slice(2)));
+  });
+  nodesG.querySelectorAll('.node').forEach(n => n.classList.toggle('lit', set.has(n.getAttribute('data-id'))));
+}
+
+badgesG.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const b = e.target.closest('[data-fold]');
+  if (b) { e.preventDefault(); toggleFold(b.getAttribute('data-fold')); }
+});
+window.addEventListener('resize', () => { if (L) { buildMini(); queueOverlay(); } });
 
 /* ---------- boot ---------- */
 const title = document.getElementById('title');
@@ -1506,9 +1963,10 @@ document.addEventListener('pointerdown', e => { if (!themeMenu.hidden && !e.targ
 setTheme(startTheme(), false);
 
 renderTree();
+autoFold();
 fit(true);
 growIn();
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (sel) markSelected(); }).catch(() => {});
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { cullGroups.forEach(g => g.list.forEach(n => { n.style.display = ''; })); sizeChips(); buildCull(); if (sel) markSelected(); }).catch(() => {});
 })();
 </script>
 </body>
