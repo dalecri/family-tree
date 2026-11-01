@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>D'Alessio Origins</title>
 <meta name="theme-color" content="#FBF8F1">
+<meta name="description" content="Where the D'Alessio family comes from: Torricella Sicura, Abruzzo, to Cornwall, Ontario.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -133,7 +134,7 @@ ul.plain li{margin-bottom:8px}
 /* clue cards */
 .clues{display:grid;gap:12px;margin-top:16px}
 .clue{display:grid;grid-template-columns:56px minmax(0,1fr);gap:14px;align-items:start;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:12px}
-.clue .k{font:400 24px/1 var(--hand);color:var(--red);text-align:center;padding-top:2px}
+.clue .k{font:400 26px/1 var(--hand);color:var(--red);text-align:center;padding-top:2px}
 .clue h3{margin:0 0 4px;font-size:12px;letter-spacing:.06em;font-weight:700}
 .clue p{margin:0;font-size:12.5px;line-height:1.7}
 
@@ -147,6 +148,40 @@ ul.plain li{margin-bottom:8px}
 .sources{margin:14px 0 0;padding-left:20px;font-size:11.5px;color:var(--ink-soft);max-width:66ch}
 .sources li{margin-bottom:5px}
 .sig{margin-top:40px;text-align:right;font:20px var(--hand);color:var(--red);letter-spacing:.05em}
+
+
+/* album photos */
+.photo{margin:20px 0 18px;display:grid;justify-items:center;gap:12px}
+.photo a{display:block;background:var(--polaFrame,#fff);background:#fff;padding:10px 10px 12px;border:1px solid var(--line);
+  box-shadow:0 12px 28px var(--shadow);transform:rotate(var(--tilt,-1deg));max-width:100%}
+.photo a:focus-visible{outline:2.5px solid var(--focus);outline-offset:4px}
+.photo img{display:block;max-width:100%;height:auto;width:var(--w,360px)}
+.photo figcaption{max-width:52ch;text-align:center;font-size:11.5px;line-height:1.65;color:var(--ink-soft)}
+.photo figcaption b{display:block;font:400 21px/1.2 var(--hand);color:var(--red);letter-spacing:.04em;margin-bottom:2px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start;margin:20px 0 10px}
+.pair .photo{margin:0}
+.pair .photo img{width:100%}
+:root[data-theme="night"] .photo a{background:#F1ECE3}
+
+/* the typed family note */
+.typed{position:relative;margin:22px auto 10px;max-width:520px;background:var(--card);border:1px solid var(--line);border-radius:3px;
+  padding:26px 30px 24px;box-shadow:0 10px 26px var(--shadow);transform:rotate(.5deg)}
+.typed::before{content:"";position:absolute;top:-10px;left:50%;width:90px;height:20px;margin-left:-45px;background:var(--tape);transform:rotate(-3deg)}
+.typed p{margin:0;font:700 14px/1.75 Arial,Helvetica,sans-serif;color:var(--ink);max-width:none}
+.typed p+p{margin-top:10px}
+.typed .from{margin-top:14px;font:11px var(--mono);color:var(--pencil-text);font-weight:400}
+
+/* passport fields */
+.fields{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 16px;margin:6px 0 14px;font-size:12px;max-width:66ch}
+.fields dt{color:var(--ink-soft);letter-spacing:.06em}
+.fields dd{margin:0}
+.fields dd i{color:var(--pencil-text);font-style:normal}
+
+.fix{margin:16px 0 0;padding:12px 14px;border:1px dashed var(--pencil);border-radius:10px;font-size:12px;line-height:1.7;max-width:66ch}
+.fix b{color:var(--red);font-weight:700;letter-spacing:.04em}
+.line .tag.maybe{border-style:dashed;border-color:var(--pencil-text);color:var(--pencil-text)}
+@media (max-width:640px){.pair{grid-template-columns:1fr}.typed{padding:22px 18px 18px}.photo a,.typed{transform:none}}
+@media (prefers-reduced-motion:reduce){.photo a,.typed{transform:none}}
 
 @media (max-width:640px){
   body{font-size:12.5px}
@@ -170,26 +205,62 @@ ul.plain li{margin-bottom:8px}
         <circle r="2.8" style="fill:var(--red)"/>
       </svg>
     </h1>
-    <p class="sub">Where the name comes from, and what the records say</p>
+    <p class="sub">From Torricella Sicura to Cornwall</p>
   </header>
 
-  <p class="lede">The D'Alessio name is Italian, and the branch on this tree has been in Cornwall, Ontario since at least the early 1900s. This page gathers what we've found so far about Alfred and Simone, the other D'Alessio families in Cornwall, and where in Italy the name likely started. Some of it is confirmed, and some of it is still a good guess. We've tried to say which is which.</p>
+  <p class="lede">The D'Alessio family on this tree comes from Torricella Sicura, a small town in the province of Teramo, in the Abruzzo region of Italy. Alfred D'Alessio left with an Italian passport issued in October 1923, settled in Cornwall, Ontario, and married Simone Hébert. This page gathers what the family album and public records tell us. Where something is still a guess, we say so.</p>
 
-  <section aria-labelledby="h-italy">
-    <h2 id="h-italy">The name in Italy today</h2>
-    <p>D'Alessio means "of Alessio" (Italian for Alexis or Alexander). The surname is found mostly in central and southern Italy.</p>
-    <div class="stats">
-      <div class="stat"><b>~4,400</b><span>people named D'Alessio in Italy</span></div>
-      <div class="stat"><b>519</b><span>towns where the name appears</span></div>
-      <div class="stat"><b>376</b><span>in Rome, the largest centre</span></div>
-      <div class="stat"><b>252</b><span>in Naples, the second largest</span></div>
+  <section aria-labelledby="h-town">
+    <h2 id="h-town">Torricella Sicura</h2>
+    <p>A typed note kept in the family album names the town and Alfred's parents:</p>
+    <div class="typed">
+      <p>D'Alessio partial Family Tree:<br>In Torricella Sicura, Province de Teramo, in Italy from the Abruzzi Area, Vincent D'Alessio and his Wife Rosario, had four sons and Two daughters. From this family Comes our Family.</p>
+      <p>Some day Someone may go to Italy and the Family Tree could be increased With information prior to our clan. Relatives are there to this day.</p>
+      <div class="from">Typed note, family album</div>
     </div>
-    <p class="src">Ciao Genealogy; Cognomix</p>
+    <figure class="photo" style="--w:360px;--tilt:1deg">
+      <a href="photos/album/italy-1916.jpg" target="_blank" rel="noopener"><img src="photos/album/italy-1916.jpg" width="721" height="1065" loading="lazy" alt="Italy, 1916"></a>
+      <figcaption><b>Italy, 1916</b>Alfred's parents, Vincent (seated) and Rosario (right), with Alfred's brother Sistine (centre) and Sistine's wife, also named Rosario (left).</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="h-leave">
+    <h2 id="h-leave">Alfred leaves Italy, 1923</h2>
+    <p>Part of Alfred's Italian passport survives in the album. He signed it in the Italian way, surname first: <i>D'Alessio Alfredo</i>.</p>
+    <figure class="photo" style="--w:360px;--tilt:-1.2deg">
+      <a href="photos/album/passport-1923.jpg" target="_blank" rel="noopener"><img src="photos/album/passport-1923.jpg" width="750" height="1090" loading="lazy" alt="Alfred's passport, October 1923"></a>
+      <figcaption><b>Alfred's passport, October 1923</b>The stamp at the bottom left is from the Fondo per l'Emigrazione, a fee paid by emigrants. Its postmark appears to read &ldquo;…SICURA&rdquo;.</figcaption>
+    </figure>
+    <dl class="fields">
+      <dt>Issued by</dt><dd>Questura di Teramo (the provincial police office)</dd>
+      <dt>Date issued</dt><dd>October 1923</dd>
+      <dt>Height</dt><dd>1.70 m <i>(about 5 ft 7 in)</i></dd>
+      <dt>Eyes</dt><dd>castani <i>(brown)</i></dd>
+      <dt>Hair</dt><dd>castani <i>(brown)</i></dd>
+    </dl>
+    <p>Alfred was about 23. Italians heading to Cornwall at the time usually landed in Halifax and travelled on by rail, finding work on the railways, the canal and in construction. Families tended to follow a first arrival from the same town, so other people from Torricella Sicura may have come to Cornwall too.</p>
+    <p class="src">Passport read from a photo of the album page; some handwriting is hard to make out. Context: Wikipédia (French); Canadian Museum of Immigration at Pier 21</p>
+    <div class="fix"><b>Updated.</b> This page first guessed that the family arrived around 1900, going by Alfred's birth year. The passport shows Alfred left Italy himself, as an adult, in October 1923 or soon after. His middle initial V. most likely comes from his father's name, Vincent (Vincenzo in Italian).</div>
+  </section>
+
+  <section aria-labelledby="h-simone">
+    <h2 id="h-simone">Simone</h2>
+    <p>Simone Hébert was born in 1907. The album names her parents as Alpheda Simpson and Domina Hébert.</p>
+    <div class="pair">
+    <figure class="photo" style="--w:320px;--tilt:-1.5deg">
+      <a href="photos/album/simone-1912.jpg" target="_blank" rel="noopener"><img src="photos/album/simone-1912.jpg" width="705" height="983" loading="lazy" alt="Simone, 1912"></a>
+      <figcaption><b>Simone, 1912</b>Age 5.</figcaption>
+    </figure>
+    <figure class="photo" style="--w:320px;--tilt:1deg">
+      <a href="photos/album/wedding.jpg" target="_blank" rel="noopener"><img src="photos/album/wedding.jpg" width="898" height="1100" loading="lazy" alt="Alfred and Simone"></a>
+      <figcaption><b>Alfred and Simone</b>Their wedding portrait. The date is still to find.</figcaption>
+    </figure>
+    </div>
   </section>
 
   <section aria-labelledby="h-stones">
-    <h2 id="h-stones">Alfred and Simone</h2>
-    <p>Gerry's parents are confirmed through their graves. Fred's 2008 obituary named "the late Alfred and Simone (Hebert) D'Alessio" as his parents, and they are the only matching couple buried in Cornwall.</p>
+    <h2 id="h-stones">Resting in Cornwall</h2>
+    <p>Alfred and Simone are buried at St. Columban's Cemetery in Cornwall, with their son Vincent and his wife Sylvia. Fred's 2008 obituary and Vincent's 2001 obituary both name Alfred and Simone (Hébert) as their parents.</p>
     <div class="stones">
       <div class="stone"><div class="nm">Alfred V. D'Alessio</div><div class="yr">1900 – 1987</div><div class="rel">Gerry's father</div></div>
       <div class="stone"><div class="nm">Simone D. Hébert D'Alessio</div><div class="yr">1907 – 1990</div><div class="rel">Gerry's mother</div></div>
@@ -197,12 +268,21 @@ ul.plain li{margin-bottom:8px}
       <div class="stone"><div class="nm">Sylvia Dickenson</div><div class="yr">1930 – 2021</div><div class="rel">Vincent's wife</div><div class="alt">Headstone says 1930.<br>Her obituary says 1936.</div></div>
     </div>
     <p class="place">St. Columban's Cemetery &middot; Cornwall, Ontario</p>
-    <p class="src">Find A Grave; Fred's obituary, 2008; Sylvia's obituary, 2021</p>
+    <p class="src">Find A Grave; Fred's obituary, 2008; Vincent's obituary, 2001; Sylvia's obituary, 2021</p>
+  </section>
+
+  <section aria-labelledby="h-boys">
+    <h2 id="h-boys">Cousin Norman</h2>
+    <figure class="photo" style="--w:360px;--tilt:-.8deg">
+      <a href="photos/album/family-1930s.jpg" target="_blank" rel="noopener"><img src="photos/album/family-1930s.jpg" width="786" height="1100" loading="lazy" alt="Alfred and Simone with the boys"></a>
+      <figcaption><b>Alfred and Simone with the boys</b>Front, left to right: Gerald, their cousin Norman, and Vincent. Norman was the son of Rose and Augustine D'Alessio, and he died shortly after this picture was taken. 1930s.</figcaption>
+    </figure>
+    <p>This caption matters. If Norman was Gerald and Vincent's first cousin, Augustine D'Alessio was most likely Alfred's brother, one of Vincent and Rosario's four sons. "Cousin" can also be used loosely, so the tree draws that link in pencil until it's confirmed.</p>
   </section>
 
   <section aria-labelledby="h-book">
     <h2 id="h-book">Cornwall, 1954</h2>
-    <p>The 1954 Cornwall phone book lists five D'Alessio households. Gerald and Vincent are the brothers on this tree.</p>
+    <p>The 1954 Cornwall phone book lists five D'Alessio households. Gerald and Vincent are Alfred's sons.</p>
     <div class="book" role="table" aria-label="D'Alessio listings in the 1954 Cornwall phone book">
       <div class="bh" role="row"><span role="columnheader">D'Alessio</span><span role="columnheader">Cornwall &middot; 1954</span></div>
       <div class="row ours" role="row"><span class="who" role="cell"><b>D'Alessio Gerald</b></span><span class="dots" aria-hidden="true"></span><span class="addr" role="cell">521 Carleton St</span></div>
@@ -215,53 +295,64 @@ ul.plain li{margin-bottom:8px}
   </section>
 
   <section aria-labelledby="h-lines">
-    <h2 id="h-lines">Three D'Alessio lines in Cornwall</h2>
-    <p>At least three D'Alessio families were in Cornwall by the mid-1900s. No record found so far shows how, or whether, they're related.</p>
+    <h2 id="h-lines">D'Alessio lines in Cornwall</h2>
     <div class="lines">
       <div class="line ours"><h3>Alfred &amp; Simone</h3><p>Alfred V. (1900–1987) and Simone Hébert (1907–1990). Parents of Vincent, Fred, Gerry, Robert and Andy.</p><span class="tag">This tree</span></div>
-      <div class="line"><h3>Augustine</h3><p>Head of a separate line. Married Rose Giannetti (1908–1997). Listed at 604 York St in 1954.</p></div>
-      <div class="line"><h3>Ettore</h3><p>Ettore D'Alessio (1896–1988), married Lucia Desimone (1901–1989). Also buried at St. Columban's.</p></div>
+      <div class="line"><h3>Augustine &amp; Rose</h3><p>Augustine married Rose Giannetti (1908–1997). Their son Norman is called a cousin of Alfred's boys. Listed at 604 York St in 1954.</p><span class="tag maybe">Likely family</span></div>
+      <div class="line"><h3>Ettore</h3><p>Ettore D'Alessio (1896–1988), married Lucia Desimone (1901–1989). Also buried at St. Columban's. No known link yet.</p></div>
     </div>
   </section>
 
-  <section aria-labelledby="h-came">
-    <h2 id="h-came">How Italians came to Cornwall</h2>
+  <section aria-labelledby="h-vince">
+    <h2 id="h-vince">Vince, 1928–2001</h2>
+    <figure class="photo" style="--w:340px;--tilt:.8deg">
+      <a href="photos/album/vincent-obituary-2001.jpg" target="_blank" rel="noopener"><img src="photos/album/vincent-obituary-2001.jpg" width="652" height="1100" loading="lazy" alt="Vincent's obituary"></a>
+      <figcaption><b>Vincent's obituary</b>M. John Sullivan Funeral Home, Cornwall, February 2001.</figcaption>
+    </figure>
     <ul class="plain">
-      <li>Cornwall's Italian community began arriving in the early 1900s.</li>
-      <li>Most came by rail from Halifax and found work on the railways, the canal and in construction.</li>
-      <li>Families usually followed a first "pioneer" from the same Italian town, then sent for relatives and neighbours. This is called chain migration.</li>
+      <li>Alfred and Simone's son Vincent, known as Vince, was a retired civil servant known for his love of music.</li>
+      <li>He died at the Ottawa General Hospital on February 12, 2001, at 72, after 38 years of marriage to Sylvia (née Dickenson).</li>
+      <li>His obituary lists his brothers and where they lived in 2001: Gerry in Russell, Robert (Bob) in Smiths Falls, and André and Fred in Cornwall.</li>
+      <li>The Royal Canadian Legion, Branch 297, held a Legion tribute for him.</li>
     </ul>
-    <p class="src">Wikipédia (French); Canadian Museum of Immigration at Pier 21</p>
   </section>
 
-  <section aria-labelledby="h-clues">
-    <h2 id="h-clues">Clues to where in Italy</h2>
-    <div class="clues">
-      <div class="clue"><div class="k" aria-hidden="true">1900</div><div><h3>Alfred's birth year</h3><p>Alfred was born in 1900, which places the family's arrival in Canada in the late 1890s or early 1900s, right in the first wave of Italian immigration to Cornwall.</p></div></div>
-      <div class="clue"><div class="k" aria-hidden="true">V.</div><div><h3>His middle initial</h3><p>Alfred's middle initial V may stand for Vincent or Vincenzo. A middle name like that often comes from a grandfather. Alfred and Simone also named one of their sons Vincent.</p></div></div>
-      <div class="clue"><div class="k" aria-hidden="true">S</div><div><h3>Southern Italian in-laws</h3><p>Desimone and Giannetti, the Italian surnames that married into the Cornwall D'Alessio families, are both southern Italian names. That fits a chain migration from one district in southern Italy.</p></div></div>
-      <div class="clue"><div class="k" aria-hidden="true">A</div><div><h3>An Abruzzo family</h3><p>Another D'Alessio family, Elio D'Alessio (son of Giovanni D'Alessio and Anna Rabottini), came through Pier 21 from Chieti Scalo in Abruzzo. Abruzzese D'Alessios settled in the region too, but no link to the Cornwall families has been found.</p></div></div>
+  <section aria-labelledby="h-italy">
+    <h2 id="h-italy">The name in Italy today</h2>
+    <p>D'Alessio means "of Alessio" (Italian for Alexis or Alexander). The surname is found mostly in central and southern Italy, which includes Abruzzo.</p>
+    <div class="stats">
+      <div class="stat"><b>~4,400</b><span>people named D'Alessio in Italy</span></div>
+      <div class="stat"><b>519</b><span>towns where the name appears</span></div>
+      <div class="stat"><b>376</b><span>in Rome, the largest centre</span></div>
+      <div class="stat"><b>252</b><span>in Naples, the second largest</span></div>
     </div>
+    <p class="src">Ciao Genealogy; Cognomix</p>
   </section>
 
   <section aria-labelledby="h-todo">
     <h2 id="h-todo">Still to find</h2>
     <ul class="todo">
-      <li>Where Alfred was born, and the names of his parents</li>
-      <li>When and how the family arrived in Canada (a ship or border record)</li>
+      <li>The names of Vincent and Rosario's other children: four sons and two daughters in all</li>
+      <li>Rosario's family name</li>
+      <li>Whether Augustine was Alfred's brother</li>
+      <li>When Alfred landed in Canada, and on which ship (late 1923 or after)</li>
+      <li>When and where Alfred and Simone married</li>
       <li>Whether "A." at 621 Gloucester St in 1954 is Alfred</li>
-      <li>Whether the Augustine and Ettore lines are related to ours</li>
+      <li>Whether the Ettore line is related to ours</li>
       <li>Sylvia's birth year: 1930 or 1936</li>
+      <li>The relatives still living in Torricella Sicura</li>
     </ul>
-    <p class="note">Know something, or have an old document or photo? Send it to Cris or July. Even a town name passed down in a story can help.</p>
+    <p class="note">Know something, or have an old document or photo? Send it to Cris or July. Clean scans of the album pages are on the way, and these photos will be swapped for them.</p>
   </section>
 
   <section aria-labelledby="h-src">
     <h2 id="h-src">Sources</h2>
     <ul class="sources">
-      <li>Find A Grave: St. Columban's Cemetery, Cornwall, Ontario</li>
+      <li>D'Alessio family album: typed family note; photograph, Italy, 1916; Alfred D'Alessio's Italian passport, October 1923; Simone Hébert, 1912; Alfred and Simone's wedding portrait; Alfred and Simone with Gerald, Norman and Vincent, 1930s</li>
+      <li>Obituary of Vincent D'Alessio, M. John Sullivan Funeral Home, 2001</li>
       <li>Obituary of Alfred "Fred" D'Alessio, 2008</li>
       <li>Obituary of Sylvia (Dickenson) D'Alessio, 2021</li>
+      <li>Find A Grave: St. Columban's Cemetery, Cornwall, Ontario</li>
       <li>Cornwall phone book (white pages), 1954</li>
       <li>Wikipédia (French): Cornwall's Italian community</li>
       <li>Canadian Museum of Immigration at Pier 21</li>

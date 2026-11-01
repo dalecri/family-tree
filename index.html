@@ -73,7 +73,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .save{background:transparent;border:1.5px solid var(--edge);border-radius:99px;padding:6px 13px;font-size:11px;white-space:nowrap}
 .save:hover{border-color:var(--red);color:var(--red)}
 .save:disabled{opacity:.5;cursor:default}
-.save.origins{text-decoration:none;display:inline-flex;align-items:center}
+.save.origins{text-decoration:none;display:inline-flex;align-items:center;color:var(--ink)}
+.save.origins:hover{color:var(--red)}
 a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
 .save[aria-pressed="true"]{border-color:var(--red);color:var(--red)}
 .pola{transition:opacity .25s}
@@ -300,7 +301,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
     <p class="sub" data-tree-sub></p>
 
     <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Reading the tree</h3>
-    <p>The tree grows the way a real one does: the oldest generation is at the bottom, and each generation grows one level higher. <b>Poppy is the trunk.</b></p>
+    <p>The tree grows the way a real one does: the oldest generation is at the bottom, and each generation grows one level higher. <b>The trunk is Vincent and Rosario</b>, Alfred's parents in Torricella Sicura, Italy.</p>
     <p>Every <b>fork</b> in a branch is a couple. Each partner sits on their own twig, and their children's branches grow up out of that fork.</p>
     <div class="key">
       <svg viewBox="0 0 44 26"><path d="M3 18 Q22 6 41 10" style="stroke:var(--ink)" stroke-width="2.8" fill="none" stroke-linecap="round"/></svg><span><b>Ink branch:</b> a confirmed link.</span>
@@ -394,19 +395,29 @@ const TREE = { title: "The D'Alessio Family", planted: "OCT 31 2026", keepers: "
 
 const PEOPLE = [
   {
-    id: "alfred", name: "Alfred D'Alessio", born: "", died: "", photo: "",
-    parents: [], partners: ["simone"], tentative: false, placeholder: false,
-    note: "The start of this tree. Father of Vincent, Fred, Gerry, Robert, and Andy."
+    id: "vincent-sr", name: "Vincent D'Alessio", born: "", died: "", photo: "photos/vincent-sr.jpg",
+    parents: [], partners: ["rosario-sr"], tentative: false, placeholder: false,
+    note: "Alfred's father. The family lived in Torricella Sicura, in the province of Teramo, Abruzzo, Italy. He and his wife Rosario had four sons and two daughters, and relatives still live there. Photographed in Italy in 1916."
   },
   {
-    id: "simone", name: "Simone Hébert", born: "", died: "", photo: "",
+    id: "rosario-sr", name: "Rosario", born: "", died: "", photo: "photos/rosario-sr.jpg",
+    parents: [], partners: ["vincent-sr"], tentative: false, placeholder: false,
+    note: "Alfred's mother and Vincent's wife, in Torricella Sicura. Her family name is still to find. Photographed in Italy in 1916."
+  },
+  {
+    id: "alfred", name: "Alfred D'Alessio", born: "1900", died: "1987", photo: "photos/alfred.jpg",
+    parents: ["vincent-sr", "rosario-sr"], partners: ["simone"], tentative: false, placeholder: false,
+    note: "Alfredo D'Alessio in Italy. Son of Vincent and Rosario of Torricella Sicura; his Italian passport was issued in Teramo in October 1923. Married Simone Hébert. Father of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
+  },
+  {
+    id: "simone", name: "Simone Hébert", born: "1907", died: "1990", photo: "photos/simone.jpg",
     parents: [], partners: ["alfred"], tentative: false, placeholder: false,
-    note: "Mother of Vincent, Fred, Gerry, Robert, and Andy."
+    note: "Daughter of Alpheda Simpson and Domina Hébert. Married Alfred D'Alessio. Mother of Vincent, Fred, Gerry, Robert, and Andy. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
-    id: "vince", name: "Vincent D'Alessio", born: "", died: "", photo: "",
+    id: "vince", name: "Vincent D'Alessio", born: "1928", died: "12 Feb 2001", photo: "photos/vince.jpg",
     parents: ["alfred", "simone"], partners: ["sylvia"], tentative: false, placeholder: false,
-    note: "Gerry's brother. Married Sylvia May Dickenson."
+    note: "Known as Vince. A retired civil servant, known for his love of music. Married to Sylvia for 38 years. Died at the Ottawa General Hospital at 72. Buried at St. Columban's Cemetery, Cornwall."
   },
   {
     id: "sylvia", name: "Sylvia May Dickenson", born: "1936", died: "2021", photo: "",
@@ -479,9 +490,9 @@ const PEOPLE = [
     note: ""
   },
   {
-    id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "",
+    id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "photos/gerry.jpg",
     parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
-    note: "Known as Gerry, and Poppy to the family."
+    note: "Known as Gerry, and Poppy to the family. His photo here is from the 1930s, as a boy with his brother Vincent and cousin Norman."
   },
   {
     id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "",
@@ -606,7 +617,7 @@ const PEOPLE = [
   {
     id: "robert", name: "Robert D'Alessio", born: "", died: "", photo: "",
     parents: ["alfred", "simone"], partners: ["lise"], tentative: false, placeholder: false,
-    note: "Gerry's brother."
+    note: "Gerry's brother. Known as Bob. Lived in Smiths Falls in 2001."
   },
   {
     id: "lise", name: "Lise", born: "", died: "", photo: "",
@@ -642,6 +653,46 @@ const PEOPLE = [
     id: "angela-daniel", name: "Angela", born: "", died: "", photo: "",
     parents: [], partners: ["daniel"], tentative: false, placeholder: false,
     note: "Daniel's wife."
+  },
+  {
+    id: "sistine", name: "Sistine D'Alessio", born: "", died: "", photo: "photos/sistine.jpg",
+    parents: ["vincent-sr", "rosario-sr"], partners: ["rosario-sistine"], tentative: false, placeholder: false,
+    note: "Alfred's brother. Named Sistine on the label of a 1916 family photo taken in Italy; his Italian name may be spelled differently."
+  },
+  {
+    id: "rosario-sistine", name: "Rosario", born: "", died: "", photo: "photos/rosario-sistine.jpg",
+    parents: [], partners: ["sistine"], tentative: false, placeholder: false,
+    note: "Sistine's wife. Named Rosario on the 1916 photo label, like her mother-in-law."
+  },
+  {
+    id: "augustine", name: "Augustine D'Alessio", born: "", died: "", photo: "",
+    parents: ["vincent-sr", "rosario-sr"], partners: ["rose"], tentative: true, placeholder: false,
+    note: "Head of another Cornwall D'Alessio family (604 York St in 1954). A 1930s family photo calls his son Norman a cousin of Gerald and Vincent, so he is likely Alfred's brother. Still to confirm."
+  },
+  {
+    id: "rose", name: "Rose Giannetti", born: "", died: "", photo: "",
+    parents: [], partners: ["augustine"], tentative: false, placeholder: false,
+    note: "Augustine's wife."
+  },
+  {
+    id: "norman", name: "Norman D'Alessio", born: "", died: "", photo: "photos/norman.jpg",
+    parents: ["augustine", "rose"], partners: [], tentative: false, placeholder: false,
+    note: "Son of Augustine and Rose. Photographed as a little boy with his cousins Gerald and Vincent in the 1930s, and died shortly after the photo was taken."
+  },
+  {
+    id: "vr-son", name: "To add", born: "", died: "", photo: "",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
+    note: "One of Vincent and Rosario's four sons. Name and details to add."
+  },
+  {
+    id: "vr-daughter-1", name: "To add", born: "", died: "", photo: "",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
+    note: "One of Vincent and Rosario's two daughters. Name and details to add."
+  },
+  {
+    id: "vr-daughter-2", name: "To add", born: "", died: "", photo: "",
+    parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: true,
+    note: "One of Vincent and Rosario's two daughters. Name and details to add."
   }
 ];
 /* ======================= END OF FAMILY DATA ========================== */
@@ -716,7 +767,7 @@ function shortDates(p) {
 /* name block: given name big, surname small underneath, then dates and pencil note */
 function nameParts(p) {
   const full = String(p.name || p.id).trim(), w = full.split(/\s+/);
-  return w.length < 2 ? [full, ''] : [w.slice(0, -1).join(' '), w[w.length - 1]];
+  return w.length < 2 || p.placeholder ? [full, ''] : [w.slice(0, -1).join(' '), w[w.length - 1]];
 }
 function labelRows(p) {
   const [given, sur] = nameParts(p), rows = [{ cls: 'nm', txt: given, y: 6 }];
