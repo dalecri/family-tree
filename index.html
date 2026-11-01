@@ -200,7 +200,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #fams{display:none}
 #svg.lod-far #fams{display:inline}
 .stage:has(#svg.lod-near) .gens{display:none}
-.fam{cursor:zoom-in}
+.fam{cursor:zoom-in;outline:none}
 .fam rect{fill:var(--card);stroke:var(--edge);stroke-width:1;opacity:.95}
 .fam .fn{font:20px var(--hand);fill:var(--red);text-anchor:middle;letter-spacing:.05em}
 .fam .fc{font:10px var(--mono);fill:var(--ink-soft);text-anchor:middle;letter-spacing:.06em}
@@ -277,7 +277,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     <button id="zin" aria-label="Zoom in">+</button>
     <button id="zout" aria-label="Zoom out">&minus;</button>
     <button id="zfit" class="fit">Fit</button>
-    <button id="zfold" class="fold-all" data-state="collapse" aria-label="Collapse all branches" title="Collapse all branches"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="co" d="M4 2.5 8 6.5 12 2.5M4 13.5 8 9.5 12 13.5"/><path class="ex" d="M4 6 8 2 12 6M4 10 8 14 12 10"/></svg></button>
+    <button id="zfold" class="fold-all" data-state="collapse" aria-label="Collapse all branches" title="Collapse all branches"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8h11"/><path class="co" d="M5 1.5 8 4.5 11 1.5M5 14.5 8 11.5 11 14.5"/><path class="ex" d="M5 4.5 8 1.5 11 4.5M5 11.5 8 14.5 11 11.5"/></svg></button>
   </div>
 </main>
 
@@ -313,9 +313,9 @@ button{font:inherit;color:inherit;cursor:pointer}
       <li><b>Meet someone:</b> tap their name. Their card shows dates, a short story, and their parents, partners and children. Tap any of those names to jump to that person.</li>
       <li><b>Find someone:</b> type a name in the search box and press Enter. If they're inside a folded branch, it opens for you.</li>
       <li><b>Follow a line:</b> when you tap someone, everyone outside their line (parents, grandparents, partner, children and grandchildren) fades back so their branch stands out.</li>
-      <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to bring them back. Very big families open with the younger branches folded.</li>
+      <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to open that family one generation at a time. Very big families open with the younger branches folded.</li>
       <li><b>Collapse everything:</b> the button under <b>Fit</b> folds every branch back to the first families in one tap. Tap it again to open them all.</li>
-      <li><b>Zoomed out:</b> names give way to family labels. Tap a label to fly to that family. The <b>GEN</b> markers on the left show which generation you're looking at, and the small map in the corner shows where you are.</li>
+      <li><b>Zoomed out:</b> names give way to family labels. Tap a label to open that family: you'll see their children, and each child's family stays folded until you tap it too. The <b>GEN</b> markers on the left show which generation you're looking at, and the small map in the corner shows where you are.</li>
       <li><b>Save as image:</b> downloads a picture of the tree as it's showing now (folded branches stay folded), ready for the family group chat.</li>
     </ul>
 
@@ -1417,7 +1417,7 @@ function endPointer(e) {
   if (ptrs.size === 0) {
     if (drag && !drag.moved && e.type === 'pointerup') {
       if (drag.fold) toggleFold(drag.fold);
-      else if (drag.fam) { if (folded.has(drag.fam)) toggleFold(drag.fam); else flyToFamily(drag.fam); }
+      else if (drag.fam) toggleFold(drag.fam, true);
       else if (drag.id) select(drag.id, true); else closeCard();
     }
     drag = null; pinch = null;
@@ -1798,10 +1798,18 @@ mini.addEventListener('pointerup', () => { miniDrag = false; });
 mini.addEventListener('pointercancel', () => { miniDrag = false; });
 
 /* fold / unfold, keeping the family's fork still on screen */
-function toggleFold(h) {
+/* opening a family shows one generation at a time: their children appear,
+   and each child's own family stays folded until you tap into it */
+function openOneLevel(h) {
+  folded.delete(h);
+  let u = h;
+  while (L.upHead.has(u)) { u = L.upHead.get(u); folded.delete(u); }
+  L.kidsAll.get(h).forEach(k => { if (L.kidsAll.get(k).length) folded.add(k); });
+}
+function toggleFold(h, drill) {
   const hadFocus = !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('.fold'));
   const F0 = L.fork.get(h), sx = cam.x + F0.x * cam.k, sy = cam.y + F0.y * cam.k;
-  if (folded.has(h)) folded.delete(h); else folded.add(h);
+  if (drill || folded.has(h)) openOneLevel(h); else folded.add(h);
   renderTree();
   if (sel && !L.tip.has(sel)) closeCard();
   const F1 = L.fork.get(h);
@@ -1853,9 +1861,9 @@ function flyToFamily(h) {
     L.kids.get(u).forEach(walk);
   };
   walk(h);
-  const v = viewArea();
-  const k = clamp(Math.min((v.w - 60) / (x1 - x0), (v.h - 60) / (y1 - y0)), MIN_K, 1.3);
-  animateTo({ k, x: v.w / 2 - (x0 + x1) / 2 * k, y: v.h / 2 - (y0 + y1) / 2 * k });
+  const v = viewArea(), rail = narrowMQ.matches ? 64 : 96;
+  const k = clamp(Math.min((v.w - rail - 40) / (x1 - x0), (v.h - 60) / (y1 - y0)), MIN_K, 1.3);
+  animateTo({ k, x: rail + (v.w - rail - 20) / 2 - (x0 + x1) / 2 * k, y: v.h / 2 - (y0 + y1) / 2 * k });
 }
 
 /* spotlight: the selected person's ancestors, partners and descendants */
