@@ -136,6 +136,33 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
 #card .rel b{font:400 20px var(--hand);color:var(--red);font-weight:400;flex:1;letter-spacing:.04em}
 #card .rel i{font-style:normal;font-size:10px;color:var(--ink-soft)}
 #card .grab{display:none}
+#card .pics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#card .pic{display:flex;flex-direction:column;gap:5px;padding:5px 5px 6px;background:#fff;border:1px solid var(--line);border-radius:3px;
+  box-shadow:0 3px 8px var(--shadow);text-align:left;min-width:0;transition:transform .15s}
+#card .pic:nth-child(odd){transform:rotate(-1.2deg)}#card .pic:nth-child(even){transform:rotate(1deg)}
+#card .pic:hover,#card .pic:focus-visible{transform:rotate(0) translateY(-2px)}
+#card .pic img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;background:var(--soft)}
+#card .pic span{font:9.5px/1.3 var(--mono);color:#4a4446;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.lightbox{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:56px 64px 24px;background:rgba(20,14,12,.93);opacity:0;transition:opacity .2s}
+.lightbox.open{opacity:1}
+.lightbox[hidden]{display:none}
+.lightbox figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:100%;max-height:100%;min-height:0}
+.lightbox img{display:block;max-width:min(92vw,1100px);max-height:calc(100vh - 210px);max-height:calc(100dvh - 210px);width:auto;height:auto;
+  background:#fff;padding:10px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.lightbox figcaption{max-width:60ch;text-align:center;color:#f3ece0}
+.lightbox h2{margin:0 0 4px;font:400 26px/1.15 var(--hand);letter-spacing:.05em;color:#F7C6CF}
+.lightbox p{margin:0;font-size:12px;line-height:1.6}
+.lightbox .lbn{display:block;margin-top:6px;font-size:10px;letter-spacing:.14em;color:#b9b0a6}
+.lightbox button{position:absolute;border:1.5px solid rgba(243,236,224,.5);background:rgba(20,14,12,.5);color:#f3ece0;border-radius:50%;
+  width:44px;height:44px;padding:0;font-size:26px;line-height:1;display:grid;place-items:center}
+.lightbox button:hover{border-color:#F7C6CF;color:#F7C6CF}
+.lightbox button:focus-visible{outline:2.5px solid #F2C94C;outline-offset:2px}
+.lightbox .x{top:14px;right:14px;font-size:22px}
+.lightbox .prev{left:12px;top:50%;margin-top:-22px}
+.lightbox .next{right:12px;top:50%;margin-top:-22px}
+.lightbox button[hidden]{display:none}
+@media (max-width:700px){.lightbox{padding:60px 12px 20px}.lightbox .prev,.lightbox .next{top:auto;bottom:16px;margin:0}
+  .lightbox img{max-height:calc(100dvh - 250px)}.lightbox figure{padding-bottom:56px}}
 
 @media (max-width:1400px){
   .top{grid-template-columns:1fr}
@@ -293,6 +320,16 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
 
 <aside id="card" aria-hidden="true"></aside>
 
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <figure>
+    <img alt="">
+    <figcaption><h2 id="lbTitle"></h2><p></p><span class="lbn"></span></figcaption>
+  </figure>
+  <button class="x" aria-label="Close photo">&times;</button>
+  <button class="prev" aria-label="Previous photo">&lsaquo;</button>
+  <button class="next" aria-label="Next photo">&rsaquo;</button>
+</div>
+
 <div class="help" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <article class="sheet">
     <span class="tape l"></span><span class="tape r"></span>
@@ -315,6 +352,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
       <li><b>Move:</b> drag the page. On a phone, drag with one finger.</li>
       <li><b>Zoom:</b> scroll, pinch, or use the <b>+</b> and <b>&minus;</b> buttons. <b>Fit</b> shows the whole tree again.</li>
       <li><b>Meet someone:</b> tap their name. Their card shows dates, a short story, and their parents, partners and children. Tap any of those names to jump to that person.</li>
+      <li><b>Photos:</b> if someone has photos in the family album, they're in their card. Tap one to see it larger, and use the arrows (or swipe) to see the rest.</li>
       <li><b>Find someone:</b> type a name in the search box and press Enter. If they're inside a folded branch, it opens for you.</li>
       <li><b>Follow a line:</b> when you tap someone, everyone outside their line (parents, grandparents, partner, children and grandchildren) fades back so their branch stands out.</li>
       <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to open that family one generation at a time. Very big families open with the younger branches folded.</li>
@@ -358,6 +396,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
     <ul>
       <li>Keep the quotes, commas and brackets exactly as they are. A missing comma is the most common reason the tree won't show up. If that happens, undo your last change.</li>
       <li>Put photos in a <code>photos</code> folder right next to this file, so they work offline and show up in saved images.</li>
+      <li>Album photos go in <code>photos/album</code> and get one entry each in <code>ALBUM</code>, just below the people list. List everyone the photo belongs with in <code>people</code>, and it shows up in each of their cards.</li>
       <li>The title and the date stamp in the corner are in <code>TREE</code>, just above the list.</li>
     </ul>
 
@@ -457,7 +496,7 @@ const PEOPLE = [
   {
     id: "fred", name: "Alfred 'Fred' D'Alessio", born: "c. 1948", died: "12 May 2008", photo: "",
     parents: ["alfred", "simone"], partners: ["margaret"], tentative: false, placeholder: false,
-    note: "Gerry's brother."
+    note: "Gerry's brother. Called Freddy as a boy; he's in the background of Gerry and Lorraine's 1954 wedding photo."
   },
   {
     id: "margaret", name: "Margaret McClure", born: "", died: "", photo: "",
@@ -492,12 +531,12 @@ const PEOPLE = [
   {
     id: "gerry", name: "Gerald D'Alessio", born: "", died: "", photo: "photos/gerry.jpg",
     parents: ["alfred", "simone"], partners: ["lorraine"], tentative: false, placeholder: false,
-    note: "Known as Gerry, and Poppy to the family. His photo here is from the 1930s, as a boy with his brother Vincent and cousin Norman. An earlier baby photo of the two brothers is labelled \"Moe & Curly\", Gerald being Moe. Lived in Ottawa in 1987, Long Sault in 1990, and Russell in 2001."
+    note: "Known as Gerry, and Poppy to the family. Married Lorraine Ruest on 27 February 1954; his photo here is from their wedding. A baby photo of him with his brother Vincent is labelled \"Moe & Curly\", Gerald being Moe. Lived in Ottawa in 1987, Long Sault in 1990, and Russell in 2001."
   },
   {
-    id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "",
+    id: "lorraine", name: "Lorraine Lucienne Ruest", born: "16 Feb 1933", died: "10 May 2021", photo: "photos/lorraine.jpg",
     parents: [], partners: ["gerry"], tentative: false, placeholder: false,
-    note: "Known to the whole family as Nanny. She and Gerry married about 1954. By May 2021 she had 8 grandchildren and 3 great-grandchildren."
+    note: "Known to the whole family as Nanny. Her brothers were Guy, Gilles and René Ruest, and an album photo shows her with her mother in front of the Ruest restaurant. She and Gerry married on 27 February 1954; her photo here is from their wedding. By May 2021 she had 8 grandchildren and 3 great-grandchildren."
   },
   {
     id: "judy", name: "Judy D'Alessio", born: "", died: "before May 2021", photo: "",
@@ -590,9 +629,9 @@ const PEOPLE = [
     note: ""
   },
   {
-    id: "mark", name: "Mark D'Alessio", born: "", died: "", photo: "",
+    id: "mark", name: "Mark D'Alessio", born: "", died: "", photo: "photos/mark.jpg",
     parents: ["gerry", "lorraine"], partners: ["elena"], tentative: false, placeholder: false,
-    note: "Cristobal's father."
+    note: "Cristobal's father. In 1979 he was living in New Brunswick, working as maître d' of the Cosmos Club. His photo here is from that year."
   },
   {
     id: "elena", name: "Elena Ramirez", born: "", died: "", photo: "",
@@ -694,6 +733,118 @@ const PEOPLE = [
     parents: ["vincent-sr", "rosario-sr"], partners: [], tentative: false, placeholder: false,
     note: "Alfred's sister. Photographed with Alfred and Giovanno in 1914, and with her father Vincent and brother Edward in 1916. Died before 1987."
   }
+];
+/* ---------------------------------------------------------------------
+   FAMILY ALBUM
+   One entry per photo. It shows in the "Photos" part of the card of
+   everyone listed in people (ids from PEOPLE above).
+     src      image file, e.g. photos/album/name.jpg
+     w, h     the image's width and height in pixels (optional)
+     title    a short name for the photo
+     caption  a sentence about it; "" is fine
+     people   ids of the people it belongs with
+   --------------------------------------------------------------------- */
+const ALBUM = [
+  { src: "photos/album/alpheda-sister-1903.jpg", w: 829, h: 1100,
+    title: "Alpheda and her sister, 1903",
+    caption: "Simone's mother, Alpheda Simpson, with her sister. The album doesn't say which one is Alpheda.",
+    people: ["simone"] },
+  { src: "photos/album/alpheda.jpg", w: 786, h: 1100,
+    title: "Alpheda Simpson",
+    caption: "Simone's mother. Died in 1912 in Hull, Quebec.",
+    people: ["simone"] },
+  { src: "photos/album/simone-1912.jpg", w: 705, h: 983,
+    title: "Simone, 1912",
+    caption: "Age 5.",
+    people: ["simone"] },
+  { src: "photos/album/siblings-1914.jpg", w: 779, h: 1100,
+    title: "Alfred with his sisters, 1914",
+    caption: "Giovanno (left), Alfred (centre) and Annie (right).",
+    people: ["alfred", "giovanno", "annie"] },
+  { src: "photos/album/italy-1916.jpg", w: 721, h: 1065,
+    title: "Italy, 1916",
+    caption: "Vincent (seated) and Rosaria (right), with their son Sistino (centre) and his wife Rosario (left).",
+    people: ["vincent-sr", "rosario-sr", "sistine", "rosario-sistine"] },
+  { src: "photos/album/vincent-edward-annie-1916.jpg", w: 771, h: 1074,
+    title: "Vincent with Edward and Annie, 1916",
+    caption: "“Father with son & daughter.” Vincent looks much younger here than in the other 1916 photo, so one date may be off.",
+    people: ["vincent-sr", "edward", "annie"] },
+  { src: "photos/album/alfred-police-1918.jpg", w: 764, h: 984,
+    title: "Alfred in uniform, 1918",
+    caption: "Labelled “Police”. The uniform looks like that of the Carabinieri.",
+    people: ["alfred"] },
+  { src: "photos/album/passport-1923.jpg", w: 750, h: 1090,
+    title: "Alfred's passport, October 1923",
+    caption: "Issued by the Questura di Teramo, signed D'Alessio Alfredo.",
+    people: ["alfred"] },
+  { src: "photos/album/wedding.jpg", w: 898, h: 1100,
+    title: "Alfred and Simone's wedding",
+    caption: "Most likely between 1924 and 1928.",
+    people: ["alfred", "simone"] },
+  { src: "photos/album/wedding-party.jpg", w: 720, h: 1040,
+    title: "The wedding party",
+    caption: "Standing: Alfred, Augustine and Edward D'Alessio, and Simone's father, Domina Hébert. Simone is seated.",
+    people: ["alfred", "simone", "augustine", "edward"] },
+  { src: "photos/album/moe-and-curly.jpg", w: 825, h: 1100,
+    title: "“Moe & Curly”",
+    caption: "Gerald (left) and Vincent (right) as little boys.",
+    people: ["gerry", "vince"] },
+  { src: "photos/album/gerald-and-vincent.jpg", w: 638, h: 914,
+    title: "Gerald and Vincent",
+    caption: "Gerald standing (left) and Vincent seated (right).",
+    people: ["gerry", "vince"] },
+  { src: "photos/album/family-1933.jpg", w: 771, h: 1100,
+    title: "The family, about 1933",
+    caption: "Alfred and Simone with Gerald and Vincent. The label notes a sling and bandage “after being struck by car”.",
+    people: ["alfred", "simone", "gerry", "vince"] },
+  { src: "photos/album/family-1930s.jpg", w: 786, h: 1100,
+    title: "With cousin Norman, 1930s",
+    caption: "Alfred and Simone behind Gerald, their cousin Norman and Vincent. Norman died shortly after this picture was taken.",
+    people: ["alfred", "simone", "gerry", "vince", "norman"] },
+  { src: "photos/album/lorraine-1933.jpg", w: 774, h: 1100,
+    title: "Lorraine Ruest, 1933",
+    caption: "Born February 16, 1933.",
+    people: ["lorraine"] },
+  { src: "photos/album/lorraine-with-mother.jpg", w: 782, h: 1100,
+    title: "Lorraine with her mother",
+    caption: "In front of the Ruest restaurant.",
+    people: ["lorraine"] },
+  { src: "photos/album/ruest-brothers.jpg", w: 1100, h: 736,
+    title: "Lorraine's three brothers",
+    caption: "Guy, Gilles and René Ruest.",
+    people: ["lorraine"] },
+  { src: "photos/album/gerry-lorraine-wedding-1954.jpg", w: 766, h: 1100,
+    title: "Gerry and Lorraine's wedding",
+    caption: "February 27, 1954. Gerry's brother Freddy is in the background.",
+    people: ["gerry", "lorraine", "fred"] },
+  { src: "photos/album/mark-six-months.jpg", w: 1100, h: 1089,
+    title: "Mark at six months",
+    caption: "“The bath tub racer.” · “Un competidor de bañera.”",
+    people: ["mark"] },
+  { src: "photos/album/mark-and-judy.jpg", w: 1100, h: 1089,
+    title: "Mark and his sister Judy",
+    caption: "Mark y su hermana Judy.",
+    people: ["mark", "judy"] },
+  { src: "photos/album/mark-first-communion.jpg", w: 878, h: 1100,
+    title: "Mark's first communion",
+    caption: "Mark haciendo su primera comunión.",
+    people: ["mark"] },
+  { src: "photos/album/mark-1979.jpg", w: 1100, h: 884,
+    title: "Mark in New Brunswick, 1979",
+    caption: "Maître d' of the Cosmos Club. · Mark cuando vivió en New Brunswick.",
+    people: ["mark"] },
+  { src: "photos/album/alfred-obituary-1987.jpg", w: 780, h: 1100,
+    title: "Alfred's obituary, 1987",
+    caption: "Wilson Funeral Home, Cornwall.",
+    people: ["alfred"] },
+  { src: "photos/album/simone-obituary-1990.jpg", w: 714, h: 1100,
+    title: "Simone's obituary, 1990",
+    caption: "Wilson Funeral Home, Cornwall.",
+    people: ["simone"] },
+  { src: "photos/album/vincent-obituary-2001.jpg", w: 652, h: 1100,
+    title: "Vincent's obituary, 2001",
+    caption: "M. John Sullivan Funeral Home, Cornwall.",
+    people: ["vince"] }
 ];
 /* ======================= END OF FAMILY DATA ========================== */
 
@@ -1522,6 +1673,12 @@ function openCard(id) {
     (fd ? '<div class="dates">' + esc(fd) + '</div>' : '') +
     (p.tentative ? '<span class="tag">link to confirm</span>' : '') + '</div></div>' +
     (p.note ? '<p class="note">' + esc(p.note) + '</p>' : '');
+  const pics = photosOf(id);
+  if (pics.length) {
+    html += '<h3>Photos <span class="ct">' + pics.length + '</span></h3><div class="pics">' +
+      pics.map((a, i) => '<button class="pic" data-pic="' + i + '" aria-label="' + esc(a.title) + '"><img src="' + esc(a.src) + '" alt="" loading="lazy"' +
+        (a.w ? ' width="' + a.w + '" height="' + a.h + '"' : '') + '><span>' + esc(a.title) + '</span></button>').join('') + '</div>';
+  }
   const section = (title, list, label) => list.length
     ? '<h3>' + title + ' <span class="ct">' + list.length + '</span></h3><div class="list">' + list.map(q => relButton(q, label)).join('') + '</div>' : '';
   html += section('Parents', parents, 'parent') + section(partners.length > 1 ? 'Partners' : 'Partner', partners, 'partner') +
@@ -1534,6 +1691,56 @@ function openCard(id) {
   card.setAttribute('aria-hidden', 'false');
   card.scrollTop = 0;
 }
+/* ---------- family album: photos in each card, shown large in a lightbox ---------- */
+const albumList = (typeof ALBUM !== 'undefined' && Array.isArray(ALBUM)) ? ALBUM.filter(a => a && a.src) : [];
+function photosOf(id) { return albumList.filter(a => (a.people || []).includes(id)); }
+const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img'), lbT = lb.querySelector('h2'),
+  lbC = lb.querySelector('p'), lbN = lb.querySelector('.lbn'), lbPrev = lb.querySelector('.prev'), lbNext = lb.querySelector('.next');
+let lbList = [], lbI = 0, lbReturn = null;
+function showPic() {
+  const a = lbList[lbI];
+  lbImg.src = a.src; lbImg.alt = a.title;
+  lbT.textContent = a.title; lbC.textContent = a.caption || '';
+  const many = lbList.length > 1;
+  lbN.textContent = many ? (lbI + 1) + ' of ' + lbList.length : '';
+  lbPrev.hidden = lbNext.hidden = !many;
+}
+function openLightbox(list, i, from) {
+  if (!list.length) return;
+  lbList = list; lbI = clamp(i, 0, list.length - 1); lbReturn = from || document.activeElement;
+  showPic();
+  lb.hidden = false;
+  requestAnimationFrame(() => lb.classList.add('open'));
+  lb.querySelector('.x').focus();
+}
+function closeLightbox() {
+  lb.classList.remove('open');
+  lb.hidden = true;
+  if (lbReturn && lbReturn.focus) lbReturn.focus();
+}
+function stepPic(d) { if (lbList.length > 1) { lbI = (lbI + d + lbList.length) % lbList.length; showPic(); } }
+lb.addEventListener('click', e => {
+  if (e.target.closest('.x') || e.target === lb) closeLightbox();
+  else if (e.target.closest('.prev')) stepPic(-1);
+  else if (e.target.closest('.next')) stepPic(1);
+});
+lb.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') { e.preventDefault(); stepPic(-1); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); stepPic(1); }
+  else if (e.key === 'Tab') {
+    const f = [...lb.querySelectorAll('button:not([hidden]), a')];
+    const i = f.indexOf(document.activeElement);
+    if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+  }
+});
+let lbTouch = null;
+lb.addEventListener('touchstart', e => { lbTouch = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (lbTouch === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouch; lbTouch = null;
+  if (Math.abs(dx) > 50) stepPic(dx < 0 ? 1 : -1);
+});
 function closeCard() {
   if (!card.classList.contains('open') && !sel) return;
   card.classList.remove('open');
@@ -1552,6 +1759,8 @@ function select(id, fly) {
   if (fly) flyTo(id);
 }
 card.addEventListener('click', e => {
+  const pic = e.target.closest('[data-pic]');
+  if (pic) { openLightbox(photosOf(sel), +pic.getAttribute('data-pic'), pic); return; }
   const go = e.target.closest('[data-go]');
   if (go) { select(go.getAttribute('data-go'), true); return; }
   if (e.target.closest('.x')) closeCard();
@@ -1580,7 +1789,8 @@ results.addEventListener('click', e => { const b = e.target.closest('[data-go]')
 document.addEventListener('pointerdown', e => { if (!e.target.closest('.search')) hideResults(); });
 document.addEventListener('keydown', e => {
   if (e.key !== 'Escape') return;
-  if (!themeMenu.hidden) closeThemes(true);
+  if (!lb.hidden) closeLightbox();
+  else if (!themeMenu.hidden) closeThemes(true);
   else if (!help.hidden) closeHelp();
   else if (!results.hidden) hideResults(); else closeCard();
 });
