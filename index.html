@@ -75,7 +75,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .save:disabled{opacity:.5;cursor:default}
 .save[aria-pressed="true"]{border-color:var(--red);color:var(--red)}
 .pola{transition:opacity .25s}
-.nophotos .pola{opacity:0;pointer-events:none}
 .pinit{font-family:var(--hand);font-size:20px;fill:var(--pencil-text);text-anchor:middle;letter-spacing:.06em}
 
 /* stage */
@@ -231,7 +230,6 @@ button{font:inherit;color:inherit;cursor:pointer}
       <input id="q" type="search" placeholder="search" autocomplete="off" aria-label="Search names">
       <ul class="results" id="results" hidden></ul>
     </div>
-    <button class="save" id="photosBtn" aria-pressed="true">Photos</button>
     <div class="themepick">
       <button class="save iconbtn" id="themeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" aria-label="Colour theme" title="Colour theme">
         <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.4"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" style="fill:var(--red)"/></svg>
@@ -311,7 +309,6 @@ button{font:inherit;color:inherit;cursor:pointer}
       <li><b>Follow a line:</b> when you tap someone, everyone outside their line (parents, grandparents, partner, children and grandchildren) fades back so their branch stands out.</li>
       <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to bring them back. Very big families open with the younger branches folded.</li>
       <li><b>Zoomed out:</b> names give way to family labels. Tap a label to fly to that family. The <b>GEN</b> markers on the left show which generation you're looking at, and the small map in the corner shows where you are.</li>
-      <li><b>Photos:</b> hides or shows the polaroids, if you'd rather see just the branches.</li>
       <li><b>Save as image:</b> downloads a picture of the tree as it's showing now (folded branches stay folded), ready for the family group chat.</li>
     </ul>
 
@@ -1140,21 +1137,6 @@ function canvasPolaroid(ctx, p, t, img) {
   ctx.restore();
 }
 
-/* photos toggle, remembered per browser */
-let showPhotos = true;
-try { showPhotos = localStorage.getItem('dalessio-tree-photos') !== 'off'; } catch (e) {}
-const photosBtn = document.getElementById('photosBtn');
-function applyPhotos() {
-  svg.classList.toggle('nophotos', !showPhotos);
-  photosBtn.setAttribute('aria-pressed', String(showPhotos));
-  photosBtn.title = showPhotos ? 'Hide photos' : 'Show photos';
-}
-photosBtn.addEventListener('click', () => {
-  showPhotos = !showPhotos;
-  try { localStorage.setItem('dalessio-tree-photos', showPhotos ? 'on' : 'off'); } catch (e) {}
-  applyPhotos();
-});
-
 /* paper chips behind names so branches never cut through the lettering */
 let chips = [];
 function sizeChips() {
@@ -1316,7 +1298,7 @@ function flyTo(id) {
   if (!t) return;
   const v = viewArea();
   const k = clamp(Math.max(cam.k, 1.15), MIN_K, 1.8);
-  const wx = t.x + t.s * 60, wy = t.y + (showPhotos ? (t.kids ? 44 : -30) : 8);
+  const wx = t.x + t.s * 60, wy = t.y + (t.kids ? 44 : -30);
   animateTo({ k, x: v.w / 2 - wx * k, y: v.h / 2 - wy * k });
 }
 function zoomAt(px, py, f) {
@@ -1557,7 +1539,7 @@ function drawExport(photos) {
     const t = L.tip.get(p.id), img = photos.get(p.id);
     if (p.placeholder) canvasPrim(ctx, ghostBud(8.5), t.x, t.y);
     else blossom(0, 0, 10, rng('tip' + p.id)).forEach(q => canvasPrim(ctx, q, t.x, t.y));
-    if (showPhotos) canvasPolaroid(ctx, p, t, img);
+    canvasPolaroid(ctx, p, t, img);
     const align = t.s < 0 ? 'right' : 'left', lx = t.x + (t.s < 0 ? -17 : 17);
     const rows = labelRows(p), fontOf = r => ROW_FONT[r.cls][0] + 'px ' + (ROW_FONT[r.cls][1] === 'hand' ? HAND : MONO);
     const widths = rows.map(r => { ctx.font = fontOf(r); return ctx.measureText(r.txt).width + r.txt.length * ROW_FONT[r.cls][2]; });
@@ -1604,7 +1586,7 @@ saveBtn.addEventListener('click', async () => {
   try {
     try { await Promise.all([document.fonts.load('34px "Patrick Hand SC"'), document.fonts.load('10px "Space Mono"')]); } catch (e) {}
     const photos = new Map();
-    if (showPhotos) await Promise.all(L.people.filter(p => p.photo && !p.placeholder)
+    await Promise.all(L.people.filter(p => p.photo && !p.placeholder)
       .map(p => loadImg(p.photo).then(img => { if (img) photos.set(p.id, img); })));
     let blob = await drawExport(photos).catch(() => null);
     if (!blob && photos.size) blob = await drawExport(new Map()).catch(() => null);
@@ -1855,7 +1837,6 @@ title.textContent = TREE.title.toUpperCase();
 const tb = el('svg', { viewBox: '-12 -12 24 24', 'aria-hidden': 'true' }, title);
 document.getElementById('stamp').textContent = (TREE.planted || '').toUpperCase();
 
-applyPhotos();
 
 /* ---------- how-it-works page ---------- */
 const help = document.getElementById('help');
