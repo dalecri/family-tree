@@ -85,6 +85,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .zoom button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--edge);background:var(--zoom-bg);font-size:15px;padding:0}
 .zoom button:hover{border-color:var(--red);color:var(--red)}
 .zoom .fit{font-size:10px}
+.zoom .fold-all{display:grid;place-items:center}
+.zoom .fold-all svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.zoom .fold-all .ex,.zoom .fold-all[data-state="expand"] .co{display:none}
+.zoom .fold-all[data-state="expand"] .ex{display:inline}
+.zoom .fold-all[hidden]{display:none}
 .stamp{position:absolute;left:20px;bottom:16px;font:13px var(--mono);letter-spacing:.14em;color:var(--stamp);pointer-events:none}
 
 /* tree */
@@ -272,6 +277,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     <button id="zin" aria-label="Zoom in">+</button>
     <button id="zout" aria-label="Zoom out">&minus;</button>
     <button id="zfit" class="fit">Fit</button>
+    <button id="zfold" class="fold-all" data-state="collapse" aria-label="Collapse all branches" title="Collapse all branches"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="co" d="M4 2.5 8 6.5 12 2.5M4 13.5 8 9.5 12 13.5"/><path class="ex" d="M4 6 8 2 12 6M4 10 8 14 12 10"/></svg></button>
   </div>
 </main>
 
@@ -308,6 +314,7 @@ button{font:inherit;color:inherit;cursor:pointer}
       <li><b>Find someone:</b> type a name in the search box and press Enter. If they're inside a folded branch, it opens for you.</li>
       <li><b>Follow a line:</b> when you tap someone, everyone outside their line (parents, grandparents, partner, children and grandchildren) fades back so their branch stands out.</li>
       <li><b>Fold a branch:</b> tap the small <b>&minus;</b> pill under any couple to tuck their descendants away. It turns into <b>+</b> and a count; tap it again to bring them back. Very big families open with the younger branches folded.</li>
+      <li><b>Collapse everything:</b> the button under <b>Fit</b> folds every branch back to the first families in one tap. Tap it again to open them all.</li>
       <li><b>Zoomed out:</b> names give way to family labels. Tap a label to fly to that family. The <b>GEN</b> markers on the left show which generation you're looking at, and the small map in the corner shows where you are.</li>
       <li><b>Save as image:</b> downloads a picture of the tree as it's showing now (folded branches stay folded), ready for the family group chat.</li>
     </ul>
@@ -1220,6 +1227,7 @@ function renderTree() {
   renderOverlays();
   applySpot();
   svg.classList.toggle('big', L.people.length > 180);
+  syncFoldAll();
 }
 /* viewport culling: only paint what's near the screen (matters past a few hundred people) */
 let cullGroups = [], cullAt = null;
@@ -1318,9 +1326,9 @@ function viewArea() {
   return { w, h };
 }
 function fit(instant) {
-  const b = L.bounds, v = viewArea();
-  const k = clamp(Math.min((v.w - 40) / b.w, (v.h - 40) / b.h, 1.3), MIN_K, MAX_K);
-  const t = { k, x: v.w / 2 - (b.x + b.w / 2) * k, y: v.h / 2 - (b.y + b.h / 2) * k };
+  const b = L.bounds, v = viewArea(), rail = narrowMQ.matches ? 64 : 96;
+  const k = clamp(Math.min((v.w - rail - 24) / b.w, (v.h - 40) / b.h, 1.3), MIN_K, MAX_K);
+  const t = { k, x: rail + (v.w - rail - 4) / 2 - (b.x + b.w / 2) * k, y: v.h / 2 - (b.y + b.h / 2) * k };
   if (instant) { stopAnim(); Object.assign(cam, t); apply(); } else animateTo(t);
 }
 function flyTo(id) {
@@ -1812,6 +1820,26 @@ function ensureVisible(id) {
 }
 /* big families open folded at the grandchildren, one tap from any branch */
 const AUTO_FOLD_AT = 120;
+/* quick action: collapse every branch back to the first generation's families,
+   or, when that's already the view, open everything again */
+const foldAllBtn = document.getElementById('zfold');
+function syncFoldAll() {
+  const open = [...L.membersAll.keys()].filter(h => L.gen.get(h) >= 1 && L.kidsAll.get(h).length && !folded.has(h) && L.visible.has(h));
+  const anything = [...L.membersAll.keys()].some(h => L.gen.get(h) >= 1 && L.kidsAll.get(h).length);
+  foldAllBtn.hidden = !anything;
+  const st = open.length ? 'collapse' : 'expand', label = st === 'collapse' ? 'Collapse all branches' : 'Expand all branches';
+  foldAllBtn.dataset.state = st;
+  foldAllBtn.setAttribute('aria-label', label);
+  foldAllBtn.title = label;
+}
+foldAllBtn.addEventListener('click', () => {
+  if (foldAllBtn.dataset.state === 'collapse') {
+    L.membersAll.forEach((m, h) => { if (L.gen.get(h) >= 1 && L.kidsAll.get(h).length) folded.add(h); });
+  } else folded.clear();
+  renderTree();
+  if (sel && !L.tip.has(sel)) closeCard();
+  fit(false);
+});
 function autoFold() {
   if (L.all.length <= AUTO_FOLD_AT) return false;
   L.membersAll.forEach((m, h) => { if (L.gen.get(h) >= 2 && L.kidsAll.get(h).length) folded.add(h); });
