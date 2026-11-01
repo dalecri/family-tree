@@ -1,0 +1,1340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The D'Alessio Family</title>
+<meta name="theme-color" content="#FBF8F1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Blossom (default). Text pairs meet WCAG AA on --paper and --card. */
+  --paper:#FBF8F1;--card:#FFFDF8;--line:#e8e0d2;
+  --ink:#1f1b1d;--ink-soft:#6b6466;--pencil:#8d8589;--pencil-text:#6f686b;
+  --red:#C8392E;--pink:#EFA3B3;--amber:#B5761A;
+  --soft:#f3ece0;--edge:rgba(31,27,29,.32);--zoom-bg:rgba(251,248,241,.9);--stamp:#3a3436;
+  --shadow:rgba(60,40,30,.16);--scrim:rgba(40,28,24,.28);--tape:rgba(239,163,179,.55);--focus:#1f1b1d;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .3 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:light;
+  --hand:'Patrick Hand SC','Segoe Print','Bradley Hand','Comic Sans MS',cursive;
+  --mono:'Space Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+:root[data-theme="night"]{
+  --paper:#16131c;--card:#211c29;--line:#3a3245;
+  --ink:#EEE8F2;--ink-soft:#B5ADBF;--pencil:#8F879C;--pencil-text:#A9A1B5;
+  --red:#FF8F80;--pink:#F28DA6;--amber:#F2C94C;
+  --soft:#2c2636;--edge:rgba(238,232,242,.32);--zoom-bg:rgba(22,19,28,.88);--stamp:#CFC7D9;
+  --shadow:rgba(0,0,0,.45);--scrim:rgba(0,0,0,.5);--tape:rgba(242,141,166,.45);--focus:#F2C94C;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 .95 0 0 0 0 .9 0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:dark;
+}
+:root[data-theme="autumn"]{
+  --paper:#F5EFE3;--card:#FBF7EE;--line:#E3D7C3;
+  --ink:#2E2119;--ink-soft:#66574A;--pencil:#8C7F70;--pencil-text:#6E6255;
+  --red:#9C3A12;--pink:#E58E3F;--amber:#1F6F78;
+  --soft:#EFE5D3;--edge:rgba(46,33,25,.32);--zoom-bg:rgba(245,239,227,.9);--stamp:#3B2A20;
+  --shadow:rgba(70,40,20,.16);--scrim:rgba(50,30,15,.3);--tape:rgba(217,119,58,.42);--focus:#1F6F78;
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .3 0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme:light;
+}
+:root[data-theme="contrast"]{
+  --paper:#FFFFFF;--card:#FFFFFF;--line:#1a1a1a;
+  --ink:#000000;--ink-soft:#2b2b2b;--pencil:#4D4D4D;--pencil-text:#3a3a3a;
+  --red:#8E0F14;--pink:#E06C88;--amber:#0050B5;
+  --soft:#EDEDED;--edge:#000000;--zoom-bg:#FFFFFF;--stamp:#000000;
+  --shadow:rgba(0,0,0,.25);--scrim:rgba(0,0,0,.55);--tape:rgba(224,108,136,.5);--focus:#0050B5;
+  --grain:none;
+  color-scheme:light;
+}
+:root[data-theme="contrast"] .circ{stroke-width:3.4}
+:root[data-theme="contrast"] .save,:root[data-theme="contrast"] .zoom button{border-width:2px}
+button:focus-visible,input:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;color:var(--ink);font-family:var(--mono);
+  background-color:var(--paper);background-image:var(--grain)}
+body{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* header */
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px 16px;padding:18px 20px 6px}
+.top h1{grid-column:2;margin:0;font:400 30px/1 var(--hand);color:var(--red);letter-spacing:.18em;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.top h1 svg{width:22px;height:22px;flex:none}
+.tools{grid-column:3;justify-self:end;display:flex;align-items:center;gap:12px;min-width:0}
+.search{position:relative;width:200px;min-width:0}
+.search input{width:100%;background:transparent;border:0;border-bottom:1.5px solid var(--edge);color:var(--ink);padding:7px 2px;font:12px var(--mono);border-radius:0}
+.search input:focus{border-bottom-color:var(--red)}
+.search input::placeholder{color:var(--pencil-text)}
+.results{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 26px var(--shadow)}
+.results[hidden]{display:none}
+.results button{display:block;width:100%;text-align:left;background:none;border:0;border-radius:6px;padding:6px 8px;font:19px var(--hand);color:var(--red);letter-spacing:.04em}
+.results button:hover,.results button:focus-visible{background:var(--soft);outline:none}
+.save{background:transparent;border:1.5px solid var(--edge);border-radius:99px;padding:6px 13px;font-size:11px;white-space:nowrap}
+.save:hover{border-color:var(--red);color:var(--red)}
+.save:disabled{opacity:.5;cursor:default}
+.save[aria-pressed="true"]{border-color:var(--red);color:var(--red)}
+.pola{transition:opacity .25s}
+.nophotos .pola{opacity:0;pointer-events:none}
+.pinit{font-family:var(--hand);font-size:20px;fill:var(--pencil-text);text-anchor:middle;letter-spacing:.06em}
+
+/* stage */
+.stage{position:relative;overflow:hidden}
+#svg{display:block;width:100%;height:100%;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+#svg.dragging{cursor:grabbing}
+.zoom{position:absolute;right:16px;bottom:14px;display:flex;flex-direction:column;gap:6px}
+.zoom button{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--edge);background:var(--zoom-bg);font-size:15px;padding:0}
+.zoom button:hover{border-color:var(--red);color:var(--red)}
+.zoom .fit{font-size:10px}
+.stamp{position:absolute;left:20px;bottom:16px;font:13px var(--mono);letter-spacing:.14em;color:var(--stamp);pointer-events:none}
+
+/* tree */
+.node{cursor:pointer;outline:none}
+.hit{fill:transparent}
+.nm{font-family:var(--hand);font-size:19px;fill:var(--red);letter-spacing:.05em}
+.ghost .nm{fill:var(--pencil-text)}
+.dt{font-family:var(--mono);font-size:10px;fill:var(--ink-soft)}
+.tg{font-family:var(--mono);font-size:9px;fill:var(--pencil-text)}
+.circ{fill:none;stroke:var(--amber);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.node:focus-visible .nm{text-decoration:underline}
+.bud{transform-box:fill-box;transform-origin:center}
+.growing .bud{animation:bloom .7s cubic-bezier(.2,1.5,.4,1) backwards}
+@keyframes bloom{from{transform:scale(0)}}
+
+/* legend */
+.legend{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;padding:8px 16px 14px;font-size:11px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+
+/* card */
+#card{position:fixed;z-index:30;top:84px;right:24px;bottom:56px;width:340px;background:var(--card);color:var(--ink);
+  border:1px solid var(--line);border-radius:16px;padding:22px;overflow:auto;box-shadow:0 18px 44px var(--shadow);
+  transform:translateX(calc(100% + 40px));transition:transform .3s cubic-bezier(.2,.8,.2,1);visibility:hidden}
+#card.open{transform:none;visibility:visible}
+#card .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:0;background:var(--soft);font-size:17px;line-height:1}
+#card .hd{display:flex;gap:14px;align-items:center;padding-right:30px}
+#card .big{width:84px;height:84px;flex:none;overflow:visible}
+#card h2{margin:0 0 4px;font:400 32px/1 var(--hand);color:var(--red);letter-spacing:.04em}
+#card.isghost h2{color:var(--pencil-text)}
+#card .dates{font-size:11px;color:var(--ink-soft)}
+#card .tag{display:inline-block;margin-top:7px;font-size:10px;padding:1px 8px;border:1px dashed var(--pencil-text);border-radius:99px;color:var(--pencil-text)}
+#card .note{font-size:12.5px;line-height:1.7;margin:16px 0 4px}
+#card h3{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:20px 0 6px}
+#card .list{display:flex;flex-direction:column;gap:2px}
+#card .rel{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px dashed var(--line);padding:6px 2px}
+#card .rel:hover b,#card .rel:focus-visible b{text-decoration:underline;outline:none}
+#card .rel svg{width:24px;height:24px;flex:none;overflow:visible}
+#card .rel b{font:400 20px var(--hand);color:var(--red);font-weight:400;flex:1;letter-spacing:.04em}
+#card .rel i{font-style:normal;font-size:10px;color:var(--ink-soft)}
+#card .grab{display:none}
+
+@media (max-width:1400px){
+  .top{grid-template-columns:1fr}
+  .top h1{grid-column:1;justify-self:center}
+  .tools{grid-column:1;justify-self:center}
+}
+@media (max-width:700px){
+  .tools{gap:8px;position:relative}
+  .tools .themepick{position:static}
+  .tools .themes{left:0;right:0;width:auto}
+  .top{grid-template-columns:1fr;padding:14px 12px 4px}
+  .top h1{grid-column:1;justify-self:center;font-size:23px}
+  .tools{grid-column:1;justify-self:stretch}
+  .search{flex:1}
+  .stamp{left:12px;font-size:11px}
+  #card{top:auto;left:0;right:0;bottom:0;width:auto;max-height:62vh;max-height:62dvh;border-radius:16px 16px 0 0;
+    padding:12px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(105%)}
+  #card .grab{display:block;width:40px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 12px}
+}
+/* help page */
+.helpbtn,.iconbtn{width:32px;height:32px;padding:0;border-radius:50%;font:18px var(--hand);display:inline-grid;place-items:center;flex:none}
+.iconbtn svg{width:18px;height:18px}
+.themepick{position:relative;flex:none}
+.themes{position:absolute;right:0;top:calc(100% + 8px);z-index:25;width:236px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px var(--shadow);padding:6px}
+.themes[hidden]{display:none}
+.themes button{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-radius:8px;padding:8px;text-align:left;color:var(--ink)}
+.themes button:hover,.themes button[aria-checked="true"]{background:var(--soft)}
+.themes button[aria-checked="true"]::after{content:"\2713";margin-left:auto;font-size:13px}
+.themes .sw{display:flex;flex:none;padding-right:4px}
+.themes .sw i{width:15px;height:15px;border-radius:50%;margin-right:-5px;box-shadow:0 0 0 1px rgba(0,0,0,.28)}
+.themes b{display:block;font:400 18px/1.1 var(--hand);letter-spacing:.04em}
+.themes small{display:block;font-size:10px;color:var(--ink-soft)}
+.helpbtn.nudge{animation:nudge 1.6s ease-in-out 2.2s 3}
+@keyframes nudge{0%,100%{transform:none}40%{transform:scale(1.18) rotate(-8deg);border-color:var(--red);color:var(--red)}}
+.help{position:fixed;inset:0;z-index:50;display:flex;justify-content:center;align-items:flex-start;padding:28px 16px;overflow:auto;
+  background:var(--scrim);opacity:0;transition:opacity .25s}
+.help.open{opacity:1}
+.help[hidden]{display:none}
+.sheet{position:relative;width:100%;max-width:640px;background-color:var(--card);border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 24px 60px var(--shadow);padding:42px 46px 40px;transform:translateY(14px);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.help.open .sheet{transform:none}
+.sheet .tape{position:absolute;top:-11px;width:86px;height:22px;background:var(--tape)}
+.sheet .tape.l{left:34px;transform:rotate(-6deg)}.sheet .tape.r{right:34px;transform:rotate(5deg)}
+.sheet .x{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:0;background:var(--soft);font-size:18px;line-height:1}
+.sheet h2{margin:0 0 4px;font:400 34px/1.05 var(--hand);color:var(--red);letter-spacing:.12em;text-align:center}
+.sheet .sub{margin:0 0 26px;text-align:center;font-size:11px;letter-spacing:.14em;color:var(--ink-soft)}
+.sheet h3{display:flex;align-items:center;gap:8px;margin:28px 0 10px;font:400 24px/1 var(--hand);color:var(--red);letter-spacing:.06em}
+.sheet h3 svg{width:20px;height:20px;flex:none}
+.sheet p,.sheet li{font-size:12.5px;line-height:1.75}
+.sheet p{margin:0 0 10px}
+.sheet ul,.sheet ol{margin:0 0 10px;padding-left:20px}
+.sheet li{margin-bottom:6px}
+.sheet b{font-weight:700}
+.key{display:grid;grid-template-columns:44px 1fr;gap:10px 12px;align-items:center;margin:6px 0 10px;font-size:12.5px}
+.key svg{width:44px;height:26px;overflow:visible}
+.sheet pre{margin:10px 0 12px;padding:14px 16px;background:var(--soft);border:1px dashed var(--line);border-radius:4px;font:11.5px/1.6 var(--mono);overflow:auto;white-space:pre}
+.sheet code{font:11.5px var(--mono);background:var(--soft);padding:1px 5px;border-radius:3px}
+.sheet .note{border-left:2px solid var(--tape);padding:2px 0 2px 12px;color:var(--ink-soft)}
+.sheet .sig{margin-top:30px;text-align:right;font:20px var(--hand);color:var(--red);letter-spacing:.05em}
+@media (max-width:700px){.help{padding:0}.sheet{min-height:100%;border-radius:0;padding:40px 20px 34px;transform:none!important}.sheet .tape{display:none}}
+@media (prefers-reduced-motion:reduce){#card,.help,.sheet{transition:none}.growing .bud,.helpbtn.nudge{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1 id="title"></h1>
+  <div class="tools">
+    <div class="search">
+      <input id="q" type="search" placeholder="search" autocomplete="off" aria-label="Search names">
+      <ul class="results" id="results" hidden></ul>
+    </div>
+    <button class="save" id="photosBtn" aria-pressed="true">Photos</button>
+    <div class="themepick">
+      <button class="save iconbtn" id="themeBtn" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu" aria-label="Colour theme" title="Colour theme">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" style="fill:var(--paper);stroke:var(--ink)" stroke-width="1.4"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" style="fill:var(--red)"/></svg>
+      </button>
+      <div class="themes" id="themeMenu" role="radiogroup" aria-label="Colour theme" hidden></div>
+    </div>
+    <button class="save helpbtn" id="helpBtn" aria-label="How it works" title="How it works">?</button>
+    <button class="save" id="save">Save as image</button>
+  </div>
+</header>
+
+<main class="stage">
+  <svg id="svg" aria-label="Family tree">
+    <defs>
+      <filter id="ink" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="t"/>
+        <feDisplacementMap in="SourceGraphic" in2="t" scale="1.5"/>
+      </filter>
+      <filter id="wash" x="-20%" y="-20%" width="140%" height="140%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.09" numOctaves="2" seed="8" result="t"/>
+        <feDisplacementMap in="SourceGraphic" in2="t" scale="3.2"/>
+      </filter>
+      <clipPath id="grow" clipPathUnits="userSpaceOnUse"><circle id="growC" cx="0" cy="0" r="0"/></clipPath>
+    </defs>
+    <g id="cam">
+      <g id="scene">
+        <g id="branches" filter="url(#ink)"></g>
+        <g id="leaves"></g>
+        <g id="flowers" filter="url(#wash)"></g>
+        <g id="nodes"></g>
+      </g>
+    </g>
+  </svg>
+  <div class="stamp" id="stamp"></div>
+  <div class="zoom">
+    <button id="zin" aria-label="Zoom in">+</button>
+    <button id="zout" aria-label="Zoom out">&minus;</button>
+    <button id="zfit" class="fit">Fit</button>
+  </div>
+</main>
+
+<footer class="legend">
+  <span><svg width="26" height="8"><path d="M1 5 Q13 1 25 4" style="stroke:var(--ink)" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg>confirmed</span>
+  <span><svg width="26" height="8"><path d="M1 5 Q13 1 25 4" style="stroke:var(--pencil)" stroke-width="1.6" fill="none" stroke-dasharray="4 4" stroke-linecap="round"/></svg>to confirm</span>
+  <span><svg width="14" height="14"><circle cx="7" cy="7" r="5.5" fill="none" style="stroke:var(--pencil)" stroke-width="1.3" stroke-dasharray="2.5 2"/></svg>to add</span>
+</footer>
+
+<aside id="card" aria-hidden="true"></aside>
+
+<div class="help" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <article class="sheet">
+    <span class="tape l"></span><span class="tape r"></span>
+    <button class="x" id="helpClose" aria-label="Close">&times;</button>
+    <h2 id="helpTitle">HOW THIS TREE WORKS</h2>
+    <p class="sub" data-tree-sub></p>
+
+    <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Reading the tree</h3>
+    <p>The tree grows the way a real one does: the oldest generation is at the bottom, and each generation grows one level higher. <b>Poppy is the trunk.</b></p>
+    <p>Every <b>fork</b> in a branch is a couple. Each partner sits on their own twig, and their children's branches grow up out of that fork.</p>
+    <div class="key">
+      <svg viewBox="0 0 44 26"><path d="M3 18 Q22 6 41 10" style="stroke:var(--ink)" stroke-width="2.8" fill="none" stroke-linecap="round"/></svg><span><b>Ink branch:</b> a confirmed link.</span>
+      <svg viewBox="0 0 44 26"><path d="M3 18 Q22 6 41 10" style="stroke:var(--pencil)" stroke-width="1.6" fill="none" stroke-dasharray="4 4" stroke-linecap="round"/></svg><span><b>Pencil dashes:</b> we think so, but it still needs confirming.</span>
+      <svg viewBox="0 0 44 26"><circle cx="22" cy="13" r="8" fill="none" style="stroke:var(--pencil)" stroke-width="1.4" stroke-dasharray="3 2.5"/></svg><span><b>Empty bud:</b> someone we know belongs here but haven't added yet.</span>
+      <svg viewBox="0 0 44 26" data-pola></svg><span><b>Polaroid:</b> a photo, or initials until we have one.</span>
+    </div>
+
+    <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Getting around</h3>
+    <ul>
+      <li><b>Move:</b> drag the page. On a phone, drag with one finger.</li>
+      <li><b>Zoom:</b> scroll, pinch, or use the <b>+</b> and <b>&minus;</b> buttons. <b>Fit</b> shows the whole tree again.</li>
+      <li><b>Meet someone:</b> tap their name. Their card shows dates, a short story, and their parents, partners and children. Tap any of those names to jump to that person.</li>
+      <li><b>Find someone:</b> type a name in the search box and press Enter.</li>
+      <li><b>Photos:</b> hides or shows the polaroids, if you'd rather see just the branches.</li>
+      <li><b>Save as image:</b> downloads a picture of the whole tree, ready for the family group chat.</li>
+    </ul>
+
+    <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Adding to the tree</h3>
+    <p>This is the part we need you for. Send <b data-keepers></b> whatever you know about someone:</p>
+    <ul>
+      <li>their full name, and what people call them</li>
+      <li>how they fit in (whose child, partner or parent they are)</li>
+      <li>birth and death years, if you know them</li>
+      <li>a photo, if you have one</li>
+      <li>a sentence or two of story: where they lived, what they did, something people remember</li>
+    </ul>
+    <p class="note">Don't know everything? Send it anyway. Blanks are fine, and anything we're unsure about goes in pencil until someone confirms it.</p>
+
+    <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Updating it yourself</h3>
+    <p>For whoever ends up keeping the tree. The whole family lives in one list at the top of this file, under the heading <code>EDIT THE FAMILY HERE</code>. The tree draws itself from that list, so you never have to move anything by hand.</p>
+    <ol>
+      <li><b>Make a copy of the file first</b>, so there's always a backup.</li>
+      <li>Open the file in a plain text editor (TextEdit set to plain text, Notepad, or VS Code), not a word processor.</li>
+      <li>Find the list and copy one person, from <code>{</code> to <code>},</code>. Paste it as a new entry and change the details.</li>
+      <li>Connect them: list their parents' ids in <code>parents</code>, or add their id to a partner's <code>partners</code>.</li>
+      <li>Save the file and reload the page. The tree grows them into the right place.</li>
+    </ol>
+    <p>Each person looks like this:</p>
+<pre>{
+  id: "first-last",          // short, lowercase, no spaces
+  name: "First Last",
+  born: "", died: "",        // years or dates; "" if unknown
+  photo: "photos/first.jpg", // "" if there's no photo yet
+  parents: ["parent-id"],    // 0, 1 or 2 ids from the list
+  partners: [],              // ids; only one side needs it
+  tentative: false,          // true = draw the link in pencil
+  placeholder: false,        // true = an empty "to add" bud
+  note: "A sentence or two of story."
+},</pre>
+    <ul>
+      <li>Keep the quotes, commas and brackets exactly as they are. A missing comma is the most common reason the tree won't show up. If that happens, undo your last change.</li>
+      <li>Put photos in a <code>photos</code> folder right next to this file, so they work offline and show up in saved images.</li>
+      <li>The title and the date stamp in the corner are in <code>TREE</code>, just above the list.</li>
+    </ul>
+
+    <p class="sig" data-sig></p>
+  </article>
+</div>
+
+
+<script>
+/* =====================================================================
+   EDIT THE FAMILY HERE
+   ---------------------------------------------------------------------
+   One object per person. To add someone: copy an object, give them a
+   new unique id, and list them in someone's parents or partners.
+     id          unique, lowercase, no spaces
+     name        as it should appear
+     born, died  years or full dates; "" means unknown
+     photo       image URL or file path; "" shows a blossom
+     parents     ids of 0, 1 or 2 people in this list
+     partners    ids; partners share a fork (only one side needs it)
+     tentative   true = link to parents not yet confirmed (pencil)
+     placeholder true = a "to add" slot (empty bud)
+     note        a sentence or two of story
+   TREE.planted is the date stamped in the corner.
+   TREE.keepers is who family should send updates to (shown on the
+   "How this tree works" page).
+   TREE.theme is the starting colour theme: "blossom", "night",
+   "autumn" or "contrast". Anyone can switch it with the theme button.
+   Nothing below this block needs editing to change the family.
+   ===================================================================== */
+const TREE = { title: "The D'Alessio Family", planted: "OCT 31 2026", keepers: "Cris or July", theme: "blossom" };
+
+const PEOPLE = [
+  {
+    id: "poppy", name: "Poppy", born: "", died: "", photo: "",
+    parents: [], partners: ["poppy-partner"], tentative: false, placeholder: false,
+    note: "Recovering at home after a fall, autumn 2026. The root of this tree."
+  },
+  {
+    id: "poppy-partner", name: "To add", born: "", died: "", photo: "",
+    parents: [], partners: ["poppy"], tentative: false, placeholder: true,
+    note: ""
+  },
+  {
+    id: "mark", name: "Mark D'Alessio", born: "", died: "", photo: "",
+    parents: ["poppy", "poppy-partner"], partners: ["elena"], tentative: false, placeholder: false,
+    note: "Cris's father."
+  },
+  {
+    id: "elena", name: "Elena Ramirez", born: "", died: "", photo: "",
+    parents: [], partners: ["mark"], tentative: false, placeholder: false,
+    note: "Cris's mother. Airline and procurement executive in Montreal."
+  },
+  {
+    id: "cris", name: "Cris D'Alessio", born: "", died: "", photo: "",
+    parents: ["mark", "elena"], partners: ["tyler"], tentative: false, placeholder: false,
+    note: "Goes by Cristobal on his portfolio. Lives in LaBelle, Quebec."
+  },
+  {
+    id: "tyler", name: "Tyler", born: "", died: "", photo: "",
+    parents: [], partners: ["cris"], tentative: false, placeholder: false,
+    note: "Cris's husband."
+  },
+  {
+    id: "vince", name: "Vince D'Alessio", born: "", died: "", photo: "",
+    parents: ["poppy", "poppy-partner"], partners: [], tentative: true, placeholder: false,
+    note: "Exact place in Poppy's generation to confirm with family. Father of July."
+  },
+  {
+    id: "july", name: "July D'Alessio", born: "", died: "", photo: "",
+    parents: ["vince"], partners: [], tentative: false, placeholder: false,
+    note: "Met Cris for the first time on Oct 31, 2026. Co-builder of this tree."
+  }
+];
+/* ======================= END OF FAMILY DATA ========================== */
+
+
+(function () {
+'use strict';
+
+/* ---------- constants ---------- */
+const HALF = 190, GAP = 44, ROW_H = 210, TW = 62, TH = 30;
+const MIN_K = 0.15, MAX_K = 3;
+/* Tree palettes. UI colours live in the CSS variables of the same theme name. */
+const THEMES = {
+  blossom: { label: 'Blossom', desc: 'Cherry ink on warm paper',
+    paper:'#FBF8F1', ink:'#1f1b1d', inkSoft:'#6b6466', pencil:'#8d8589', pencilText:'#6f686b', red:'#C8392E', amber:'#B5761A',
+    center:'#B8324F', stamen:'#7a1f33', stamp:'#3a3436', polaFrame:'#ffffff', polaEdge:'#e6ddcf', polaInner:'#efe7da',
+    polaShadow:'rgba(60,40,30,.13)', tape:'rgba(239,163,179,.55)', pencilW:1,
+    pinks:['#F4B6C2','#EFA3B3','#F7C6CF','#EA97AA','#F2ADBB'], greens:['#5F7F3B','#6E8E45','#4F6E32'] },
+  night: { label: 'Night garden', desc: 'Dark, easy on the eyes',
+    paper:'#16131c', ink:'#E8E1D4', inkSoft:'#B5ADBF', pencil:'#8F879C', pencilText:'#A9A1B5', red:'#FF8F80', amber:'#F2C94C',
+    center:'#D94A6E', stamen:'#5a1028', stamp:'#CFC7D9', polaFrame:'#F1ECE3', polaEdge:'#cfc6b8', polaInner:'#3a3344',
+    polaShadow:'rgba(0,0,0,.4)', tape:'rgba(242,141,166,.5)', pencilW:1.1,
+    pinks:['#F6A9BC','#F28DA6','#F9C4D0','#EE98B0','#F4B3C3'], greens:['#8DB36A','#9CC277','#7AA35A'] },
+  autumn: { label: 'Laurentian autumn', desc: 'Maple reds and bark browns',
+    paper:'#F5EFE3', ink:'#3A2A20', inkSoft:'#66574A', pencil:'#8C7F70', pencilText:'#6E6255', red:'#9C3A12', amber:'#1F6F78',
+    center:'#7A2E12', stamen:'#3d1608', stamp:'#3B2A20', polaFrame:'#FFFDF8', polaEdge:'#E3D7C3', polaInner:'#EDE2CF',
+    polaShadow:'rgba(70,40,20,.14)', tape:'rgba(217,119,58,.42)', pencilW:1,
+    pinks:['#E9A23B','#D9773A','#F0BE5E','#C9562F','#E58E3F'], greens:['#8A8F3A','#A3953F','#6F7A33'] },
+  contrast: { label: 'High contrast', desc: 'Strongest lines and text',
+    paper:'#FFFFFF', ink:'#000000', inkSoft:'#2b2b2b', pencil:'#4D4D4D', pencilText:'#3a3a3a', red:'#8E0F14', amber:'#0050B5',
+    center:'#7A0F2E', stamen:'#2a0510', stamp:'#000000', polaFrame:'#ffffff', polaEdge:'#000000', polaInner:'#EDEDED',
+    polaShadow:'rgba(0,0,0,.18)', tape:'rgba(224,108,136,.5)', pencilW:1.5,
+    pinks:['#E8829A','#E06C88','#EC94A8','#DC6A86','#E57D96'], greens:['#2E6B1F','#3B7A2A','#245717'] }
+};
+const C = Object.assign({}, THEMES.blossom);
+const PINKS = THEMES.blossom.pinks.slice();
+const GREENS = THEMES.blossom.greens.slice();
+const HAND = '"Patrick Hand SC", "Segoe Print", "Bradley Hand", cursive';
+const MONO = '"Space Mono", ui-monospace, Menlo, Consolas, monospace';
+const NS = 'http://www.w3.org/2000/svg';
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const narrowMQ = window.matchMedia('(max-width: 700px)');
+
+/* ---------- helpers ---------- */
+function el(tag, attrs, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs || {}) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const f1 = n => (Math.round(n * 10) / 10).toString();
+
+function yearOf(s) {
+  s = String(s || '').trim();
+  if (!s) return '';
+  const m = s.match(/\d{3,4}/);
+  return m ? m[0] : s;
+}
+function shortDates(p) {
+  const b = yearOf(p.born), d = yearOf(p.died);
+  if (b && d) return b + '–' + d;
+  if (b) return 'b. ' + b;
+  if (d) return 'd. ' + d;
+  return '';
+}
+function fullDates(p) {
+  const b = String(p.born || '').trim(), d = String(p.died || '').trim();
+  if (b && d) return b + ' – ' + d;
+  if (b) return 'Born ' + b;
+  if (d) return 'Died ' + d;
+  return '';
+}
+function rng(seedStr) {
+  let h = 1779033703;
+  seedStr = String(seedStr);
+  for (let i = 0; i < seedStr.length; i++) { h = Math.imul(h ^ seedStr.charCodeAt(i), 3432918353); h = h << 13 | h >>> 19; }
+  return function () {
+    h = Math.imul(h ^ h >>> 16, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+/* ---------- drawing primitives (shared by screen and export) ---------- */
+function cubicPts(p0, p1, p2, p3, n) {
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const t = i / (n - 1), u = 1 - t;
+    const x = u*u*u*p0.x + 3*u*u*t*p1.x + 3*u*t*t*p2.x + t*t*t*p3.x;
+    const y = u*u*u*p0.y + 3*u*u*t*p1.y + 3*u*t*t*p2.y + t*t*t*p3.y;
+    let tx = 3*u*u*(p1.x-p0.x) + 6*u*t*(p2.x-p1.x) + 3*t*t*(p3.x-p2.x);
+    let ty = 3*u*u*(p1.y-p0.y) + 6*u*t*(p2.y-p1.y) + 3*t*t*(p3.y-p2.y);
+    const L = Math.hypot(tx, ty) || 1;
+    out.push({ x, y, tx: tx / L, ty: ty / L });
+  }
+  return out;
+}
+function taper(pts, w0, w1, seed) {
+  const r = rng(seed), ph = r() * 6.28, fr = 1.5 + r() * 2.5, n = pts.length, L = [], R = [];
+  pts.forEach((p, i) => {
+    const t = i / (n - 1);
+    const w = (w0 + (w1 - w0) * Math.pow(t, 0.8)) * (1 + 0.08 * Math.sin(t * fr * 6.28 + ph));
+    const nx = -p.ty, ny = p.tx;
+    L.push(f1(p.x + nx * w / 2) + ',' + f1(p.y + ny * w / 2));
+    R.push(f1(p.x - nx * w / 2) + ',' + f1(p.y - ny * w / 2));
+  });
+  return 'M' + L.join('L') + 'L' + R.reverse().join('L') + 'Z';
+}
+const line = pts => 'M' + pts.map(p => f1(p.x) + ',' + f1(p.y)).join('L');
+const circleD = (x, y, r) => 'M' + f1(x - r) + ',' + f1(y) + 'a' + f1(r) + ',' + f1(r) + ' 0 1,0 ' + f1(2 * r) + ',0a' + f1(r) + ',' + f1(r) + ' 0 1,0 ' + f1(-2 * r) + ',0Z';
+
+function blossom(x, y, r, rnd) {
+  const out = [], rot = rnd() * 6.28, base = PINKS[Math.floor(rnd() * PINKS.length)];
+  for (let i = 0; i < 5; i++) {
+    const a = rot + i * 1.2566 + (rnd() - 0.5) * 0.25, d = r * (0.52 + rnd() * 0.08);
+    out.push({ d: circleD(x + Math.cos(a) * d, y + Math.sin(a) * d, r * (0.48 + rnd() * 0.08)),
+      fill: rnd() < 0.3 ? PINKS[Math.floor(rnd() * PINKS.length)] : base, op: 0.78 + rnd() * 0.15 });
+  }
+  out.push({ d: circleD(x, y, r * 0.3), fill: C.center, op: 0.85 });
+  for (let i = 0; i < 3; i++) {
+    const a = rnd() * 6.28;
+    out.push({ d: circleD(x + Math.cos(a) * r * 0.18, y + Math.sin(a) * r * 0.18, r * 0.08), fill: C.stamen, op: 0.9 });
+  }
+  return out;
+}
+function leaf(x, y, ang, len, rnd) {
+  const w = len * 0.36, cx = Math.cos(ang), sy = Math.sin(ang);
+  const tx = x + cx * len, ty = y + sy * len, mx = x + cx * len * 0.5, my = y + sy * len * 0.5, nx = -sy, ny = cx;
+  return { d: 'M' + f1(x) + ',' + f1(y) + 'Q' + f1(mx + nx * w) + ',' + f1(my + ny * w) + ' ' + f1(tx) + ',' + f1(ty) +
+    'Q' + f1(mx - nx * w) + ',' + f1(my - ny * w) + ' ' + f1(x) + ',' + f1(y) + 'Z',
+    fill: GREENS[Math.floor(rnd() * GREENS.length)], op: 0.82 };
+}
+function ghostBud(r) { return { d: circleD(0, 0, r), stroke: C.pencil, w: 1.4 * C.pencilW, dash: '3 2.5', fill: 'none' }; }
+
+/* ---------- layout: computed from PEOPLE alone ---------- */
+function computeLayout() {
+  const byId = new Map();
+  PEOPLE.forEach(p => {
+    if (!p || !p.id) { console.warn('Family data: a person is missing an id.', p); return; }
+    if (byId.has(p.id)) console.warn('Family data: duplicate id "' + p.id + '". Only the first is used.');
+    else byId.set(p.id, p);
+  });
+  const people = [...byId.values()];
+  people.forEach(p => [...(p.parents || []), ...(p.partners || [])].forEach(q => {
+    if (!byId.has(q)) console.warn('Family data: "' + p.id + '" names "' + q + '", who is not in PEOPLE.');
+  }));
+  const index = new Map(people.map((p, i) => [p.id, i]));
+  const par = new Map(people.map(p => [p.id, (p.parents || []).filter(q => byId.has(q) && q !== p.id)]));
+  const prt = new Map(people.map(p => [p.id, new Set()]));
+  people.forEach(p => (p.partners || []).forEach(q => {
+    if (byId.has(q) && q !== p.id) { prt.get(p.id).add(q); prt.get(q).add(p.id); }
+  }));
+
+  // generations
+  const gen = new Map(people.map(p => [p.id, 0]));
+  for (let it = 0; it <= people.length + 1; it++) {
+    let changed = false;
+    people.forEach(p => {
+      const ps = par.get(p.id);
+      let g = 0;
+      if (ps.length) g = Math.max(...ps.map(q => gen.get(q))) + 1;
+      else prt.get(p.id).forEach(q => { g = Math.max(g, gen.get(q)); });
+      if (g !== gen.get(p.id)) { gen.set(p.id, g); changed = true; }
+    });
+    if (!changed) break;
+  }
+
+  // family units: a head plus partners with no parents in the tree
+  const attached = new Map();
+  people.forEach(p => {
+    if (par.get(p.id).length) return;
+    for (const q of prt.get(p.id)) if (par.get(q).length) { attached.set(p.id, q); return; }
+  });
+  people.forEach(p => {
+    if (par.get(p.id).length || attached.has(p.id)) return;
+    for (const q of prt.get(p.id)) {
+      if (index.get(q) < index.get(p.id) && !par.get(q).length && !attached.has(q)) { attached.set(p.id, q); return; }
+    }
+  });
+  const headOf = id => attached.get(id) || id;
+  const members = new Map();
+  people.forEach(p => { if (!attached.has(p.id)) members.set(p.id, [p.id]); });
+  people.forEach(p => { if (attached.has(p.id)) members.get(attached.get(p.id)).push(p.id); });
+
+  const kids = new Map([...members.keys()].map(h => [h, []]));
+  const roots = [];
+  people.forEach(p => {
+    if (attached.has(p.id)) return;
+    const ps = par.get(p.id);
+    if (ps.length) { const h = headOf(ps[0]); if (h !== p.id) kids.get(h).push(p.id); else roots.push(p.id); }
+    else roots.push(p.id);
+  });
+
+  // widths and descendant weight
+  const wMemo = new Map(), dMemo = new Map(), visiting = new Set();
+  function treeW(h) {
+    if (wMemo.has(h)) return wMemo.get(h);
+    if (visiting.has(h)) return 0;
+    visiting.add(h);
+    let kw = 0;
+    kids.get(h).forEach((k, i) => { kw += treeW(k) + (i ? GAP : 0); });
+    visiting.delete(h);
+    const w = Math.max(HALF * 2, kw);
+    wMemo.set(h, w);
+    return w;
+  }
+  function desc(h) {
+    if (dMemo.has(h)) return dMemo.get(h);
+    dMemo.set(h, members.get(h).length);
+    const d = members.get(h).length + kids.get(h).reduce((s, k) => s + desc(k), 0);
+    dMemo.set(h, d);
+    return d;
+  }
+  const stemW = h => 1.8 + 1.5 * Math.sqrt(desc(h));
+  const forkW = h => stemW(h) * 0.7;
+
+  // forks: where a family's branch splits
+  const fork = new Map(), placed = new Set(), placedRoots = [];
+  function place(h, left) {
+    if (placed.has(h)) return;
+    placed.add(h);
+    const w = treeW(h), c = left + w / 2;
+    fork.set(h, { x: c, y: -gen.get(h) * ROW_H });
+    const ks = kids.get(h);
+    let kw = 0;
+    ks.forEach((k, i) => { kw += treeW(k) + (i ? GAP : 0); });
+    let x = c - kw / 2;
+    ks.forEach(k => { place(k, x); x += treeW(k) + GAP; });
+  }
+  let cursor = 0;
+  roots.forEach(r => { if (!placed.has(r)) { place(r, cursor); placedRoots.push(r); cursor += treeW(r) + GAP * 2; } });
+  members.forEach((m, h) => { if (!placed.has(h)) { place(h, cursor); placedRoots.push(h); cursor += treeW(h) + GAP * 2; } });
+
+  // twig tips: where each person blooms
+  const tip = new Map();
+  members.forEach((m, h) => {
+    const F = fork.get(h), r = rng('tip' + h), ks = kids.get(h);
+    let lone = r() < 0.5 ? -1 : 1;
+    if (ks.length) {
+      const avg = ks.reduce((s, k) => s + fork.get(k).x, 0) / ks.length;
+      if (avg > F.x + 4) lone = -1; else if (avg < F.x - 4) lone = 1;
+    }
+    m.forEach((id, i) => {
+      const s = m.length === 1 ? lone : (i === 0 ? -1 : 1);
+      const lift = i > 1 ? (i - 1) * 40 : 0;
+      tip.set(id, { x: F.x + s * (TW + r() * 12), y: F.y - TH - lift - r() * 14, s, head: h, kids: ks.length > 0 });
+    });
+  });
+
+  // the painting
+  const ink = [], pencil = [], leaves = [], flowers = [], bases = [];
+  function decorate(pts, w0, w1, rnd, nB, nL) {
+    const n = pts.length;
+    for (let k = 0; k < nB + nL; k++) {
+      const t = 0.18 + rnd() * 0.66, p = pts[Math.round(t * (n - 1))];
+      const side = rnd() < 0.5 ? -1 : 1, w = w0 + (w1 - w0) * t, nx = -p.ty * side, ny = p.tx * side;
+      if (k < nB) {
+        const rad = 6 + rnd() * 4;
+        flowers.push(...blossom(p.x + nx * (w / 2 + rad * 0.3), p.y + ny * (w / 2 + rad * 0.3), rad, rnd));
+      } else {
+        const ang = Math.atan2(p.ty, p.tx) + side * (0.6 + rnd() * 0.5);
+        leaves.push(leaf(p.x + nx * w * 0.4, p.y + ny * w * 0.4, ang, 11 + rnd() * 6, rnd));
+      }
+    }
+  }
+  placedRoots.forEach(rId => {
+    const F = fork.get(rId), r = rng('trunk' + rId);
+    const B = { x: F.x + 70 + r() * 30, y: F.y + 260 };
+    bases.push(B);
+    const pts = cubicPts(B, { x: B.x - 4, y: B.y - 120 }, { x: F.x + 28, y: F.y + 90 }, F, 36);
+    const w0 = stemW(rId) * 2.8, w1 = forkW(rId);
+    ink.push({ d: taper(pts, w0, w1, 'trunk' + rId), fill: C.ink });
+    const sp = pts[16], ang = Math.atan2(sp.ty, sp.tx) - 0.9;
+    const S2 = { x: sp.x + Math.cos(ang) * 46, y: sp.y + Math.sin(ang) * 46 };
+    const spur = cubicPts(sp, { x: sp.x - 8, y: sp.y - 10 }, { x: S2.x + 10, y: S2.y + 6 }, S2, 12);
+    ink.push({ d: taper(spur, 3.4, 0.6, 'spur' + rId), fill: C.ink });
+    decorate(pts, w0, w1, r, 2, 2);
+  });
+  members.forEach((m, h) => {
+    const F = fork.get(h);
+    kids.get(h).forEach(k => {
+      const K = fork.get(k), dy = F.y - K.y, r = rng('stem' + k);
+      const pts = cubicPts(F, { x: F.x + (r() - 0.5) * 50, y: F.y - dy * 0.42 },
+        { x: K.x + (r() - 0.5) * 50, y: K.y + dy * 0.48 }, K, 30);
+      if (byId.get(k).tentative) {
+        pencil.push({ d: line(pts), stroke: C.pencil, w: 1.7 * C.pencilW, dash: '6 5', fill: 'none' });
+        decorate(pts, 2, 2, r, 0, 1);
+      } else {
+        const w0 = Math.min(stemW(k), forkW(h) * 1.05), w1 = forkW(k);
+        ink.push({ d: taper(pts, w0, w1, 'stem' + k), fill: C.ink });
+        decorate(pts, w0, w1, r, 2, 2);
+      }
+    });
+    if (kids.get(h).length) {
+      const r = rng('fork' + h);
+      flowers.push(...blossom(F.x + (r() - 0.5) * 18, F.y - 6 - r() * 10, 7 + r() * 3, r));
+    }
+    m.forEach(id => {
+      const T = tip.get(id), r = rng('twig' + id), S = { x: F.x, y: F.y + 6 };
+      const pts = cubicPts(S, { x: S.x + (T.x - S.x) * 0.15, y: S.y - 16 }, { x: T.x - (T.x - S.x) * 0.4, y: T.y + 8 }, T, 16);
+      if (byId.get(id).placeholder) pencil.push({ d: line(pts), stroke: C.pencil, w: 1.4 * C.pencilW, dash: '4 4', fill: 'none' });
+      else {
+        ink.push({ d: taper(pts, 2.8, 1.3, 'twig' + id), fill: C.ink });
+        if (r() < 0.75) {
+          const p = pts[10], side = r() < 0.5 ? -1 : 1;
+          leaves.push(leaf(p.x, p.y, Math.atan2(p.ty, p.tx) + side * 0.9, 10 + r() * 4, r));
+        }
+      }
+    });
+  });
+
+  // bounds
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  const grow = (a, b, c, d) => { x0 = Math.min(x0, a); y0 = Math.min(y0, b); x1 = Math.max(x1, c); y1 = Math.max(y1, d); };
+  tip.forEach(t => grow(t.s < 0 ? t.x - 170 : t.x - 16, t.kids ? t.y - 26 : t.y - 104, t.s < 0 ? t.x + 16 : t.x + 170, t.kids ? t.y + 130 : t.y + 46));
+  fork.forEach(f => grow(f.x - 20, f.y - 20, f.x + 20, f.y + 20));
+  bases.forEach(b => grow(b.x - 30, b.y - 10, b.x + 30, b.y + 4));
+  if (!people.length) { x0 = y0 = 0; x1 = y1 = 100; }
+
+  return {
+    byId, people, par, prt, gen, tip, fork, bases,
+    prims: { ink, pencil, leaves, flowers },
+    bounds: { x: x0, y: y0, w: x1 - x0, h: y1 - y0 },
+    childrenOf: id => people.filter(q => par.get(q.id).includes(id))
+  };
+}
+
+/* ---------- SVG rendering ---------- */
+const svg = document.getElementById('svg');
+const camG = document.getElementById('cam');
+const sceneG = document.getElementById('scene');
+const branchesG = document.getElementById('branches');
+const leavesG = document.getElementById('leaves');
+const flowersG = document.getElementById('flowers');
+const nodesG = document.getElementById('nodes');
+const card = document.getElementById('card');
+let L = null, sel = null;
+
+function svgPrim(p, parent) {
+  return el('path', { d: p.d, fill: p.fill || 'none', opacity: p.op, stroke: p.stroke, 'stroke-width': p.w,
+    'stroke-dasharray': p.dash, 'stroke-linecap': p.stroke ? 'round' : null }, parent);
+}
+function drawBud(parent, p, r, prefix, usePhoto) {
+  if (p.placeholder) { svgPrim(ghostBud(r * 0.85), parent); return; }
+  const flower = el('g', {}, parent);
+  blossom(0, 0, r, rng('tip' + p.id)).forEach(q => svgPrim(q, flower));
+  if (p.photo && usePhoto !== false) {
+    const cid = prefix + 'ph-' + String(p.id).replace(/[^a-zA-Z0-9_-]/g, '_');
+    const cp = el('clipPath', { id: cid }, parent);
+    el('circle', { r: r * 1.5 }, cp);
+    const ph = el('g', {}, parent);
+    const img = el('image', { href: p.photo, x: -r * 1.5, y: -r * 1.5, width: r * 3, height: r * 3,
+      preserveAspectRatio: 'xMidYMid slice', 'clip-path': 'url(#' + cid + ')' }, ph);
+    el('circle', { r: r * 1.5, fill: 'none', stroke: PINKS[1], 'stroke-width': 2.5 }, ph);
+    flower.style.display = 'none';
+    img.addEventListener('error', () => { ph.remove(); flower.style.display = ''; });
+  }
+}
+
+/* ---------- polaroids: a small taped photo above each name ---------- */
+const POLA = { W: 56, H: 66, GAP: 18, IN: 4, LIP: 18 };
+function initialsOf(p) {
+  if (p.placeholder) return '?';
+  const w = norm(p.name).toUpperCase().split(/\s+/).map(x => (x.match(/[A-Z]/) || [''])[0]).filter(Boolean);
+  return w.length ? (w.length === 1 ? w[0] : w[0] + w[w.length - 1]) : '?';
+}
+function polaGeom(p, t) {
+  const r = rng('pola' + p.id);
+  const below = 14 + (shortDates(p) ? 15 : 0) + (p.tentative ? 15 : 0) + 10;
+  const cy = t.kids ? below + POLA.H / 2 : -POLA.GAP - POLA.H / 2;
+  return { cx: t.s * 58, cy, rot: (r() - 0.5) * 10, tape: (r() - 0.5) * 14 };
+}
+function polaroid(g, p, t) {
+  const q = polaGeom(p, t), W = POLA.W, H = POLA.H;
+  const pg = el('g', { class: 'pola', transform: 'translate(' + f1(q.cx) + ',' + f1(q.cy) + ') rotate(' + f1(q.rot) + ')' }, g);
+  const ix = -W / 2 + POLA.IN, iy = -H / 2 + POLA.IN, iw = W - POLA.IN * 2, ih = H - POLA.IN - POLA.LIP;
+  if (p.placeholder) {
+    el('rect', { x: -W / 2, y: -H / 2, width: W, height: H, rx: 2, fill: 'none', stroke: C.pencil, 'stroke-width': 1.2, 'stroke-dasharray': '3 3' }, pg);
+    el('text', { class: 'pinit', x: 0, y: iy + ih / 2 + 7 }, pg).textContent = '?';
+    return;
+  }
+  el('rect', { x: -W / 2 + 1.5, y: -H / 2 + 2.5, width: W, height: H, rx: 2, fill: C.polaShadow }, pg);
+  el('rect', { x: -W / 2, y: -H / 2, width: W, height: H, rx: 2, fill: C.polaFrame, stroke: C.polaEdge, 'stroke-width': 0.8 }, pg);
+  el('rect', { x: ix, y: iy, width: iw, height: ih, fill: C.polaInner }, pg);
+  el('text', { class: 'pinit', x: 0, y: iy + ih / 2 + 7 }, pg).textContent = initialsOf(p);
+  if (p.photo) {
+    const img = el('image', { href: p.photo, x: ix, y: iy, width: iw, height: ih, preserveAspectRatio: 'xMidYMid slice' }, pg);
+    img.addEventListener('error', () => img.remove());
+  }
+  el('rect', { x: -12, y: -H / 2 - 5, width: 24, height: 9, fill: C.tape, transform: 'rotate(' + f1(q.tape) + ')' }, pg);
+}
+function canvasPolaroid(ctx, p, t, img) {
+  const q = polaGeom(p, t), W = POLA.W, H = POLA.H;
+  const ix = -W / 2 + POLA.IN, iy = -H / 2 + POLA.IN, iw = W - POLA.IN * 2, ih = H - POLA.IN - POLA.LIP;
+  ctx.save();
+  ctx.translate(t.x + q.cx, t.y + q.cy); ctx.rotate(q.rot * Math.PI / 180);
+  ctx.textAlign = 'center'; ctx.font = '20px ' + HAND; ctx.fillStyle = C.pencilText;
+  if (p.placeholder) {
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = C.pencil; ctx.lineWidth = 1.2; ctx.strokeRect(-W / 2, -H / 2, W, H); ctx.setLineDash([]);
+    ctx.fillText('?', 0, iy + ih / 2 + 7);
+    ctx.restore(); return;
+  }
+  ctx.fillStyle = C.polaShadow; ctx.fillRect(-W / 2 + 1.5, -H / 2 + 2.5, W, H);
+  ctx.fillStyle = C.polaFrame; ctx.fillRect(-W / 2, -H / 2, W, H);
+  ctx.strokeStyle = C.polaEdge; ctx.lineWidth = 0.8; ctx.strokeRect(-W / 2, -H / 2, W, H);
+  ctx.fillStyle = C.polaInner; ctx.fillRect(ix, iy, iw, ih);
+  if (img) {
+    ctx.save(); ctx.beginPath(); ctx.rect(ix, iy, iw, ih); ctx.clip();
+    const s = Math.max(iw / img.width, ih / img.height);
+    ctx.drawImage(img, ix + iw / 2 - img.width * s / 2, iy + ih / 2 - img.height * s / 2, img.width * s, img.height * s);
+    ctx.restore();
+  } else { ctx.fillStyle = C.pencilText; ctx.fillText(initialsOf(p), 0, iy + ih / 2 + 7); }
+  ctx.rotate(q.tape * Math.PI / 180);
+  ctx.fillStyle = C.tape; ctx.fillRect(-12, -H / 2 - 5, 24, 9);
+  ctx.restore();
+}
+
+/* photos toggle, remembered per browser */
+let showPhotos = true;
+try { showPhotos = localStorage.getItem('dalessio-tree-photos') !== 'off'; } catch (e) {}
+const photosBtn = document.getElementById('photosBtn');
+function applyPhotos() {
+  svg.classList.toggle('nophotos', !showPhotos);
+  photosBtn.setAttribute('aria-pressed', String(showPhotos));
+  photosBtn.title = showPhotos ? 'Hide photos' : 'Show photos';
+}
+photosBtn.addEventListener('click', () => {
+  showPhotos = !showPhotos;
+  try { localStorage.setItem('dalessio-tree-photos', showPhotos ? 'on' : 'off'); } catch (e) {}
+  applyPhotos();
+});
+
+function renderTree() {
+  L = computeLayout();
+  [branchesG, leavesG, flowersG, nodesG].forEach(g => { g.textContent = ''; });
+  L.prims.ink.forEach(p => svgPrim(p, branchesG));
+  L.prims.pencil.forEach(p => svgPrim(p, branchesG));
+  L.prims.leaves.forEach(p => svgPrim(p, leavesG));
+  L.prims.flowers.forEach(p => svgPrim(p, flowersG));
+  L.people.forEach(p => {
+    const t = L.tip.get(p.id);
+    const g = el('g', {
+      class: 'node' + (p.placeholder ? ' ghost' : ''), 'data-id': p.id,
+      transform: 'translate(' + f1(t.x) + ',' + f1(t.y) + ')',
+      tabindex: 0, role: 'button', 'aria-label': p.name || p.id
+    }, nodesG);
+    const ds = shortDates(p);
+    el('rect', { class: 'hit', x: t.s < 0 ? -178 : -16, y: -24, width: 194, height: 34 + (ds ? 16 : 0) + (p.tentative ? 16 : 0) + 14 }, g);
+    const bud = el('g', { class: 'bud', style: 'animation-delay:' + (0.35 + L.gen.get(t.head) * 0.32).toFixed(2) + 's' }, g);
+    drawBud(bud, p, 10, 'n-', false);
+    polaroid(g, p, t);
+    const lab = el('g', { class: 'lbl' }, g);
+    const anchor = t.s < 0 ? 'end' : 'start', lx = t.s < 0 ? -17 : 17;
+    el('text', { class: 'nm', x: lx, y: 6, 'text-anchor': anchor }, lab).textContent = p.name || p.id;
+    let ny = 6;
+    if (ds) { ny += 15; el('text', { class: 'dt', x: lx, y: ny, 'text-anchor': anchor }, lab).textContent = ds; }
+    if (p.tentative) {
+      ny += 15;
+      el('text', { class: 'tg', x: lx, y: ny, 'text-anchor': anchor }, lab).textContent = 'link to confirm';
+      const ux = t.s < 0 ? lx - 82 : lx;
+      el('line', { x1: ux, y1: ny + 4, x2: ux + 82, y2: ny + 4, stroke: C.pencil, 'stroke-width': 1, 'stroke-dasharray': '2 3' }, lab);
+    }
+  });
+  if (sel) markSelected();
+}
+
+/* hand-drawn circle around the selected name */
+function handCircle(bb, seed) {
+  const r = rng(seed), cx = bb.x + bb.width / 2, cy = bb.y + bb.height / 2;
+  const rx = bb.width / 2 + 16, ry = bb.height / 2 + 11, a0 = -2.5 + r() * 0.6, ph = r() * 6.28;
+  const pts = [];
+  for (let i = 0; i <= 56; i++) {
+    const u = i / 56, a = a0 + u * (6.28 + 0.55), k = 1 + 0.05 * Math.sin(3 * a + ph) + u * 0.07;
+    pts.push(f1(cx + Math.cos(a) * rx * k) + ',' + f1(cy + Math.sin(a) * ry * k));
+  }
+  return 'M' + pts.join('L');
+}
+function markSelected() {
+  nodesG.querySelectorAll('.circ').forEach(c => c.remove());
+  if (!sel) return;
+  const g = nodesG.querySelector('.node[data-id="' + CSS.escape(sel) + '"]');
+  if (!g) return;
+  let bb;
+  try { bb = g.querySelector('.lbl').getBBox(); } catch (e) { return; }
+  const path = el('path', { class: 'circ', d: handCircle(bb, 'c' + sel) }, g);
+  if (!reduceMotion.matches) {
+    const len = path.getTotalLength();
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len;
+    path.getBoundingClientRect();
+    path.style.transition = 'stroke-dashoffset .5s ease-out';
+    path.style.strokeDashoffset = 0;
+  }
+}
+
+/* ---------- camera ---------- */
+const cam = { x: 0, y: 0, k: 1 };
+let anim = null;
+function apply() { camG.setAttribute('transform', 'translate(' + cam.x + ',' + cam.y + ') scale(' + cam.k + ')'); }
+function stopAnim() { if (anim) { cancelAnimationFrame(anim); anim = null; } }
+function animateTo(t) {
+  stopAnim();
+  if (reduceMotion.matches) { Object.assign(cam, t); apply(); return; }
+  const s = { x: cam.x, y: cam.y, k: cam.k }, t0 = performance.now(), D = 420;
+  const step = now => {
+    const u = clamp((now - t0) / D, 0, 1);
+    const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+    cam.x = s.x + (t.x - s.x) * e; cam.y = s.y + (t.y - s.y) * e; cam.k = s.k + (t.k - s.k) * e;
+    apply();
+    anim = u < 1 ? requestAnimationFrame(step) : null;
+  };
+  anim = requestAnimationFrame(step);
+}
+function viewArea() {
+  const r = svg.getBoundingClientRect();
+  let w = r.width, h = r.height;
+  if (card.classList.contains('open')) {
+    if (narrowMQ.matches) {
+      const sheetTop = window.innerHeight - card.offsetHeight;
+      h = Math.max(140, Math.min(h, sheetTop - r.top));
+    } else {
+      const left = window.innerWidth - 24 - card.offsetWidth;
+      w = Math.max(180, Math.min(w, left - r.left - 12));
+    }
+  }
+  return { w, h };
+}
+function fit(instant) {
+  const b = L.bounds, v = viewArea();
+  const k = clamp(Math.min((v.w - 40) / b.w, (v.h - 40) / b.h, 1.3), MIN_K, MAX_K);
+  const t = { k, x: v.w / 2 - (b.x + b.w / 2) * k, y: v.h / 2 - (b.y + b.h / 2) * k };
+  if (instant) { stopAnim(); Object.assign(cam, t); apply(); } else animateTo(t);
+}
+function flyTo(id) {
+  const t = L.tip.get(id);
+  if (!t) return;
+  const v = viewArea();
+  const k = clamp(Math.max(cam.k, 1.15), MIN_K, 1.8);
+  const wx = t.x + t.s * 60, wy = t.y + (showPhotos ? (t.kids ? 44 : -30) : 8);
+  animateTo({ k, x: v.w / 2 - wx * k, y: v.h / 2 - wy * k });
+}
+function zoomAt(px, py, f) {
+  const k2 = clamp(cam.k * f, MIN_K, MAX_K), r = k2 / cam.k;
+  cam.x = px - (px - cam.x) * r; cam.y = py - (py - cam.y) * r; cam.k = k2;
+  apply();
+}
+function zoomButton(f) {
+  const r = svg.getBoundingClientRect(), px = r.width / 2, py = r.height / 2;
+  const k2 = clamp(cam.k * f, MIN_K, MAX_K), q = k2 / cam.k;
+  animateTo({ k: k2, x: px - (px - cam.x) * q, y: py - (py - cam.y) * q });
+}
+
+/* the tree grows in from its base */
+function growIn() {
+  if (reduceMotion.matches || !L.bases.length) return;
+  const b = L.bounds, o = L.bases[0];
+  const rMax = Math.max(...[[b.x, b.y], [b.x + b.w, b.y], [b.x, b.y + b.h], [b.x + b.w, b.y + b.h]]
+    .map(([x, y]) => Math.hypot(x - o.x, y - o.y))) + 40;
+  const c = document.getElementById('growC');
+  c.setAttribute('cx', o.x); c.setAttribute('cy', o.y); c.setAttribute('r', 0);
+  sceneG.setAttribute('clip-path', 'url(#grow)');
+  svg.classList.add('growing');
+  const t0 = performance.now(), D = 1700;
+  const step = now => {
+    const u = clamp((now - t0) / D, 0, 1);
+    c.setAttribute('r', (rMax * (1 - Math.pow(1 - u, 2.2))).toFixed(1));
+    if (u < 1) requestAnimationFrame(step); else sceneG.removeAttribute('clip-path');
+  };
+  requestAnimationFrame(step);
+}
+
+/* ---------- pointer: pan, pinch, tap ---------- */
+const ptrs = new Map();
+let drag = null, pinch = null;
+function local(pt) { const r = svg.getBoundingClientRect(); return { x: pt.x - r.left, y: pt.y - r.top }; }
+function pinchState() {
+  const [a, b] = [...ptrs.values()];
+  return { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, m: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 } };
+}
+svg.addEventListener('pointerdown', e => {
+  if (e.button !== undefined && e.button > 0) return;
+  stopAnim();
+  try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+  ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+  if (ptrs.size === 1) {
+    const n = e.target.closest && e.target.closest('[data-id]');
+    drag = { sx: e.clientX, sy: e.clientY, moved: false, id: n ? n.getAttribute('data-id') : null };
+  } else if (ptrs.size === 2) {
+    if (drag) drag.moved = true;
+    pinch = pinchState();
+  }
+});
+svg.addEventListener('pointermove', e => {
+  if (!ptrs.has(e.pointerId)) return;
+  const prev = ptrs.get(e.pointerId), cur = { x: e.clientX, y: e.clientY };
+  ptrs.set(e.pointerId, cur);
+  if (ptrs.size === 1 && drag) {
+    if (!drag.moved && Math.hypot(cur.x - drag.sx, cur.y - drag.sy) > 5) { drag.moved = true; svg.classList.add('dragging'); }
+    if (drag.moved) { cam.x += cur.x - prev.x; cam.y += cur.y - prev.y; apply(); }
+  } else if (ptrs.size === 2 && pinch) {
+    const now = pinchState(), m = local(now.m);
+    cam.x += now.m.x - pinch.m.x; cam.y += now.m.y - pinch.m.y;
+    zoomAt(m.x, m.y, now.d / pinch.d);
+    pinch = now;
+  }
+});
+function endPointer(e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId);
+  if (ptrs.size === 1) {
+    pinch = null;
+    const [p] = [...ptrs.values()];
+    drag = { sx: p.x, sy: p.y, moved: true, id: null };
+    return;
+  }
+  if (ptrs.size === 0) {
+    if (drag && !drag.moved && e.type === 'pointerup') {
+      if (drag.id) select(drag.id, true); else closeCard();
+    }
+    drag = null; pinch = null;
+    svg.classList.remove('dragging');
+  }
+}
+svg.addEventListener('pointerup', endPointer);
+svg.addEventListener('pointercancel', endPointer);
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  stopAnim();
+  const m = local({ x: e.clientX, y: e.clientY });
+  const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
+  zoomAt(m.x, m.y, Math.exp(-e.deltaY * unit * (e.ctrlKey ? 0.01 : 0.0015)));
+}, { passive: false });
+nodesG.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const n = e.target.closest('[data-id]');
+  if (n) { e.preventDefault(); select(n.getAttribute('data-id'), true); }
+});
+document.getElementById('zin').addEventListener('click', () => zoomButton(1.35));
+document.getElementById('zout').addEventListener('click', () => zoomButton(1 / 1.35));
+document.getElementById('zfit').addEventListener('click', () => fit(false));
+
+/* ---------- person card ---------- */
+function miniBud(svgEl, p, prefix) { drawBud(svgEl, p, 9, prefix); }
+function relButton(p, label) {
+  return '<button class="rel" data-go="' + esc(p.id) + '"><svg viewBox="-14 -14 28 28" data-mini="' + esc(p.id) +
+    '"></svg><b>' + esc(p.name || p.id) + '</b><i>' + esc(label) + '</i></button>';
+}
+function openCard(id) {
+  const p = L.byId.get(id);
+  if (!p) return;
+  const parents = L.par.get(id).map(q => L.byId.get(q));
+  const partners = [...L.prt.get(id)].map(q => L.byId.get(q));
+  const children = L.childrenOf(id);
+  const fd = fullDates(p);
+  let html = '<div class="grab"></div><button class="x" aria-label="Close">&times;</button>' +
+    '<div class="hd"><svg class="big" viewBox="-24 -24 48 48"></svg><div><h2>' + esc(p.name || p.id) + '</h2>' +
+    (fd ? '<div class="dates">' + esc(fd) + '</div>' : '') +
+    (p.tentative ? '<span class="tag">link to confirm</span>' : '') + '</div></div>' +
+    (p.note ? '<p class="note">' + esc(p.note) + '</p>' : '');
+  if (parents.length || partners.length) {
+    html += '<h3>Parents &amp; partners</h3><div class="list">' +
+      parents.map(q => relButton(q, 'parent')).join('') + partners.map(q => relButton(q, 'partner')).join('') + '</div>';
+  }
+  if (children.length) html += '<h3>Children</h3><div class="list">' + children.map(q => relButton(q, 'child')).join('') + '</div>';
+  card.innerHTML = html;
+  card.classList.toggle('isghost', !!p.placeholder);
+  drawBud(card.querySelector('.big'), p, 16, 'card-');
+  card.querySelectorAll('[data-mini]').forEach((s, i) => miniBud(s, L.byId.get(s.getAttribute('data-mini')), 'li' + i + '-'));
+  card.classList.add('open');
+  card.setAttribute('aria-hidden', 'false');
+  card.scrollTop = 0;
+}
+function closeCard() {
+  if (!card.classList.contains('open') && !sel) return;
+  card.classList.remove('open');
+  card.setAttribute('aria-hidden', 'true');
+  sel = null;
+  markSelected();
+}
+function select(id, fly) {
+  if (!L.byId.has(id)) return;
+  sel = id;
+  markSelected();
+  openCard(id);
+  if (fly) flyTo(id);
+}
+card.addEventListener('click', e => {
+  const go = e.target.closest('[data-go]');
+  if (go) { select(go.getAttribute('data-go'), true); return; }
+  if (e.target.closest('.x')) closeCard();
+});
+
+/* ---------- search ---------- */
+const input = document.getElementById('q');
+const results = document.getElementById('results');
+function matches(q) {
+  q = norm(q.trim());
+  return q ? L.people.filter(p => norm(p.name).includes(q)) : [];
+}
+function hideResults() { results.hidden = true; results.innerHTML = ''; }
+function showResults() {
+  const m = matches(input.value).slice(0, 8);
+  results.innerHTML = m.map(p => '<li><button data-go="' + esc(p.id) + '">' + esc(p.name || p.id) + '</button></li>').join('');
+  results.hidden = !m.length;
+}
+function goTo(id) { hideResults(); input.blur(); select(id, true); }
+input.addEventListener('input', showResults);
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { const m = matches(input.value); if (m[0]) goTo(m[0].id); }
+  else if (e.key === 'Escape') { input.value = ''; hideResults(); input.blur(); e.stopPropagation(); }
+});
+results.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) goTo(b.getAttribute('data-go')); });
+document.addEventListener('pointerdown', e => { if (!e.target.closest('.search')) hideResults(); });
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (!themeMenu.hidden) closeThemes(true);
+  else if (!help.hidden) closeHelp();
+  else if (!results.hidden) hideResults(); else closeCard();
+});
+
+/* ---------- export: paint the whole tree onto a canvas ---------- */
+function loadImg(src) {
+  return new Promise(res => {
+    const i = new Image();
+    i.crossOrigin = 'anonymous';
+    i.onload = () => res(i); i.onerror = () => res(null);
+    i.src = src;
+  });
+}
+function canvasPrim(ctx, p, dx, dy) {
+  ctx.save();
+  if (dx || dy) ctx.translate(dx, dy);
+  ctx.globalAlpha = p.op == null ? 1 : p.op;
+  const path = new Path2D(p.d);
+  if (p.fill && p.fill !== 'none') { ctx.fillStyle = p.fill; ctx.fill(path); }
+  if (p.stroke) {
+    ctx.strokeStyle = p.stroke; ctx.lineWidth = p.w || 1; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.setLineDash(p.dash ? p.dash.split(/\s+/).map(Number) : []);
+    ctx.stroke(path);
+  }
+  ctx.restore();
+}
+function spaced(ctx, text, x, y, spacing, align) {
+  let w = 0;
+  const chars = [...text], ws = chars.map(c => ctx.measureText(c).width);
+  w = ws.reduce((a, b) => a + b, 0) + spacing * (chars.length - 1);
+  let cx = align === 'center' ? x - w / 2 : align === 'right' ? x - w : x;
+  ctx.textAlign = 'left';
+  chars.forEach((c, i) => { ctx.fillText(c, cx, y); cx += ws[i] + spacing; });
+  return w;
+}
+function drawExport(photos) {
+  const b = L.bounds, PAD = 56, HEAD = 96, FOOT = 64;
+  const W = Math.ceil(b.w + PAD * 2), H = Math.ceil(b.h + PAD * 2 + HEAD + FOOT);
+  const S = Math.min(2, 8000 / Math.max(W, H));
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(W * S); cv.height = Math.round(H * S);
+  const ctx = cv.getContext('2d');
+  ctx.scale(S, S);
+  ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H);
+
+  ctx.fillStyle = C.red; ctx.font = '34px ' + HAND; ctx.textBaseline = 'alphabetic';
+  spaced(ctx, TREE.title.toUpperCase(), W / 2, 62, 6, 'center');
+
+  ctx.save();
+  ctx.translate(PAD - b.x, HEAD + PAD - b.y);
+  L.prims.ink.forEach(p => canvasPrim(ctx, p));
+  L.prims.pencil.forEach(p => canvasPrim(ctx, p));
+  L.prims.leaves.forEach(p => canvasPrim(ctx, p));
+  L.prims.flowers.forEach(p => canvasPrim(ctx, p));
+  L.people.forEach(p => {
+    const t = L.tip.get(p.id), img = photos.get(p.id);
+    if (p.placeholder) canvasPrim(ctx, ghostBud(8.5), t.x, t.y);
+    else blossom(0, 0, 10, rng('tip' + p.id)).forEach(q => canvasPrim(ctx, q, t.x, t.y));
+    if (showPhotos) canvasPolaroid(ctx, p, t, img);
+    const align = t.s < 0 ? 'right' : 'left', lx = t.x + (t.s < 0 ? -17 : 17);
+    ctx.textAlign = align;
+    ctx.font = '19px ' + HAND; ctx.fillStyle = p.placeholder ? C.pencilText : C.red;
+    spaced(ctx, p.name || p.id, lx, t.y + 6, 0.9, align);
+    let ny = t.y + 6;
+    const ds = shortDates(p);
+    if (ds) { ny += 15; ctx.font = '10px ' + MONO; ctx.fillStyle = C.inkSoft; ctx.textAlign = align; ctx.fillText(ds, lx, ny); }
+    if (p.tentative) {
+      ny += 15; ctx.font = '9px ' + MONO; ctx.fillStyle = C.pencilText; ctx.textAlign = align;
+      ctx.fillText('link to confirm', lx, ny);
+    }
+  });
+  ctx.restore();
+
+  ctx.textAlign = 'left'; ctx.font = '14px ' + MONO; ctx.fillStyle = C.stamp;
+  if (TREE.planted) spaced(ctx, TREE.planted.toUpperCase(), 28, H - 28, 2, 'left');
+  ctx.font = '10px ' + MONO; ctx.fillStyle = C.inkSoft;
+  let lx = W - 28;
+  const items = [['to add', 'bud'], ['to confirm', 'pencil'], ['confirmed', 'ink']];
+  items.forEach(([label, kind]) => {
+    const tw = ctx.measureText(label).width;
+    ctx.textAlign = 'right'; ctx.fillText(label, lx, H - 28);
+    lx -= tw + 8;
+    if (kind === 'bud') canvasPrim(ctx, ghostBud(5), lx - 5, H - 32);
+    else canvasPrim(ctx, kind === 'ink'
+      ? { d: 'M' + (lx - 26) + ',' + (H - 31) + ' Q' + (lx - 13) + ',' + (H - 35) + ' ' + lx + ',' + (H - 32), stroke: C.ink, w: 2.6 }
+      : { d: 'M' + (lx - 26) + ',' + (H - 31) + ' Q' + (lx - 13) + ',' + (H - 35) + ' ' + lx + ',' + (H - 32), stroke: C.pencil, w: 1.6 * C.pencilW, dash: '4 4' });
+    lx -= (kind === 'bud' ? 12 : 28) + 20;
+  });
+
+  return new Promise((res, rej) => {
+    try { cv.toBlob(bl => bl ? res(bl) : rej(new Error('empty')), 'image/png'); }
+    catch (err) { rej(err); }
+  });
+}
+const saveBtn = document.getElementById('save');
+saveBtn.addEventListener('click', async () => {
+  saveBtn.disabled = true;
+  const label = saveBtn.textContent;
+  saveBtn.textContent = 'Saving…';
+  try {
+    try { await Promise.all([document.fonts.load('34px "Patrick Hand SC"'), document.fonts.load('10px "Space Mono"')]); } catch (e) {}
+    const photos = new Map();
+    if (showPhotos) await Promise.all(L.people.filter(p => p.photo && !p.placeholder)
+      .map(p => loadImg(p.photo).then(img => { if (img) photos.set(p.id, img); })));
+    let blob = await drawExport(photos).catch(() => null);
+    if (!blob && photos.size) blob = await drawExport(new Map()).catch(() => null);
+    if (blob) {
+      const url = URL.createObjectURL(blob), a = document.createElement('a');
+      a.href = url; a.download = 'dalessio-family-tree.png';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.textContent = label;
+  }
+});
+
+/* ---------- boot ---------- */
+const title = document.getElementById('title');
+title.textContent = TREE.title.toUpperCase();
+const tb = el('svg', { viewBox: '-12 -12 24 24', 'aria-hidden': 'true' }, title);
+document.getElementById('stamp').textContent = (TREE.planted || '').toUpperCase();
+
+applyPhotos();
+
+/* ---------- how-it-works page ---------- */
+const help = document.getElementById('help');
+const helpBtn = document.getElementById('helpBtn');
+help.querySelector('[data-tree-sub]').textContent = (TREE.title + (TREE.planted ? ' · planted ' + TREE.planted : '')).toUpperCase();
+help.querySelectorAll('[data-keepers]').forEach(n => { n.textContent = TREE.keepers || 'whoever keeps the tree'; });
+help.querySelector('[data-sig]').textContent = TREE.keepers ? '❀ ' + TREE.keepers : '';
+function paintDecor() {
+  tb.textContent = '';
+  blossom(0, 0, 9, rng('title')).forEach(p => svgPrim(p, tb));
+  help.querySelectorAll('[data-bloom]').forEach((sv, i) => {
+    sv.textContent = '';
+    blossom(0, 0, 9, rng('help' + i)).forEach(p => svgPrim(p, sv));
+  });
+  const sv = help.querySelector('[data-pola]');
+  sv.textContent = '';
+  const g = el('g', { transform: 'translate(22,13) rotate(-5)' }, sv);
+  el('rect', { x: -10, y: -12, width: 20, height: 24, rx: 1, fill: C.polaFrame, stroke: C.polaEdge, 'stroke-width': 0.8 }, g);
+  el('rect', { x: -8, y: -10, width: 16, height: 15, fill: C.polaInner }, g);
+  el('rect', { x: -6, y: -15, width: 12, height: 5, fill: C.tape }, g);
+}
+let helpReturn = null;
+function openHelp() {
+  helpReturn = document.activeElement;
+  help.hidden = false;
+  help.scrollTop = 0;
+  requestAnimationFrame(() => help.classList.add('open'));
+  document.getElementById('helpClose').focus();
+  helpBtn.classList.remove('nudge');
+  try { localStorage.setItem('dalessio-tree-help-seen', '1'); } catch (e) {}
+}
+function closeHelp() {
+  help.classList.remove('open');
+  setTimeout(() => { help.hidden = true; }, reduceMotion.matches ? 0 : 250);
+  if (helpReturn && helpReturn.focus) helpReturn.focus();
+}
+helpBtn.addEventListener('click', openHelp);
+document.getElementById('helpClose').addEventListener('click', closeHelp);
+help.addEventListener('click', e => { if (e.target === help) closeHelp(); });
+try { if (!localStorage.getItem('dalessio-tree-help-seen')) helpBtn.classList.add('nudge'); } catch (e) {}
+if (location.hash === '#help') openHelp();
+
+/* ---------- colour themes ---------- */
+const themeBtn = document.getElementById('themeBtn');
+const themeMenu = document.getElementById('themeMenu');
+let theme = null;
+function startTheme() {
+  try { const saved = localStorage.getItem('dalessio-tree-theme'); if (THEMES[saved]) return saved; } catch (e) {}
+  if (window.matchMedia('(prefers-contrast: more)').matches) return 'contrast';
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'night';
+  return THEMES[TREE.theme] ? TREE.theme : 'blossom';
+}
+function setTheme(name, save) {
+  if (!THEMES[name]) name = 'blossom';
+  theme = name;
+  const t = THEMES[name];
+  Object.assign(C, t);
+  PINKS.splice(0, PINKS.length, ...t.pinks);
+  GREENS.splice(0, GREENS.length, ...t.greens);
+  document.documentElement.setAttribute('data-theme', name);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', t.paper);
+  if (save) { try { localStorage.setItem('dalessio-tree-theme', name); } catch (e) {} }
+  themeMenu.querySelectorAll('[role="radio"]').forEach(b => {
+    const on = b.dataset.theme === name;
+    b.setAttribute('aria-checked', String(on));
+    b.tabIndex = on ? 0 : -1;
+  });
+  paintDecor();
+  if (L) {
+    renderTree();
+    if (sel && card.classList.contains('open')) openCard(sel);
+  }
+}
+themeMenu.innerHTML = Object.keys(THEMES).map(k => {
+  const t = THEMES[k];
+  return '<button role="radio" aria-checked="false" data-theme="' + k + '"><span class="sw" aria-hidden="true">' +
+    [t.paper, t.ink, t.red, t.pinks[1]].map(c => '<i style="background:' + c + '"></i>').join('') +
+    '</span><span><b>' + esc(t.label) + '</b><small>' + esc(t.desc) + '</small></span></button>';
+}).join('');
+function openThemes() {
+  themeMenu.hidden = false;
+  themeBtn.setAttribute('aria-expanded', 'true');
+  const cur = themeMenu.querySelector('[aria-checked="true"]');
+  if (cur) cur.focus();
+}
+function closeThemes(refocus) {
+  themeMenu.hidden = true;
+  themeBtn.setAttribute('aria-expanded', 'false');
+  if (refocus) themeBtn.focus();
+}
+themeBtn.addEventListener('click', () => { themeMenu.hidden ? openThemes() : closeThemes(); });
+themeMenu.addEventListener('click', e => {
+  const b = e.target.closest('[data-theme]');
+  if (b) { setTheme(b.dataset.theme, true); closeThemes(true); }
+});
+themeMenu.addEventListener('keydown', e => {
+  const opts = [...themeMenu.querySelectorAll('[role="radio"]')];
+  const i = opts.indexOf(document.activeElement);
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); const n = opts[(i + 1) % opts.length]; n.focus(); setTheme(n.dataset.theme, true); }
+  else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); const n = opts[(i - 1 + opts.length) % opts.length]; n.focus(); setTheme(n.dataset.theme, true); }
+  else if (e.key === 'Tab') closeThemes(false);
+});
+document.addEventListener('pointerdown', e => { if (!themeMenu.hidden && !e.target.closest('.themepick')) closeThemes(false); });
+setTheme(startTheme(), false);
+
+renderTree();
+fit(true);
+growIn();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (sel) markSelected(); }).catch(() => {});
+})();
+</script>
+</body>
+</html>
