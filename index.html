@@ -184,6 +184,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
 }
 /* help page */
 .helpbtn,.iconbtn{width:32px;height:32px;padding:0;border-radius:50%;font:18px var(--hand);display:inline-grid;place-items:center;flex:none}
+.helpbtn{width:auto;padding:0 13px;border-radius:999px;font-size:14px;letter-spacing:.02em}
 .iconbtn svg{width:18px;height:18px}
 .themepick{position:relative;flex:none}
 .themes{position:absolute;right:0;top:calc(100% + 8px);z-index:25;width:236px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px var(--shadow);padding:6px}
@@ -272,7 +273,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
       <div class="themes" id="themeMenu" role="radiogroup" aria-label="Colour theme" hidden></div>
     </div>
     <a class="save origins" href="origins.html">Origins</a>
-    <button class="save helpbtn" id="helpBtn" aria-label="How it works" title="How it works">?</button>
+    <button class="save helpbtn" id="helpBtn" aria-label="How to use" title="How to use">How to use</button>
     <button class="save" id="save">Save as image</button>
   </div>
 </header>
@@ -334,7 +335,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
   <article class="sheet">
     <span class="tape l"></span><span class="tape r"></span>
     <button class="x" id="helpClose" aria-label="Close">&times;</button>
-    <h2 id="helpTitle">HOW THIS TREE WORKS</h2>
+    <h2 id="helpTitle">HOW TO USE THIS TREE</h2>
     <p class="sub" data-tree-sub></p>
 
     <h3><svg viewBox="-12 -12 24 24" data-bloom></svg>Reading the tree</h3>
