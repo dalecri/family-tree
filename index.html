@@ -21,6 +21,10 @@
   --hand:'Patrick Hand SC','Segoe Print','Bradley Hand','Comic Sans MS',cursive;
   --mono:'Space Mono',ui-monospace,Menlo,Consolas,monospace;
 }
+:root[data-theme="classic"]{
+  --ink-soft:#6b6466;--pencil:#8d8589;--pencil-text:#6f686b;
+  --pink:#EFA3B3;--amber:#B5761A;
+}
 :root[data-theme="night"]{
   --paper:#16131c;--card:#211c29;--line:#3a3245;
   --ink:#EEE8F2;--ink-soft:#B5ADBF;--pencil:#8F879C;--pencil-text:#A9A1B5;
@@ -342,7 +346,7 @@ a.save:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
     <p>The tree grows the way a real one does: the oldest generation is at the bottom, and each generation grows one level higher. <b>The trunk is Vincent and Rosaria</b>, Alfred's parents in Torricella Sicura, Italy.</p>
     <p>Every <b>fork</b> in a branch is a couple. Each partner sits on their own twig, and their children's branches grow up out of that fork.</p>
     <div class="key">
-      <svg viewBox="0 0 44 26"><path d="M3 7 Q22 2 41 5" style="stroke:#3B6FD4" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M3 14 Q22 9 41 12" style="stroke:#CE5F8A" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M3 21 Q22 16 41 19" style="stroke:#12805C" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span><b>Coloured branches:</b> a solid branch is a confirmed link, and its colour is the family line: gold for Alfred and Simone's trunk, green for Italy, blue for Vincent's, purple for Fred's, pink for Gerry's, orange for Robert's, brown for Andy's, the same colours as the family archive folders. Each name is underlined in its family colour too.</span>
+      <svg viewBox="0 0 44 26"><path d="M3 7 Q22 2 41 5" style="stroke:#3B6FD4" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M3 14 Q22 9 41 12" style="stroke:#CE5F8A" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M3 21 Q22 16 41 19" style="stroke:#12805C" stroke-width="2.6" fill="none" stroke-linecap="round"/></svg><span><b>Coloured branches:</b> a solid branch is a confirmed link, and its colour is the family line: gold for Alfred and Simone's trunk, green for Italy, blue for Vincent's, purple for Fred's, pink for Gerry's, orange for Robert's, brown for Andy's, the same colours as the family archive folders. Each name is underlined in its family colour too. The Classic theme restores the original look instead: plain ink branches and no colours.</span>
       <svg viewBox="0 0 44 26"><path d="M3 18 Q22 6 41 10" style="stroke:#8B5FC9" stroke-width="1.6" fill="none" stroke-dasharray="4 4" stroke-linecap="round"/></svg><span><b>Dashed branch:</b> we think so, but it still needs confirming. Dashes come in the family colour too.</span>
       <svg viewBox="0 0 44 26"><circle cx="22" cy="13" r="8" fill="none" style="stroke:var(--pencil)" stroke-width="1.4" stroke-dasharray="3 2.5"/></svg><span><b>Empty bud:</b> someone we know belongs here but haven't added yet.</span>
       <svg viewBox="0 0 44 26" data-pola></svg><span><b>Polaroid:</b> a photo, or initials until we have one.</span>
@@ -967,6 +971,11 @@ const THEMES = {
     center:'#B8324F', stamen:'#7a1f33', stamp:'#3a3436', polaFrame:'#ffffff', polaEdge:'#e6ddcf', polaInner:'#efe7da',
     polaShadow:'rgba(60,40,30,.13)', tape:'rgba(239,163,179,.55)', pencilW:1,
     pinks:['#F4B6C2','#EFA3B3','#F7C6CF','#EA97AA','#F2ADBB'], greens:['#5F7F3B','#6E8E45','#4F6E32'], branch:{ trunk:'#B8860B', italy:'#12805C', vincent:'#3B6FD4', fred:'#8B5FC9', gerry:'#CE5F8A', robert:'#D95F0E', andy:'#8A5A44' } },
+  classic: { label: 'Classic', desc: 'The original look, plain ink branches',
+    paper:'#FBF8F1', ink:'#1f1b1d', inkSoft:'#6b6466', pencil:'#8d8589', pencilText:'#6f686b', red:'#C8392E', amber:'#B5761A',
+    center:'#B8324F', stamen:'#7a1f33', stamp:'#3a3436', polaFrame:'#ffffff', polaEdge:'#e6ddcf', polaInner:'#efe7da',
+    polaShadow:'rgba(60,40,30,.13)', tape:'rgba(239,163,179,.55)', pencilW:1, branch:null,
+    pinks:['#F4B6C2','#EFA3B3','#F7C6CF','#EA97AA','#F2ADBB'], greens:['#5F7F3B','#6E8E45','#4F6E32'] },
   night: { label: 'Night garden', desc: 'Dark, easy on the eyes',
     paper:'#16131c', ink:'#E8E1D4', inkSoft:'#B5ADBF', pencil:'#8F879C', pencilText:'#A9A1B5', red:'#FF8F80', amber:'#F2C94C',
     center:'#D94A6E', stamen:'#5a1028', stamp:'#CFC7D9', polaFrame:'#F1ECE3', polaEdge:'#cfc6b8', polaInner:'#3a3344',
@@ -1374,7 +1383,7 @@ function computeLayout() {
       const pts = cubicPts(F, { x: F.x + (r() - 0.5) * 50, y: F.y - dy * 0.42 },
         { x: st ? K.x : K.x + (r() - 0.5) * 50, y: st ? K.y + dy * 0.62 : K.y + dy * 0.48 }, K, 30);
       if (byId.get(k).tentative) {
-        pencil.push({ d: line(pts), stroke: branchColour(k), w: 1.7 * C.pencilW, dash: '6 5', fill: 'none' });
+        pencil.push({ d: line(pts), stroke: C.branch ? branchColour(k) : C.pencil, w: 1.7 * C.pencilW, dash: '6 5', fill: 'none' });
         decorate(pts, 2, 2, r, 0, 1);
       } else {
         const w0 = Math.min(stemW(k), forkW(h) * 1.05), w1 = forkW(k);
@@ -1389,7 +1398,7 @@ function computeLayout() {
     m.forEach(id => own('p:' + id, () => {
       const T = tip.get(id), r = rng('twig' + id), S = { x: F.x, y: F.y + 6 };
       const pts = cubicPts(S, { x: S.x + (T.x - S.x) * 0.15, y: S.y - 16 }, { x: T.x - (T.x - S.x) * 0.4, y: T.y + 8 }, T, 16);
-      if (byId.get(id).placeholder) pencil.push({ d: line(pts), stroke: branchColour(id), w: 1.4 * C.pencilW, dash: '4 4', fill: 'none' });
+      if (byId.get(id).placeholder) pencil.push({ d: line(pts), stroke: C.branch ? branchColour(id) : C.pencil, w: 1.4 * C.pencilW, dash: '4 4', fill: 'none' });
       else {
         ink.push({ d: taper(pts, 2.8, 1.3, 'twig' + id), fill: branchColour(id) });
         if (r() < 0.75) {
@@ -1433,7 +1442,7 @@ function svgPrim(p, parent) {
     'stroke-dasharray': p.dash, 'stroke-linecap': p.stroke ? 'round' : null }, parent);
 }
 function drawBud(parent, p, r, prefix, usePhoto) {
-  if (p.placeholder) { svgPrim(ghostBud(r * 0.85, branchColour(p.id)), parent); return; }
+  if (p.placeholder) { svgPrim(ghostBud(r * 0.85, C.branch ? branchColour(p.id) : undefined), parent); return; }
   const flower = el('g', {}, parent);
   blossom(0, 0, r, rng('tip' + p.id)).forEach(q => svgPrim(q, flower));
   if (p.photo && usePhoto !== false) {
@@ -1468,7 +1477,7 @@ function polaroid(g, p, t) {
   const pg = el('g', { class: 'pola', transform: 'translate(' + f1(q.cx) + ',' + f1(q.cy) + ') rotate(' + f1(q.rot) + ')' }, g);
   const ix = -W / 2 + POLA.IN, iy = -H / 2 + POLA.IN, iw = W - POLA.IN * 2, ih = H - POLA.IN - POLA.LIP;
   if (p.placeholder) {
-    el('rect', { x: -W / 2, y: -H / 2, width: W, height: H, rx: 2, fill: 'none', stroke: branchColour(p.id), 'stroke-width': 1.2, 'stroke-dasharray': '3 3' }, pg);
+    el('rect', { x: -W / 2, y: -H / 2, width: W, height: H, rx: 2, fill: 'none', stroke: C.branch ? branchColour(p.id) : C.pencil, 'stroke-width': 1.2, 'stroke-dasharray': '3 3' }, pg);
     el('text', { class: 'pinit', x: 0, y: iy + ih / 2 + 7 }, pg).textContent = '?';
     return;
   }
@@ -1489,7 +1498,7 @@ function canvasPolaroid(ctx, p, t, img) {
   ctx.translate(t.x + q.cx, t.y + q.cy); ctx.rotate(q.rot * Math.PI / 180);
   ctx.textAlign = 'center'; ctx.font = '20px ' + HAND; ctx.fillStyle = C.pencilText;
   if (p.placeholder) {
-    ctx.setLineDash([3, 3]); ctx.strokeStyle = branchColour(p.id); ctx.lineWidth = 1.2; ctx.strokeRect(-W / 2, -H / 2, W, H); ctx.setLineDash([]);
+    ctx.setLineDash([3, 3]); ctx.strokeStyle = C.branch ? branchColour(p.id) : C.pencil; ctx.lineWidth = 1.2; ctx.strokeRect(-W / 2, -H / 2, W, H); ctx.setLineDash([]);
     ctx.fillText('?', 0, iy + ih / 2 + 7);
     ctx.restore(); return;
   }
@@ -1547,7 +1556,7 @@ function renderTree() {
     const anchor = t.s < 0 ? 'end' : 'start', lx = t.s < 0 ? -17 : 17;
     rows.forEach(r => {
       el('text', { class: r.cls, x: lx, y: r.y, 'text-anchor': anchor }, lab).textContent = r.txt;
-      if (r.cls === 'nm' && !p.placeholder) {
+      if (r.cls === 'nm' && !p.placeholder && C.branch) {
         const uw = estW(r), ux0 = anchor === 'end' ? lx - uw : lx;
         el('line', { x1: ux0, y1: r.y + 5, x2: ux0 + uw, y2: r.y + 5, stroke: branchColour(p.id), 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: 0.9 }, lab);
       }
@@ -2086,8 +2095,7 @@ function renderOverlays() {
     const rect = el('rect', { rx: 10 }, inner);
     const fnT = el('text', { class: 'fn', x: 0, y: 0 }, inner);
     fnT.textContent = name;
-    const bc = branchColour(h);
-    rect.style.stroke = bc; fnT.style.fill = bc;
+    if (C.branch) { const bc = branchColour(h); rect.style.stroke = bc; fnT.style.fill = bc; }
     el('text', { class: 'fc', x: 0, y: 17 }, inner).textContent = (L.descAll(h)) + ' people' + (isF ? ' · folded' : '');
     const tw = Math.max(name.length * 10.5, 90) + 24;
     rect.setAttribute('x', -tw / 2); rect.setAttribute('y', -20); rect.setAttribute('width', tw); rect.setAttribute('height', 46);
